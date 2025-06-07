@@ -1,0 +1,19 @@
+{% extends 'base.html' %}                                                                           <!--- extends statement: extending the base template i.e. we're going to use all the markup defined in base.html here, (similar to the include feature in php) --->
+
+{% block content %}                                                                                 <!--- this block is also defined in the base.html file with the same name, where the content of the block here will be inserted there, and view it here with the styles defined in the base.html --->
+<h1>Products</h1>
+    <div class="row">                                                                               <!--- created by typing div.row then press tab, the other is div.col and press tab --->
+        {% for product in products %}
+            <div class="col">                                                                       <!--- bootstrap code pasted for a card item inside this column --->
+            <div class="card" style="width: 18rem;">                                                <!--- code was beautified here using Ctrl+Alt+Shift+L or reformat code from Code at the top bar --->
+                <img src="{{ product.image_url }}" class="card-img-top" alt="...">                  <!--- you can add the double curly inside tag attributes inside the quotation marks and it works just fine --->
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>                                  <!--- details added dynamically --->
+                    <p class="card-text"> ${{ product.price }}</p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
