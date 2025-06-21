@@ -1,86 +1,102 @@
-from random import randint
-
-from art import higher_lower, vs
-from higherlower import data
 
 
-def follower_diff(a, b):
-    if a > b:
-        return a
-    elif b > a:
-        return b
-    else:
-        return "Oops, they are one and the same :)"
+
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "milk": 0,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 400,
+    "milk": 200,
+    "coffee": 100,
+    "money" : 0
+}
 
 
-def answer_checker(answer, bigger):
-    if answer == bigger:
-        print("you win")
-        print(f"your score is {score + 1}")
-        return True
-    else:
-        print(f"you lost, your score is {score}")
-        return False
+def resource_checker(selected_item_f):
+    unavailable_f = []
+    water_f = MENU[selected_item]["ingredients"]["water"]
+    milk_f = MENU[selected_item]["ingredients"]["milk"]
+    coffee_f = MENU[selected_item]["ingredients"]["coffee"]
+    selected_resources = [water_f, milk_f, coffee_f]
+
+    for item in selected_resources:
+        for resource in resources:
+            if item < resources[resource]:
+                unavailable_f.append(item)
+    return unavailable_f, water_f, milk_f, coffee_f
 
 
-def score_counter():
-    if game_continue:
-        return score + 1
+def dispenser(selected_item_f, water_f, milk_f, coffee_f):
+    ingredients = [water_f, milk_f, coffee_f]
+    for item in ingredients:
+        resources[item] = item - resources[item]
+    return resources
+
+is_on = True
 
 
-def name_fetcher():
-    if bigger == a:
-        return f"{random_person['name']} is the correct answer"
-    else:
-        return f"{random_person_2['name']} is the correct answer"
-
-def person_randomizer():
-    return data[randint(0, len(data) - 1)]
 
 
-def name_definer(person):
-    return f"{person['name']} a {person['description']} from {person['country']}"
+while is_on:
+    print("Welcome to the Coffee Machine")
+    print("1: Espresso")
+    print("2: Latte")
+    print("3: cappuccino")
+    print("report: print a report")
+    print("off: Turn off")
+    request = input("What would you like? ")
 
 
-print(higher_lower)
 
+    if request == "1":
+        selected_item = "espresso"
+        unavailable, water, milk, coffee = resource_checker(selected_item)
+        dispenser(selected_item, water, milk, coffee)
 
-bigger = ""
-score = 0
-game_continue = True
-winner = 0
+    elif request == "2":
+        selected_item = "latte"
+        unavailable, water, milk, coffee = resource_checker(selected_item)
+        dispenser(selected_item, water, milk, coffee)
 
-random_person = person_randomizer()
-random_person_2 = person_randomizer()
+    elif request == "3":
+        selected_item = "cappuccino"
+        unavailable, water, milk, coffee = resource_checker(selected_item)
+        dispenser(selected_item, water, milk, coffee)
 
-while game_continue:
-    random_person = random_person_2
-    random_person_2 = person_randomizer()
-    if random_person == random_person_2:
-        continue
-    a = random_person['followers']
-    b = random_person_2['followers']
-    a_name = random_person['name']
+    elif request.lower() == "report":
+        # print(f"current resources")
+        # print(f"Water: {resources["water"]}ml")
+        # print(f"Milk: {resources["milk"]}ml")
+        # print(f"Coffee: {resources["coffee"]}g")
+        # print(f"Money: ${resources["money"]}\n")
+        input("Press any button to continue\n")
 
-    print("Compare: A " + name_definer(random_person))
-    print(vs)
-    print(f"Against: B " + name_definer(random_person_2))
-
-
-    user_input = input("who has more followers? Type 'A' or 'B'")
-
-
-    if user_input == 'a'.lower():
-        answer = a
-        bigger = follower_diff(a, b)
-        game_continue = answer_checker(answer, bigger)
-        score = score_counter()
-        name_fetcher()
-
-    else:
-        answer = b
-        bigger = follower_diff(a, b)
-        game_continue = answer_checker(answer, bigger)
-        score = score_counter()
-        name_fetcher()
-
+    elif request.lower() == "off":
+        is_on = False
+        machine_status = input("machine turned off, to turn back on type ON: ")
+        if machine_status.lower() == "on":
+            is_on = True

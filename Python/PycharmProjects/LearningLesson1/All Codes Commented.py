@@ -1046,6 +1046,8 @@ z = coordinates[2]
 x, y, z = coordinates # this line does the same thing as the 3 lines above with much less code, python inepreter, will get the first item in the tupple and assign it to x, then the second item to y, the the third to z and so on, UNPACKNG the tupple to those 3 variables, works with lists too
 print(z)
 
+#NOTE: Good Example of this in line 2309
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #dictionaries (key => value pairs, equivalent of Assosicative Arrays in php)
@@ -2227,6 +2229,103 @@ while game_continue:
             continue
 
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#ChatGPT Version ( i Liked his multi value return fucntion answer_checker() aka Unpacking in lines, 2251, 2263, 2266, 2309, the rest is irrelevent, the next code block is better than this
+
+from random import choice
+from art import higher_lower, vs
+from higherlower import data
+
+def follower_diff(count_a, count_b):
+    """
+    Compare two follower counts and return:
+      - "A" if count_a > count_b
+      - "B" if count_b > count_a
+      - "tie" if they are equal
+    """
+    if count_a > count_b:
+        return "A"
+    elif count_b > count_a:
+        return "B"
+    else:
+        return "tie"
+
+def answer_checker(user_choice, correct_side, current_score):                       #this Function
+    """
+    Print win/lose message, update score,
+    and return (did_win: bool, new_score: int).
+    """
+    if correct_side == "tie":
+        print("They have exactly the same follower count! No points awarded.")
+        return True, current_score  # Let user continue
+    elif user_choice.upper() == correct_side:
+        new_score = current_score + 1
+        print("You win this round!")
+        print(f"Your score is now {new_score}")
+        return True, new_score                                                      #here
+    else:
+        print(f"You lost. Your final score was {current_score}")
+        return False, current_score                                                 #and Here
+
+def name_definer(person):
+    """
+    Return a string like "John Doe a singer from USA"
+    """
+    return f"{person['name']}, a {person['description']} from {person['country']}"
+
+def person_randomizer():
+    """Pick one random entry from the data list."""
+    return choice(data)
+
+def play_higher_lower():
+    print(higher_lower)
+    score = 0
+    game_continue = True
+
+    # Start by picking two distinct people
+    person_a = person_randomizer()
+    person_b = person_randomizer()
+    while person_b == person_a:
+        person_b = person_randomizer()
+
+    while game_continue:
+        a_followers = person_a["followers"]
+        b_followers = person_b["followers"]
+
+        # Show the two options
+        print(f"Compare A: {name_definer(person_a)}")
+        print(vs)
+        print(f"Against B: {name_definer(person_b)}")
+
+        # Get the user's guess
+        guess = ""
+        while guess not in ("a", "b"):
+            guess = input("Who has more followers? Type 'A' or 'B': ").lower()
+
+        # Determine which side truly has more followers
+        correct_side = follower_diff(a_followers, b_followers)
+
+        # Check the answer, update score, and see if we continue
+        game_continue, score = answer_checker(guess, correct_side, score)                   #and here, the way he returned all the values to their repective variables using Unpacking
+        if not game_continue:
+            break
+
+        # Announce who was correct
+        if correct_side == "A":
+            print(f"{person_a['name']} was correct with {a_followers} followers!")
+        elif correct_side == "B":
+            print(f"{person_b['name']} was correct with {b_followers} followers!")
+        # If it was a tie, we already handled it in answer_checker
+
+        # Prepare for the next round: B becomes the new A, and pick a new B
+        person_a = person_b
+        person_b = person_randomizer()
+        while person_b == person_a:
+            person_b = person_randomizer()
+
+if __name__ == "__main__":
+    play_higher_lower()
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #higher lower game (her version, Trillion Times better than mine + Shorter)
@@ -2281,6 +2380,229 @@ while game_should_continue:
     else:
         game_should_continue = False
         print(f"Sorry, that's wrong. Final Score: {score}")
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Coffee Machine (my code)
+
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "milk": 0,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 400,
+    "milk": 200,
+    "coffee": 100,
+    "money" : 0.00
+}
+
+
+def resource_checker(selected_item_f):
+    water_f = MENU[selected_item_f]["ingredients"]["water"]
+    milk_f = MENU[selected_item_f]["ingredients"]["milk"]
+    coffee_f = MENU[selected_item_f]["ingredients"]["coffee"]
+
+    if water_f > resources["water"]:
+        print("Sorry, you don't have enough Water")
+        return False, water_f, milk_f, coffee_f
+    if milk_f > resources["milk"]:
+        print("Sorry, you don't have enough Milk")
+        return False, water_f, milk_f, coffee_f
+    if coffee_f > resources["coffee"]:
+        print("Sorry, you don't have enough Coffee")
+        return False, water_f, milk_f, coffee_f
+    return True, water_f, milk_f, coffee_f
+
+
+def dispenser(water_f, milk_f, coffee_f):
+    resources["water"] = resources["water"] - water_f
+    resources["milk"] = resources["milk"] - milk_f
+    resources["coffee"] = resources["coffee"] - coffee_f
+
+
+def process_coins():
+    print("insert Coins")
+    quarters = float(input("How many quarters? "))
+    dimes = float(input("How many dimes? "))
+    nickles = float(input("How many nickles? "))
+    pennies = float(input("How many pennies? "))
+    total = quarters * 0.25 + dimes * 0.10 + nickles * 0.05 + pennies * 0.01
+
+    if total < MENU[selected_item]["cost"]:
+        print("Sorry, Not enough Cash, refunding")
+    elif total == MENU[selected_item]["cost"]:
+        resources["money"] = resources["money"] + total
+        print("enjoy your drink!")
+    else:
+        remainder = round(total - MENU[selected_item]["cost"], 2)
+        total = round(total - remainder, 2)
+        resources["money"] = resources["money"] + total
+        print(f"enjoy your drink!, here's the Change ${remainder}")
+
+
+is_on = True
+
+while is_on:
+    print("Welcome to the Coffee Machine")
+    print(f"1: Espresso ${MENU["espresso"]["cost"]}")
+    print(f"2: Latte ${MENU["latte"]["cost"]}")
+    print(f"3: cappuccino ${MENU["cappuccino"]["cost"]}")
+    print("report: print a report")
+    print("off: Turn off")
+    request = input("What would you like? ")
+
+
+
+    if request == "1":
+        selected_item = "espresso"
+        can_order, water, milk, coffee = resource_checker(selected_item)
+        if can_order:
+            process_coins()
+            dispenser(water, milk, coffee)
+
+    elif request == "2":
+        selected_item = "latte"
+        can_order, water, milk, coffee = resource_checker(selected_item)
+        if can_order:
+            process_coins()
+            dispenser(water, milk, coffee)
+
+    elif request == "3":
+        selected_item = "cappuccino"
+        can_order, water, milk, coffee = resource_checker(selected_item)
+        if can_order:
+            process_coins()
+            dispenser(water, milk, coffee)
+
+    elif request.lower() == "report":
+        print(f"current resources")
+        print(f"Water: {resources["water"]}ml")
+        print(f"Milk: {resources["milk"]}ml")
+        print(f"Coffee: {resources["coffee"]}g")
+        print(f"Money: ${resources["money"]}\n")
+        input("Press any button to continue\n")
+
+    elif request.lower() == "off":
+        is_on = False
+        machine_status = input("machine turned off, to turn back on type ON: ")
+        if machine_status.lower() == "on":
+            is_on = True
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Coffee Machine (her code)
+
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "milk": 0,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+profit = 0
+resources = {
+    "water": 400,
+    "milk": 200,
+    "coffee": 100
+}
+
+def is_resource_sufficient(order_ingredients):
+    """Returns True when order can be made, False if ingredients are insufficient"""
+    for item in order_ingredients:
+        if order_ingredients[item] >= resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+    return True
+
+def process_coins():
+    """Returns the total calculated from coins inserted."""
+    print("Please insert coins. ")
+    total = int(input("How many quarters?: ")) * 0.25
+    total += int(input("How many dimes?: ")) * 0.1                   #Mind = Blown
+    total += int(input("How many nickles?: ")) * 0.05
+    total += int(input("How many pennies?: ")) * 0.01
+    return total
+
+def is_transaction_successful(money_received, drink_cost):
+    """Return True if the payment is accepted, or False if the money is insufficient"""
+    if money_received >= drink_cost:
+        change = round(money_received - drink_cost, 2)
+        print(f"here is ${change} in change.")
+        global profit
+        profit += drink_cost
+        return True
+    else:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
+
+
+def make_coffee(drink_name, order_ingredients):
+    """Deduct the required ingredients from the resources."""
+    for item in order_ingredients:
+        resources[item] -= order_ingredients[item]
+    print(f"Here is your {drink_name} ☕")
+
+is_on = True
+
+while is_on:
+    choice = input("what would you like? (espresso/latte/cappuccino): ")
+    if choice == "off":
+        is_on = False
+    elif choice == "report":
+        print(f"Water: {resources['water']}ml")
+        print(f"Milk: {resources['milk']}ml")
+        print(f"Coffee: {resources['coffee']}g")
+        print(f"Money: ${profit}")
+    else:
+        drink = MENU[choice]
+        if is_resource_sufficient(drink["ingredients"]):
+            payment = process_coins()
+            if is_transaction_successful(payment, drink["cost"]):
+                make_coffee(choice, drink["ingredients"])
+
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3242,3 +3564,6 @@ TEMPLATES = [
 # 1.
 def botato(hamodi):
     print(f"potato {hamodi}")       #if you highlight a word in a string and press { it will enclose it like so {word} useful with formatted strings, also works with ""
+
+# 2.
+# TODO you can make Todo notes like so, putting them all over the code and a access them from the bottom left button called TODO (three dots and lines)
