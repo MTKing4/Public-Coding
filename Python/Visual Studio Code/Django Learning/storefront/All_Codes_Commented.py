@@ -91,3 +91,51 @@ def say_hello(request):
 {% else %}
 <h1>Hello World</h1>
 {% endif %}
+
+
+
+
+
+#NOTES
+#Installing Django Debug Toolbar
+#1. pipenv install django-debug-toolbar
+#2. Add it to INSTALLED_APPS in django project
+#3. Add a new URL in the main urls.py
+
+
+#--------------------------------------file: settings.py--------------------------------------------------
+
+INSTALLED_APPS = [                                          
+    'debug_toolbar'                                     # Added the newly created app here: django-debug-toolbar
+]
+
+MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",          # Added for debug toolbar
+]
+
+INTERNAL_IPS = [                                                # Added for debug toolbar
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
+
+#--------------------------------------file: storefront/urls.py--------------------------------------------------
+
+import debug_toolbar                                                  # Added for debug toolbar
+# from debug_toolbar.toolbar import debug_toolbar_urls                # Added for debug toolbar
+
+urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls))
+]
+
+
+
+
+
+#Models
+#--------------------------------------file: settings.py--------------------------------------------------
+
+INSTALLED_APPS = [
+    'store',                                                    # added for Modeling the DB, Store: {Product, Collection, Cart, CartItem, Order, OrderItem, Customer}    
+    'tags'                                                      # added for tags, tags: {tag, TaggedItem}

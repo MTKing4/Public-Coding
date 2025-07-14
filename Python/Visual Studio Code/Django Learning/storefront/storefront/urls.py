@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import debug_toolbar                                                # Added for debug toolbar
+# from debug_toolbar.toolbar import debug_toolbar_urls                # Added for debug toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('playground/', include('playground.urls'))                #plyaground/ path means everything inside the playground directory, since we typed it here, there's no need to retype it in the playground's urls.py, we just type the name of the directory inside it
+    path('playground/', include('playground.urls')),                #plyaground/ path means everything inside the playground directory, since we typed it here, there's no need to retype it in the playground's urls.py, we just type the name of the directory inside it
+    path('__debug__/', include(debug_toolbar.urls))                 # Added for debug toolbar
 ]

@@ -34,13 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',                              # legacy, not used anymore, a session is a temporary memory on the server for managing user's data, it'd not used when building apis with django anymore
-    'django.contrib.messages',                              # used for displaying one-time notifications for the user
-    'django.contrib.staticfiles',                           # for serving static files like images, css files, etc.
-    'playground'                                            # Added the newly created app here
+    'django.contrib.sessions',                                  # legacy, not used anymore, a session is a temporary memory on the server for managing user's data, it'd not used when building apis with django anymore
+    'django.contrib.messages',                                  # used for displaying one-time notifications for the user
+    'django.contrib.staticfiles',                               # for serving static files like images, css files, etc.
+    'playground',                                               # Added the newly created app here
+    'debug_toolbar',                                            # Added for debug toolbar
+    'store',                                                    # added for Modeling the DB, Store: {Product, Collection, Cart, CartItem, Order, OrderItem, Customer}    
+    'tags'                                                      # added for tags, tags: {tag, TaggedItem}
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",          # Added for debug toolbar
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -48,6 +52,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+INTERNAL_IPS = [                                                # Added for debug toolbar
+    # ...
+    "127.0.0.1",
+    # ...
 ]
 
 ROOT_URLCONF = 'storefront.urls'
