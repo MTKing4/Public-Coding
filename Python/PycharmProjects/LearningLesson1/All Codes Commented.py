@@ -714,6 +714,12 @@ numbers.index(1)  # returns the index of the first occurence of an element#
 print(numbers[2]) #can access individual items similar to lists
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# convert a tuple to a list:
+
+list = [1, 2, 3]
+tuple = tuple(list)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #formatted strings#
 first = "john"
@@ -2662,6 +2668,291 @@ timmy.forward(100)
 my_screen = Screen()
 print(my_screen.canvheight)
 my_screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#moving the turtle and changing its color
+
+from turtle import Turtle, Screen                 # import * imports everything
+import turtle
+import random
+
+tim = Turtle()
+tim.shape("turtle")
+tim.color("red")
+
+# Drawing a Square
+for i in range(4):
+    tim.forward(100)
+    tim.right(90)
+
+# Draw a dashe line
+for _ in range(14):
+    tim.forward(10)
+    tim.penup()
+    tim.forward(10)
+    tim.pendown()
+
+#------------------------------------------
+
+# Generates a random heroic name
+import heroes
+print(heroes.gen())
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle Exersice: Draw a Triangle, Square, Pentagon, hexagon, heptagon, octagon, nonagon, and decagon :D
+# (All my code, YAY)
+
+from turtle import Turtle, Screen
+import turtle
+import random
+
+tim = Turtle()
+tim.shape("turtle")
+tim.color("red")
+
+for sides in range(3, 11):
+    angle = 360 / sides
+    turtle.colormode(255)
+    tim.pencolor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    for _ in range(sides):
+        tim.forward(100)
+        tim.right(angle)
+
+
+screen = Screen()
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle Exersice: Draw a Triangle, Square, Pentagon, hexagon, heptagon, octagon, nonagon, and decagon :D
+# (her code, kina weird)
+
+from turtle import Turtle, Screen                 # import * imports everything
+import turtle
+import random
+
+tim = Turtle()
+
+colours = ['dark orange', 'lawn green', 'dodger blue', 'medium violet red', 'yellow', 'medium slate blue', 'spring green', 'deep pink', 'sky blue']
+
+def draw_shape(num_sides):
+    angle = 360 / num_sides
+    for _ in range(num_sides):
+        tim.forward(100)
+        tim.right(angle)
+
+for shape_side_n in range(3, 11):
+    tim.color(random.choice(colours))
+    draw_shape(shape_side_n)
+
+
+screen = Screen()
+screen.exitonclick()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle: Random Walk (my code, same as hers)
+
+from random import randint
+from turtle import Turtle, Screen
+import turtle
+import random
+
+tim = Turtle()
+
+colours = ['dark orange', 'lawn green', 'dodger blue', 'medium violet red', 'yellow', 'medium slate blue', 'spring green', 'deep pink', 'sky blue', 'blue', 'olive', 'indian red', 'dark green']
+
+moves = [0, 45, 90, 135, 180, 225, 270, 360]
+
+tim.speed(0)
+tim.pensize(10)
+for _ in range(10000):
+    # tim.setheading(randint(0, 270))           # can use this
+    tim.setheading(random.choice(moves))        # or this, but not both
+    tim.forward(20)
+    tim.color(random.choice(colours))
+
+
+screen = Screen()
+screen.exitonclick()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle: Draw a Spirograph (Circles shape) (my code)
+
+from random import randint
+from turtle import Turtle, Screen
+import turtle
+import random
+
+tim = Turtle()
+
+
+heading = 0
+tim.speed(0)
+for _ in range(75):
+    tim.setheading(heading)
+    turtle.colormode(255)
+    tim.color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    heading += 5
+    tim.circle(100)
+
+
+screen = Screen()
+screen.exitonclick()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle: Draw a Spirograph (Circles shape) (her code, very nice)
+
+from random import randint
+from turtle import Turtle, Screen
+import turtle
+import random
+
+tim = Turtle()
+turtle.colormode(255)
+
+def random_color():
+    r = random.randint(0, 255)                                          # another way of adding random colors
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    color = (r, g, b)
+    return color
+
+
+tim.speed(0)
+
+def draw_spirograph(size_of_gap):
+    for _ in range(int(360 / size_of_gap)):                              # real smart, making it only draw the needed circles to complete the shape, division returns float so we added int()
+        tim.color(random_color())
+        tim.circle(100)
+        tim.setheading(tim.heading() + size_of_gap)                      # using tim.heading() to get the current heading then increase it by 10
+
+draw_spirograph(5)
+
+screen = Screen()
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Extract colors from an image with colorgram (my code)
+
+import colorgram
+
+colors = colorgram.extract('image.jpg', 30)
+
+all_colors = []
+for number in range(30):
+    color = colors[number]
+    rgb = color.rgb
+    red = rgb[0]
+    green = rgb[1]
+    blue = rgb[2]
+    colors_tuple = (red, green, blue)
+    if number > 2:                              #removes the first 3 colors (white background are the most occurring so they get extracted first)
+        all_colors.append(colors_tuple)
+
+print(all_colors)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Extract colors from an image with colorgram (her code)
+
+import colorgram
+
+
+rgb_colors = []
+colors = colorgram.extract('image.jpg', 30)
+for color in colors:
+    r = color.rgb.r
+    g = color.rgb.g
+    b = color.rgb.b
+    new_color = (r, g, b)
+    rgb_colors.append(new_color)
+
+print(rgb_colors)
+
+#
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Hirst Painting (my code, NICE)
+
+from turtle import Turtle, Screen
+import turtle
+import random
+
+color_list = [(198, 13, 32), (248, 236, 25), (40, 76, 188), (244, 247, 253), (39, 216, 69), (238, 227, 5), (227, 159, 49), (29, 40, 154), (212, 76, 15), (17, 153, 17), (241, 36, 161), (195, 16, 12), (223, 21, 120), (68, 10, 31), (61, 15, 8), (223, 141, 206), (11, 97, 62), (219, 159, 11), (54, 209, 229), (19, 21, 49), (238, 157, 216), (79, 74, 212), (10, 228, 238), (73, 212, 168), (93, 233, 198), (65, 231, 239), (217, 88, 51)]
+
+tim = Turtle()
+screen = Screen()
+
+turtle.colormode(255)
+tim.hideturtle()
+tim.penup()
+tim.setheading(225)
+tim.forward(350)
+tim.speed(0)
+
+def create_circle_row():
+    for _ in range(10):
+        tim.setheading(0)
+        tim.color(random.choice(color_list))
+        tim.begin_fill()
+        tim.circle(20)
+        tim.end_fill()
+        tim.penup()
+        tim.forward(50)
+
+
+create_circle_row()
+
+for __ in range(9):
+    tim.setheading(180)
+    tim.forward(500)
+    tim.setheading(90)
+    tim.forward(50)
+    create_circle_row()
+
+
+
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Hirst Painting (her code, interesting)
+
+import turtle as turtle_module
+import random
+
+turtle_module.colormode(255)
+tim = turtle_module.Turtle()
+color_list = [(198, 13, 32), (248, 236, 25), (40, 76, 188), (244, 247, 253), (39, 216, 69), (238, 227, 5), (227, 159, 49), (29, 40, 154), (212, 76, 15), (17, 153, 17), (241, 36, 161), (195, 16, 12), (223, 21, 120), (68, 10, 31), (61, 15, 8), (223, 141, 206), (11, 97, 62), (219, 159, 11), (54, 209, 229), (19, 21, 49), (238, 157, 216), (79, 74, 212), (10, 228, 238), (73, 212, 168), (93, 233, 198), (65, 231, 239), (217, 88, 51)]
+
+tim.penup()
+tim.hideturtle()
+tim.setheading(225)
+tim.forward(300)
+tim.setheading(0)
+number_of_dots = 100
+tim.speed("fastest")
+
+for dot_count in range(1, number_of_dots + 1):
+    tim.dot(20, random.choice(color_list))
+    tim.forward(50)
+
+    if dot_count % 10 == 0:
+        tim.setheading(90)
+        tim.forward(50)
+        tim.setheading(180)
+        tim.forward(500)
+        tim.setheading(0)
+
+
+screen = turtle_module.Screen()
+screen.exitonclick()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
