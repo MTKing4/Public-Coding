@@ -293,11 +293,15 @@ while i <= 10 and i > 0:
 #Lists#
 names = ["John", "Bob", "Mosh", "Sam", "Mary"]
 names[0] = "Jon"  # can change an opject at a given index
-print(names[2:]) #can get items from a range till the end of the list, ex. here from index 2 till the end of the list
+print(names[2:]) # can get items from a range till the end of the list, ex. here from index 2 till the end of the list
 print(names[0:2]) # this will return a sublist from the original list even if it has 1 item, the numbers are the index for the items in the list, Syntax: names(from:to], so from index 0 to index 2, you can use negagive index, -1 will show the first from the end of the list, mary, -2 will show the second of the last and so on
+print(names[0:4:2]) # the third number the number of steps to jump to, in this case, it will get every other item
+print(names[::2]) # get every other item
+print(names[::-1]) # this will reverse the order of items, from the end to the begining
 print(names[0]) # this returns an integer, not a sublist (can't be used with for loops after the in clause)
-print(names[:]) #this will return all the items from the begining to the end of the list
+print(names[:]) # this will return all the items from the begining to the end of the list
 print(names)  # Will return the original list unchanged#
+#NOTE: most/all of these work with tuples as well
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # nested lists
@@ -2956,6 +2960,128 @@ screen.exitonclick()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#Making the the turtle move with keys using Event lisnters and higher order functions (my code, mostly, this is also the Etch a Sketch Challeng LOL)
+
+
+from turtle import Turtle, Screen
+
+tim = Turtle()
+screen = Screen()
+tim.speed(0)
+
+def forward():
+    tim.forward(10)
+
+def back():
+    tim.back(10)
+
+def left():
+    tim.left(10)
+
+def right():
+    tim.right(10)
+
+def clear():
+    tim.clear()
+    tim.reset()             #can also use tim.home() but it's shittier, needs penup and pendown because it paint's on the way back
+
+
+screen.listen()
+screen.onkeypress(forward, "Up")                #she used onkey() much worse, needs constant tapping becuse holding the button won't trigger repeated movements
+screen.onkeypress(back, "Down")
+screen.onkeypress(left, "Left")
+screen.onkeypress(right, "Right")
+screen.onkeypress(clear, "c")
+
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle Racing Game (my code, ALL MINE, YES!) (no need for her code, mine is better anyway :) )
+
+
+
+from turtle import Turtle, Screen
+import turtle
+import random
+
+screen = Screen()
+screen.setup(width=500, height=400)
+user_bet = screen.textinput(title="Make your bet", prompt="Which will turtle will win the race? Enter a color:")                #for numbers, we use screen.numinput()
+
+
+turtle.colormode(255)
+turtle_names = ["tim", "tom", "tam", "tem", "tym", "tum", "twm"]
+turtle_colors = ['red', 'green', 'blue', 'purple', 'gold', 'magenta', 'cyan']
+turtles = {}
+y_position = 90
+number = 0
+
+for turtle_name in turtle_names:
+    turtles[turtle_name] = Turtle(shape="turtle")                               # can define the shape when we create the object
+    turtles[turtle_name].penup()
+    turtles[turtle_name].color(turtle_colors[number])
+    number += 1
+    turtles[turtle_name].goto(x=-230, y=y_position)                             # give turtle coordinates to go to
+    y_position -= 30
+
+race_is_on = True
+while race_is_on:
+    for turtle_name in turtle_names:                                               # can dictionary.items() to get the keys and the values of the dictionary printed
+        turtles[turtle_name].forward(random.randint(3, 10))
+        if turtles[turtle_name].xcor() >= 230.00:                                  # xcor() checks x Coordinates
+            race_is_on = False
+            winning_color = turtles[turtle_name].pencolor()                        # can use .color() or .pencolor() to reference the turtle with its color, pencolor() will return only the color string but color() will return (pencolor, fillcolor)
+            if winning_color == user_bet:
+                print(f"{winning_color} Wins, you win!")
+            else:
+                print(f"{winning_color} Wins, you lost!")
+
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Turtle Racing Game (her code, yes i decided to add it)
+
+from turtle import Turtle, Screen
+import random
+
+is_race_on = False
+screen = Screen()
+screen.setup(width=500, height=400)
+user_bet = screen.textinput(title="Make your bet", prompt="Which turtle will win the race? Enter a color: ")
+colors = ["red", "orange", "yellow", "green", "blue", "purple"]
+y_positions = [-70, -40, -10, 20, 50, 80]
+all_turtles = []
+
+#Create 6 turtles
+for turtle_index in range(0, 6):
+    new_turtle = Turtle(shape="turtle")
+    new_turtle.penup()
+    new_turtle.color(colors[turtle_index])
+    new_turtle.goto(x=-230, y=y_positions[turtle_index])
+    all_turtles.append(new_turtle)
+
+if user_bet:
+    is_race_on = True
+
+while is_race_on:
+    for turtle in all_turtles:
+        #230 is 250 - half the width of the turtle.
+        if turtle.xcor() > 230:
+            is_race_on = False
+            winning_color = turtle.pencolor()
+            if winning_color == user_bet:
+                print(f"You've won! The {winning_color} turtle is the winner!")
+            else:
+                print(f"You've lost! The {winning_color} turtle is the winner!")
+
+        #Make each turtle move a random amount.
+        rand_distance = random.randint(0, 10)
+        turtle.forward(rand_distance)
+
+screen.exitonclick()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Creating a table using the prettytable Package (OOP)
 
 from prettytable import PrettyTable
@@ -3195,9 +3321,9 @@ class QuizBrain:
         print(f"Your current score is {self.score}/{self.question_number}\n")
 
 #-----------------------------------------------------------------------------------------------------------------------
-#Notes (Differences between my main.py and hers at the begining:
+#Notes (Differences between my main.py and hers at the begining):
 
-#mine (complicated
+#mine (complicated)
 
 from question_model import Question
 from data import question_data
@@ -3253,6 +3379,353 @@ class Cat(Mammal):
 cat1 = Cat()
 dog1 = Dog()
 cat1.meo()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# inheritnace constructors
+
+class Animal:
+    def __init__(self):
+        self.num_eyes = 2
+
+    def breathe(self):
+        print("Inhale, exhale.")
+
+
+
+class Fish(Animal):
+    def __init__(self):
+        super().__init__()                      # this will initialize the parent methods and attributes from the parent class
+    def swim(self):
+        print("moving in water.")
+
+    def breathe(self):
+        super().breathe()                       # this means we're going to do everything that the super class breathe method does and more in the child class
+        print("doing this underwater.")
+
+nemo = Fish()
+nemo.swim()
+nemo.breathe()                                  # now child class objects can access parent class methods and attributes
+print(nemo.num_eyes)
+
+juno = Animal()                                 # parent breathe method unaffected
+juno.breathe()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# The Snake Game (OOP + Inheritence) (my code)
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+from turtle import Screen
+import time
+from scoreboard import Score
+from food import Food
+from snake import Snake
+
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("Snake Game")
+
+screen.tracer(0)
+snake = Snake()
+food = Food()
+score = Score()
+
+screen.listen()
+screen.onkeypress(snake.left, "Up")
+screen.onkeypress(snake.right, "Down")
+screen.onkeypress(snake.left, "Left")
+screen.onkeypress(snake.right, "Right")
+screen.onkeypress(snake.clear, "c")
+
+
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
+    # print(snake.segments[0].pos())
+
+    if food.distance(snake.segments[0]) <= 20:
+        food.change_location()
+        snake.extend()
+        score.count_score()
+
+    if (snake.segments[0].xcor() > 300 or snake.segments[0].xcor() < -300
+        or snake.segments[0].ycor() > 300 or snake.segments[0].ycor() < -300):
+        game_is_on = False
+        score.game_over()
+        print("you lost :(")
+
+
+    for segment in snake.segments[1:]:                          # using a sublist/slice instead of doing a for loop over all of the original list and excluding the first segment with an if statement, much shorter now
+        if snake.segments[0].distance(segment) < 10:
+            game_is_on = False
+            score.game_over()
+            print("you lost :(")
+
+screen.exitonclick()
+
+#------------------------------------------File: snake.py---------------------------------------------------------------
+
+from turtle import Turtle
+
+MOVE_DISTANCE = 20
+
+class Snake():
+    def __init__(self):
+        self.tails_names = ["tail_1", "tail_2", "tail_3"]
+        self.tails = {}
+        self.x_position = 0
+        self.segments = []
+
+        for tail in self.tails_names:
+            self.add_segment(tail)
+
+
+    def add_segment(self, tail):
+        self.tails[tail] = Turtle(shape="square")
+        self.tails[tail].color("white")
+        self.tails[tail].penup()
+        self.tails[tail].goto(self.x_position, y=0)
+        self.x_position -= 20
+        self.segments.append(self.tails[tail])
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())                     # -1 here means the last segment, in lists, -1 index is the last item in the list
+
+
+    def move(self):
+        for seg_num in range(len(self.segments) -1, 0, -1):
+            self.segments[seg_num].goto((self.segments[seg_num - 1].pos()))
+        self.segments[0].forward(MOVE_DISTANCE)
+
+
+    def left(self):
+        self.segments[0].left(90)
+
+    def right(self):
+        self.segments[0].right(90)
+
+    def clear(self):
+        self.segments[0].clear()
+
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
+from turtle import Turtle
+FONT = ("", 13, "")                 #constant, just a variable written in all caps, there are no constants in python :)
+
+class Score(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.hideturtle()
+        self.penup()
+        self.color("white")
+        self.score = 0
+        self.goto(-40, 280)
+        self.score_update()
+
+    def score_update(self):
+        self.write(f"Score: {self.score}", font= FONT)
+
+    def game_over(self):
+        self.goto(-40,0)
+        self.write("GAME OVER", font=FONT)
+
+    def count_score(self):
+        self.clear()
+        self.score += 1
+        self.score_update()
+
+#------------------------------------------File: food.py----------------------------------------------------------------
+
+from turtle import Turtle
+import random
+
+class Food(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.color("blue")
+        self.penup()
+        self.shapesize(stretch_len=0.5, stretch_wid=0.5)
+        self.speed("fastest")
+        self.change_location()
+
+
+    def change_location(self):
+        self.goto(random.randint(-280, 280), random.randint(-280, 280))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# The Snake Game (OOP + Inheritence) (her code)
+# many differences, but the same functionality, can't tell which is better, mine or hers :)
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+from turtle import Screen
+from snake import Snake
+from food import Food
+from scoreboard import Scoreboard
+import time
+
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("My Snake Game")
+screen.tracer(0)
+
+snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
+
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
+
+    #Detect collision with food.
+    if snake.head.distance(food) < 15:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
+
+    #Detect collision with wall.
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
+
+    #Detect collision with tail.
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
+
+
+screen.exitonclick()
+
+
+#------------------------------------------File: snake.py---------------------------------------------------------------
+
+from turtle import Turtle
+STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
+
+
+class Snake:
+
+    def __init__(self):
+        self.segments = []
+        self.create_snake()
+        self.head = self.segments[0]
+
+    def create_snake(self):
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
+
+    def move(self):
+        for seg_num in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[seg_num - 1].xcor()
+            new_y = self.segments[seg_num - 1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
+        self.head.forward(MOVE_DISTANCE)
+
+    def up(self):
+        if self.head.heading() != DOWN:
+            self.head.setheading(UP)
+
+    def down(self):
+        if self.head.heading() != UP:
+            self.head.setheading(DOWN)
+
+    def left(self):
+        if self.head.heading() != RIGHT:
+            self.head.setheading(LEFT)
+
+    def right(self):
+        if self.head.heading() != LEFT:
+            self.head.setheading(RIGHT)
+
+
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
+from turtle import Turtle
+ALIGNMENT = "center"
+FONT = ("Courier", 24, "normal")
+
+
+class Scoreboard(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.score = 0
+        self.color("white")
+        self.penup()
+        self.goto(0, 270)
+        self.hideturtle()
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.write(f"Score: {self.score}", align=ALIGNMENT, font=FONT)
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write("GAME OVER", align=ALIGNMENT, font=FONT)
+
+    def increase_score(self):
+        self.score += 1
+        self.clear()
+        self.update_scoreboard()
+
+
+#------------------------------------------File: food.py----------------------------------------------------------------
+
+from turtle import Turtle
+import random
+
+
+class Food(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.penup()
+        self.shapesize(stretch_len=0.5, stretch_wid=0.5)
+        self.color("blue")
+        self.speed("fastest")
+        self.refresh()
+
+    def refresh(self):
+        random_x = random.randint(-280, 280)
+        random_y = random.randint(-280, 280)
+        self.goto(random_x, random_y)
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Modules
