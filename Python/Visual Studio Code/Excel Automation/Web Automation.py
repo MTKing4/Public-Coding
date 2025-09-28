@@ -43,7 +43,7 @@ for item in df['Translation']:
 
 #-----------------------------------------------
 
-
+time.sleep(20)
 
 def is_valid(text):
     return not (isinstance(text, float) and math.isnan(text)) and str(text).strip()

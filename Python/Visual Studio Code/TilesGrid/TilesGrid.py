@@ -27,14 +27,11 @@ running = True
 while running:
     screen.fill(black)
 
+    # Draw a square
+    pygame.draw.rect(screen, blue, (square_x, square_y, square_size, square_size))
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-        running = False
-
-
-pygame.display.flip()  # Update the display
-
-
-pygame.quit()
+    pygame.display.flip()

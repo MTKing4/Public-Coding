@@ -2840,6 +2840,110 @@ screen = Screen()
 screen.exitonclick()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Draw a Donut (ChatGPT code) (Super Cool)
+
+import turtle
+import random
+import math
+
+tim = turtle.Turtle()
+turtle.colormode(255)
+tim.speed(0)
+
+orbit_radius = 100   # distance from center (controls the "hole" size)
+circle_radius = 50   # radius of the drawn circles
+angle_step = 5      # how much to rotate each step
+
+for angle in range(0, 360, angle_step):
+    # compute position on the orbit
+    x = orbit_radius * math.cos(math.radians(angle))
+    y = orbit_radius * math.sin(math.radians(angle))
+
+    tim.penup()
+    tim.goto(x, y)             # move turtle outward on orbit
+    tim.setheading(angle)      # make turtle face outward
+    tim.pendown()
+
+    tim.color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    tim.circle(circle_radius)  # draw a circle at this orbit point
+
+screen = turtle.Screen()
+screen.exitonclick()
+
+# Code Explanation:
+
+# https://chatgpt.com/share/68a5aee8-28c8-800b-9395-e06e36b2c74b
+
+# Explanation Text:
+
+# 1. The coordinate plane
+# In turtle (and in general math graphics):
+#   - The center (0,0) is the origin.
+#   - The x-axis goes left (negative) and right (positive).
+#   - The y-axis goes down (negative) and up (positive).
+# We want the turtle to move in a circle around the origin at some distance orbit_radius.
+
+# 2. The unit circle (radius = 1)
+# In trigonometry, the unit circle is a circle centered at (0,0) with radius 1.
+# For any angle θ (measured from the positive x-axis):
+#   - cos(θ) gives the x-coordinate on that circle.
+#   - sin(θ) gives the y-coordinate on that circle.
+
+# So:
+#   - At θ = 0° → (cos 0, sin 0) = (1, 0) → point on the right.
+#   - At θ = 90° → (cos 90, sin 90) = (0, 1) → point on the top.
+#   - At θ = 180° → (cos 180, sin 180) = (-1, 0) → left side.
+#   - At θ = 270° → (cos 270, sin 270) = (0, -1) → bottom.
+
+# This is how you can walk around a circle just by changing θ.
+
+# 3. Scaling to any radius
+# The unit circle only has radius = 1, but we want a bigger circle (orbit_radius).
+# So we scale up the coordinates:
+#       x = r * cos(θ),     y = r * sin(θ)
+
+# That makes the circle radius r instead of 1.
+
+# Example with r = 200:
+#   - At θ = 0° → (200, 0)
+#   - At θ = 90° → (0, 200)
+#   - At θ = 180° → (-200, 0)
+#   - At θ = 270° → (0, -200)
+
+# Now you’ve got a circle of radius 200 centered at (0,0).
+
+# 4. Why math.radians(angle)?
+# In Python’s math module:
+# cos() and sin() expect the angle in radians, not degrees.
+# 1 radian ≈ 57.3°, and 2π radians = 360°.
+# So if you want to work in degrees (like we usually do with turtle), you must convert:
+
+math.radians(angle)   # converts degrees → radians
+
+# Example:
+# math.cos(math.radians(90)) = 0
+# math.sin(math.radians(90)) = 1
+
+# Exactly what we expect.
+
+# 5. Putting it all together
+
+# This line:
+x = orbit_radius * math.cos(math.radians(angle))
+y = orbit_radius * math.sin(math.radians(angle))
+
+# means:
+# 1. Start with an angle in degrees (like 0°, 10°, 20°…).
+# 2. Convert to radians for math functions.
+# 3. Compute the (x, y) coordinates on a circle of radius orbit_radius.
+
+# Then tim.goto(x, y) moves the turtle to that position, making it orbit smoothly around the center.
+
+# 💡 Visualization: Imagine a stick of length orbit_radius attached at the center.
+# You spin it around by changing the angle. The tip of the stick traces a perfect circle,
+# and cos/sin give you the tip’s x and y at every angle.
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Extract colors from an image with colorgram (my code)
 
@@ -3970,15 +4074,116 @@ def proccess_workbook(filename):
 proccess_workbook(input())
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Jupyter Notbook code (using pandas to read and display the content of a csv file)
+#Jupyter Notebook code (using pandas to read and display the content of a csv file)
 
 import pandas as pd
-df = pd.read_csv("vgsales.csv") # df means data frame
-df                              # typing this will inspect (View) the sheet
-df.shape                        # will return the number of rows and columns (2D Array)
-df.describe()                   # retuns basic information about each column (statistics)
-df.values                       # will show the 2D array
+df = pd.read_csv("vgsales.csv")                             # df means data frame, read_csv() is a pandas built-in function
+df_xlsx = pd.read_excel("vgsales.xlsx")                     # read_excel() is a pandas built-in function
+df_txt = pd.read_csv('pokemon_data.txt', delimiter = '\t')  # this will read a tab separated text file and display it like a table, '\t' represents the tab key, delimiter can work for any other character separating the columns
+df                                                          # typing this will inspect (View) the sheet
+df.shape                                                    # returns the number of rows and columns (2D Array)
+df.describe()                                               # returns basic information about each column (statistics), (count, mean, std, min, 25%, 50%, 75%, max) whatever any of those mean ¯\_(ツ)_/¯
+df.values                                                   # shows the 2D array
+df.head(2)                                                  # shows the first number of rows (2) of the file
+df.tail(2)                                                  # shows the last number of rows (2) of the file
 
+df.columns                                                  # prints the headers of the table
+df['column name'][0:5]                                      # prints all the data in that column, can also specify the index range, for one worded columns, you can get away with ex. df.name
+df[['Name', 'Type 1', 'HP']]                                # prints multiple columns in any order
+df.iloc[1]                                                  # prints a specific row iloc stands for integer location, a function in the data frame
+df.iloc[1:4]                                                # multiple rows also works
+df.iloc[3][1]                                               # to get a specific value by [row][column] coordinates, this method is deprecated apparently
+df.iloc[3,1]                                                # same as line above (new way of getting a specific value by coordinates)
+
+
+for index, row in df.iterrows():                            # iterate through each row, (it sucks bcause it has to use print which ruins the format + it prints values of each row at a new line, iterrows() returns data as: (index, Series), series is a full column
+    print(index, row)
+
+for index, row in df.iterrows():                            # iterate through each row in Name Column, listing them one by one, seems very useful
+    print(index, row['Name'])
+
+
+df.loc[df['Type 1'] == "Fire"]                                  # Searches for specific values (in this case, it finds all rows that contain 'Fire' in 'Type 1' column)
+df.loc[(df['Type 1'] == "Grass") & (df['Type 2'] == 'Poison')]  # Searches for multiple values, separated by () can use & for AND, | for OR
+df = df.reset_index()                                           # filtered data keep the old index so you need to reset the index on the dataframe (old index will be added as a column)
+df = df.reset_index(drop=True)                                  # will remove the old index column from the table
+df.reset_index(drop=True, inplace=True)                     # this will update the dataframe without setting it to a new variable/dataframe
+
+
+df.sort_values('Name', ascending = False)                   # Sorts the values alphabetically, Descending
+df.sort_values(['Type 1', 'HP'], ascending = [1, 0])        # Sorts multiple columns, can also specify ascending/descending values for each in order with this [1, 0] where 1 is ascending for 'Type 1', and 0 is descending for 'HP'
+
+
+
+df['Total'] = df['HP'] + df['Attack'] + df['Defence'] + df['Sp. Atk'] + df['Sp. Def'] + df['Speed']                 # adding a new  column to the dataframe called 'Total'
+
+df = df.drop(columns=['Total'])                                                                                     # Dropping the column 'Total' from the dataframe
+
+df['Total'] = df.iloc[:, 4:10].sum(axis=1)                                                                          # another way to add columns, [:, 4:10] the first : means all rows, second : means from column 4 to 10, sum(axis=1) adding values horizontally (values in 1 row), if axis=0 it would add vertically (values in different rows)
+
+df = df[['Total', 'HP', 'Defense']]                                                                                 # show only these columns and in this order
+
+# rearrange the total column and put it in the middle
+cols = list(df.columns)                                                                                             # puts all column names in a list
+df = df[cols[0:4] + [cols[-1]] + cols[4:12]]                                                                        # combine the columns you like in the orders you prefer, the middle one has [] brackets around it to convert it to a list because a single item will count as string/integer
+
+df.to_csv('modified.csv')                                                                                           # saves the data frame to a csv file
+df.to_csv('modified.csv', index = False)                                                                            # index = False removes the first index column from the file
+df.to_excel('modified.xlsx', index = False)                                                                         # saves the data frame to an Excel file
+df.to_csv('modified.txt', index = False, sep = '\t')                                                                # saves the data frame to a tab separated file, sep means separater, '\t' means tab
+
+df.loc[df['Name'].str.contains('Mega')]                                                                             # looks for a text 'Mega' inside the 'Name' column entries
+df.loc[~df['Name'].str.contains('Mega')]                                                                            # looks for a text 'Mega' inside the 'Name' column entries and NOT include it in the result
+
+# Contains() also works with regex
+# Examples With Regex
+#--------------------------------------------------------------------------
+
+import re
+
+df.loc[df['Type 1'].str.contains('Fire|Grass', regex=True)]                                                         # 'Fire|Grass' means fire or grass
+df.loc[df['Type 1'].str.contains('fire|grass', flags = re.I, regex=True)]                                           # flags = re.I means ignore case sensitivity
+
+
+df.loc[df['Name'].str.contains('^pi[a z]*', flags = re.I, regex=True)]                                              # 'pi[a z]*' means look for anything that starts ^ with pi then 0 to infinite number of the letters a to z
+df.loc[df['Name'].str.contains('pi[a z]*', flags = re.I, regex=True)]                                               # not having the ^ will search for all occurrences of pi
+
+#--------------------------------------------------------------------------
+
+df.loc[df['Type 1'] == 'Fire', 'Type 1'] = 'Flamer'                                                                 # replacing the word Fire to Flamer in all the data frame in  'Type 1' Column, .loc[] is label-based indexing, which allows you to, 1. Select rows based on a condition, 2. Select specific columns to work with. syntax: df.loc[df['Column_Name_where_data_exists'] == 'Old_Cell_Value', 'Column_where_the_data_will_be_changed'] = 'New_cell_value'
+
+df.loc[df['Type 1'] == 'Fire', 'Legendary'] = True                                                                  # another example but making the changes on a different column 'Legendary', this makes all Fire Types Legendary
+
+df.loc[df['Total'] > 500, ['Generation', 'Legendary']] = 'Test Value'                                               # Modifying multiple columns based on a condition to equal one value
+
+df.loc[df['Total'] > 500, ['Generation', 'Legendary']] = ['Test 1', 'Test 2']                                       # Modifying multiple columns with corresponding multiple values each
+
+
+# Groupby() method
+
+df.groupby(['Type 1']).mean(numeric_only = True).sort_values('Defense', ascending=False)                            # this is grouping all the data and finding the average (mean) of all it's numercal values, and sorting by defense descending
+df.groupby(['Type 1']).sum(numeric_only=True)                                                                       # Summing values
+df.groupby(['Type 1']).count()                                                                                      # counting entries
+
+df['count'] = 1
+df.groupby(['Type 1']).count()['count']                                                                             # cleaner way to count by making a count column that equals 1 on each row and counting that
+
+df.groupby(['Type 1', 'Type 2']).count()['count']                                                                   # grouping by multiple parameters, example, Type 1 of Bug, two have Type 2 of Electric, etc
+
+pd.read_csv('modified.csv', chunksize=5)                                                                            # read large dataframes in chunks
+
+# chunks presentation
+for df in pd.read_csv('modified.csv', chunksize=5):
+                     print("CHUNK DF\n")
+                     print(df)
+
+
+# example of chunks
+
+new_df = pd.DataFrame(columns=df.columns)                                                                           # this code will read the big file by chunks, group the chunks by counting type 1, then concatenating the the chunk with the new dataframe, basically extract information from main df and store only the data you need in the new df
+for df in pd.read_csv('modified.csv', chunksize=5):
+     results = df.groupby('Type 1').count()
+     new_df = pd.concat([new_df, results])
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Machine Learning Project (on Jupyter)

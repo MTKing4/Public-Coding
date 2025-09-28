@@ -1,0 +1,159 @@
+/* Import a modern, clean font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    /* Define color variables for easy theme changes */
+    --navy-blue: #1A2E40;
+    --yellow: #FFD700;
+    --white: #FFFFFF;
+    --light-gray: #F0F2F5;
+    --dark-gray: #333333;
+}
+
+body {
+    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--light-gray); /* Light gray background */
+    /* If you want a custom background image, uncomment and adjust: */
+    background-image: url('images/modern-background.jpg');
+    background-size: cover;
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed;
+    color: var(--dark-gray);
+    text-shadow: none; /* Remove retro text shadow */
+}
+
+.game-container {
+    background-color: var(--white); /* White background for the actual game content */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Modern, soft shadow */
+    text-align: center;
+
+    /* Monitor look styling */
+    position: relative;
+    width: 650px; /* Adjust monitor size */
+    height: 500px; /* Adjust monitor size */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow: hidden; /* Hide any content that overflows monitor edges */
+
+    /* Modern monitor bezel effect using borders and gradients */
+    border: 15px solid var(--navy-blue); /* Outer bezel */
+    border-radius: 20px;
+    background: linear-gradient(to bottom right, #e0e0e0, #f8f8f8); /* Subtle screen gradient */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Optional: If you want a more distinct modern bezel, you can layer a pseudo-element.
+   For simplicity, we're mostly doing it with borders on .game-container */
+/* If you have a modern monitor-frame.png with transparent screen, you can re-enable and adjust this: */
+
+/* .game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('images/modern-monitor-frame.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 20px;
+} */
+
+
+h1 {
+    color: var(--navy-blue); /* Navy blue for heading */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: 700; /* Bold */
+    text-shadow: none; /* Remove retro glow */
+}
+
+#status {
+    font-size: 1.3em;
+    margin-bottom: 25px;
+    font-weight: 400; /* Normal weight */
+    color: var(--navy-blue); /* Navy blue */
+    text-shadow: none;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 90px); /* Slightly larger cells */
+    grid-template-rows: repeat(3, 90px);
+    gap: 8px; /* Slightly larger gap */
+    width: 285px; /* (3 * 90px) + (2 * 8px) */
+    height: 285px;
+    margin: 0 auto 70px;
+    background-color: var(--white); /* White game board background */
+    border: 2px solid var(--navy-blue); /* Navy blue border for the board */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Subtle shadow for the board */
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    background-color: var(--white); /* White cell background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em; /* No text, but good fallback */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+    border: 1px solid var(--light-gray); /* Very light gray border for cells */
+    border-radius: 4px;
+}
+
+.cell img {
+    max-width: 75%; /* Make images fit within the cell */
+    max-height: 75%;
+    object-fit: contain;
+    filter: none; /* Remove retro glow filter */
+    transform: scale(0.9); /* Slightly smaller initially */
+    transition: transform 0.2s ease-out;
+}
+
+.cell:hover {
+    background-color: var(--light-gray); /* Light gray hover effect */
+    transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+.cell:hover img {
+    transform: scale(1); /* Image grows on hover */
+}
+
+
+#restartButton {
+    background-color: var(--yellow); /* Yellow button */
+    color: var(--navy-blue); /* Navy blue text */
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Yellow glow for button */
+    position: absolute;
+    top: 425px;
+}
+
+#restartButton:hover {
+    background-color: #e0bb00; /* Slightly darker yellow on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
+}
