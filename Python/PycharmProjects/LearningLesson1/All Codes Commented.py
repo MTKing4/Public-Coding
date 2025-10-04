@@ -3830,6 +3830,353 @@ class Food(Turtle):
         random_y = random.randint(-280, 280)
         self.goto(random_x, random_y)
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Pong Game (my code)
+# OOP, Inheritence, lambda
+# Ball Speeding
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+import time
+from turtle import Screen, Turtle
+
+from ball import Ball
+from scoreboard import Scoreboard
+from paddle import Paddle
+
+
+
+screen = Screen()
+screen.setup(1200, 800)
+screen.bgcolor('black')
+screen.tracer(0)
+
+paddle1 = Paddle()
+paddle1.paddle_creation(580, 0)
+
+paddle2 = Paddle()
+paddle2.paddle_creation(-590, 0)
+
+
+keys = {"Up": False, "Down": False, "w": False, "s": False}         #keys are being used as toggles, they will be changed to True when the key is pressed, and False when not pressed
+
+def key_press(key):
+    keys[key] = True                                                # this is setting the key "up" for example to True, allowing the movement to happen when the value is Evaluated to be True in the main loop
+
+
+def key_release(key):
+    keys[key] = False                                               # this is setting the key "up" for example to False, stopping the movement to happen when the value is Evaluated to be False in the main loop
+
+
+screen.listen()
+
+screen.onkeypress(lambda: key_press("Up"), "Up")                # lambda in Python creates a tiny unnamed function on the fly. It lets you pass arguments into functions for event handlers, without calling them immediately.
+screen.onkeyrelease(lambda: key_release("Up"), "Up")            # what lambda is doing here is basically: “When the Up key is pressed, run this little function that calls key_press("Up").” Python doesn’t execute it right away — it just saves that tiny function to be triggered later.
+
+screen.onkeypress(lambda: key_press("Down"), "Down")            # without lambda for example: ```screen.onkeypress(key_press("Up"), "Up")``` this calls the function immediately when Python reads the line, instead of waiting for the key press. That’s not what we want.
+screen.onkeyrelease(lambda: key_release("Down"), "Down")
+
+screen.onkeypress(lambda: key_press("w"), "w")
+screen.onkeyrelease(lambda: key_release("w"), "w")
+
+screen.onkeypress(lambda: key_press("s"), "s")
+screen.onkeyrelease(lambda: key_release("s"), "s")
+
+scoreboard = Scoreboard()
+ball = Ball()
+
+line = Turtle()
+line.color("white")
+line.speed(0)
+line.penup()
+line.hideturtle()
+line.goto(0, 400)
+line.setheading(-90)
+for _ in range(40):
+    line.pendown()
+    line.forward(10)
+    line.penup()
+    line.forward(10)
+
+game_on = True
+while game_on:
+    screen.update()
+    time.sleep(0.02)
+    ball.move()
+
+    if ball.ycor() > 380 or ball.ycor() < -380:
+        ball.bounce_y()
+
+    if ball.xcor() > 550 and ball.distance(paddle1.paddles[0]) < 100:
+        ball.bounce_x()
+
+    if ball.xcor() < -550 and ball.distance(paddle2.paddles[0]) < 100:
+        ball.bounce_x()
+
+    if ball.xcor() > 600:
+        ball.goto(0,0)
+        ball.reset_ball()
+        scoreboard.left_point()
+
+    if ball.xcor() < -600:
+        ball.goto(0,0)
+        ball.reset_ball()
+        scoreboard.right_point()
+
+    if keys["Up"]:                              # here when the key is evaluated to be True, "after it was changed by the key_press function" it will trigger the movement", and once it gets False "after it was changed by the key_release function" it will stop the movement.
+        paddle1.up()
+    if keys["Down"]:
+        paddle1.down()
+
+    if keys["w"]:
+        paddle2.up()
+    if keys["s"]:
+        paddle2.down()
+
+screen.exitonclick()
+
+#------------------------------------------File: paddle.py--------------------------------------------------------------
+
+from turtle import Turtle
+import turtle
+
+
+
+class Paddle():
+    def __init__(self):
+        self.paddles = []
+        ...
+
+
+    def paddle_creation(self, x_loc, y_loc):
+        paddle = Turtle(shape="square")
+        paddle.color("white")
+        paddle.penup()
+        paddle.shapesize(2,8)
+        paddle.setheading(90)
+        paddle.speed(0)
+        paddle.goto(x_loc, y_loc)
+        self.paddles.append(paddle)
+
+
+    def up(self):
+        self.paddles[0].setheading(90)
+        self.paddles[0].forward(20)
+
+    def down(self):
+        self.paddles[0].setheading(-90)
+        self.paddles[0].forward(20)
+
+
+#------------------------------------------File: ball.py----------------------------------------------------------------
+
+from turtle import Turtle
+
+class Ball(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.pendown()
+        self.shape("circle")
+        self.goto(0,0)
+        self.color("white")
+        self.shapesize(2)
+        self.penup()
+        self.x_move = 10
+        self.y_move = 10
+
+
+    def move(self):
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce_x(self):
+        self.x_move *= -1
+        self.x_move *= 1.1
+        self.y_move *= 1.1
+
+    def bounce_y(self):
+        self.y_move *= -1
+
+    def reset_ball(self):
+        self.bounce_x()
+        self.x_move = 10
+        self.y_move = 10
+
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
+from turtle import Turtle
+
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.goto(0, 350)
+        self.score_left = 0
+        self.score_right = 0
+
+
+    def update_score(self):
+        self.clear()
+        self.write(f"{self.score_left}        {self.score_right}", align="center", font=("Courier", 36, "normal"))
+
+
+    def left_point(self):
+        self.score_left += 1
+        self.update_score()
+
+
+    def right_point(self):
+        self.score_right += 1
+        self.update_score()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Pong Game (her Code)
+# Took ball speeding idea from her (but mine is better)
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+from turtle import Screen, Turtle
+from paddle import Paddle
+from ball import Ball
+from scoreboard import Scoreboard
+import time
+
+screen = Screen()
+screen.bgcolor("black")
+screen.setup(width=800, height=600)
+screen.title("Pong")
+screen.tracer(0)
+
+r_paddle = Paddle((350, 0))
+l_paddle = Paddle((-350, 0))
+ball = Ball()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(r_paddle.go_up, "Up")
+screen.onkey(r_paddle.go_down, "Down")
+screen.onkey(l_paddle.go_up, "w")
+screen.onkey(l_paddle.go_down, "s")
+
+game_is_on = True
+while game_is_on:
+    time.sleep(ball.move_speed)
+    screen.update()
+    ball.move()
+
+    #Detect collision with wall
+    if ball.ycor() > 280 or ball.ycor() < -280:
+        ball.bounce_y()
+
+    #Detect collision with paddle
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
+        ball.bounce_x()
+
+    #Detect R paddle misses
+    if ball.xcor() > 380:
+        ball.reset_position()
+        scoreboard.l_point()
+
+    #Detect L paddle misses:
+    if ball.xcor() < -380:
+        ball.reset_position()
+        scoreboard.r_point()
+
+screen.exitonclick()
+
+#------------------------------------------File: paddle.py--------------------------------------------------------------
+
+from turtle import Turtle
+
+
+class Paddle(Turtle):
+
+    def __init__(self, position):
+        super().__init__()
+        self.shape("square")
+        self.color("white")
+        self.shapesize(stretch_wid=5, stretch_len=1)
+        self.penup()
+        self.goto(position)
+
+    def go_up(self):
+        new_y = self.ycor() + 20
+        self.goto(self.xcor(), new_y)
+
+    def go_down(self):
+        new_y = self.ycor() - 20
+        self.goto(self.xcor(), new_y)
+
+
+#------------------------------------------File: ball.py----------------------------------------------------------------
+
+from turtle import Turtle
+
+
+class Ball(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.shape("circle")
+        self.penup()
+        self.x_move = 3
+        self.y_move = 3
+        self.move_speed = 0.1
+
+    def move(self):
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
+        self.goto(new_x, new_y)
+
+    def bounce_y(self):
+        self.y_move *= -1
+
+    def bounce_x(self):
+        self.x_move *= -1
+        self.move_speed *= 0.9
+
+    def reset_position(self):
+        self.goto(0, 0)
+        self.move_speed = 0.1
+        self.bounce_x()
+
+
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
+from turtle import Turtle
+
+
+class Scoreboard(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.color("white")
+        self.penup()
+        self.hideturtle()
+        self.l_score = 0
+        self.r_score = 0
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.goto(-100, 200)
+        self.write(self.l_score, align="center", font=("Courier", 80, "normal"))
+        self.goto(100, 200)
+        self.write(self.r_score, align="center", font=("Courier", 80, "normal"))
+
+    def l_point(self):
+        self.l_score += 1
+        self.update_scoreboard()
+
+    def r_point(self):
+        self.r_score += 1
+        self.update_scoreboard()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Modules
