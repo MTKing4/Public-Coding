@@ -4595,6 +4595,149 @@ print(dice1.roll()) #calling the method
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#Opening, Reading and Writing into Files
+
+file = open("my_file.txt")              # opening the file takes some resources from pc, should be closed when done
+contents = file.read()                  # filename.read() returns the contents of the file
+print(contents)
+file.close()                            # closing the file to clear up some resources
+
+
+# another way of opening the file (this one does not need a close() statement
+with open("my_file.txt") as file:
+    contents = file.read()
+    print(contents)
+
+
+with open("my_file.txt", mode="a") as file:             # default open mode is ready only: mode="r", and mode="w" means open file in write mode (will replace everything), to add to file without replace use mode="a" which stands for append
+    file.write("\nNew text.")
+
+
+with open("new_file.txt", mode="w") as file: # if new_file.txt doesn't exist, it will create that file for you, only works with write mode "w"
+    file.write("\nNew text.")
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Snake game with a highscore feature (based on her version)
+
+#------------------------------------------File: snake.py---------------------------------------------------------------
+
+# Unchanged
+
+#------------------------------------------File: food.py----------------------------------------------------------------
+
+# Unchanged
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+from turtle import Screen
+from snake import Snake
+from food import Food
+from scoreboard import Scoreboard
+import time
+
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("My Snake Game")
+screen.tracer(0)
+
+snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
+
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
+
+    #Detect collision with food.
+    if snake.head.distance(food) < 15:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
+
+    #Detect collision with wall.
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        scoreboard.reset()
+        snake.reset()
+
+    #Detect collision with tail.
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+                scoreboard.reset()
+                snake.reset()
+
+
+screen.exitonclick()
+
+
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
+from turtle import Turtle
+ALIGNMENT = "center"
+FONT = ("Courier", 24, "normal")
+
+
+
+class Scoreboard(Turtle):
+
+    def __init__(self):
+        super().__init__()
+        self.score = 0
+        with open("data.txt") as score_file:                    # reading the data.txt file to access previous highscore from the file
+            self.highscore = int(score_file.read())
+        self.color("white")
+        self.penup()
+        self.goto(0, 270)
+        self.hideturtle()
+        self.update_scoreboard()
+
+    def update_scoreboard(self):
+        self.clear()
+        self.write(f"Score: {self.score} High Score: {self.highscore}", align=ALIGNMENT, font=FONT)
+
+
+    def reset(self):
+        if  self.score > self.highscore:
+            self.highscore = self.score
+            with open("data.txt", mode="w") as new_score_file:              # writing the newest highscore to the data.txt file
+                new_score_file.write(str(self.highscore))
+        self.score = 0
+        self.update_scoreboard()
+
+    # def game_over(self):
+    #     self.goto(0, 0)
+    #     self.write("GAME OVER", align=ALIGNMENT, font=FONT)
+
+    def increase_score(self):
+        self.score += 1
+        self.update_scoreboard()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Absolute and Relative Paths
+
+with open("C:/Users/ACER/Desktop/new_file.txt") as file:            #Absolute Path
+    contents = file.read()
+    print(contents)
+
+
+with open("../../../../../../Art/new_file.txt") as file:            #Relative Path (../ means going backwards once, then going forwards to Art in this example
+    contents = file.read()
+    print(contents)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #Files and Directories
 from pathlib import Path
 import os # this library is imported to use os.getcwd() to check current working directory
@@ -4604,14 +4747,49 @@ import os # this library is imported to use os.getcwd() to check current working
 #/usr/local/bin #Linux Path
 
 #Relative Path:
-path = Path("emails") #not typing an argument between the paranthesis it will reference the current directory
+path = Path("emails") # not typing an argument between the paranthesis it will reference the current directory
 print(path.exists())
-print(os.getcwd()) #this is used to check the current working directory
+print(os.getcwd()) # this is used to check the current working directory
 print(path.mkdir()) # to create a new directory
 print(path.rmdir()) # to remove the directory
 path1 = Path()
 for file in path1.glob('*.py'): # this method returns a generator object, with it you can search for the files and directories in the current path, '*' Means everything, '*.*' will get all the files without the directories, '*.py' search all the files with the .py extionsion
     print(file) #this loop will return all .py files
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Mail Merge Challenge (check project to work) (my code)
+# it reads names from a file, strips extra whitespaces, replaces the placeholder [name], then writes letter.txt files each by their own names
+
+with open("Input/Names/invited_names.txt") as invited_names:
+    names_list = invited_names.readlines()                                      #reads the lines and puts each line as an item in a list
+    for name in names_list:
+        new_name = name.strip()                                                 #rremoves any leading, and trailing whitespaces, including end lines.
+
+        with open("Input/Letters/starting_letter.txt") as starting_letter:
+            letter = starting_letter.read()
+            replaced_letter = letter.replace("[name]", new_name)
+
+        with open(f"Output/ReadyToSend/{new_name}.txt", mode="w") as mail_merged:
+            mail_merged.write(replaced_letter)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Mail Merge Challenge (check project to work) (her code) (./ for pathing didn't not work for me for some reason but here it does)
+
+PLACEHOLDER = "[name]"
+
+
+with open("./Input/Names/invited_names.txt") as names_file:
+    names = names_file.readlines()
+
+with open("./Input/Letters/starting_letter.txt") as letter_file:
+    letter_contents = letter_file.read()
+    for name in names:
+        stripped_name = name.strip()
+        new_letter = letter_contents.replace(PLACEHOLDER, stripped_name)
+        with open(f"./Output/ReadyToSend/letter_for_{stripped_name}.txt", mode="w") as completed_letter:
+            completed_letter.write(new_letter)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
