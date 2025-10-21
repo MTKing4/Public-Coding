@@ -75,13 +75,12 @@ while game_on:
         ball.bounce_x()
 
     if ball.xcor() > 600:
-        ball.goto(0,0)
         ball.reset_ball()
         scoreboard.left_point()
 
     if ball.xcor() < -600:
-        ball.goto(0,0)
         ball.reset_ball()
+        ball.goto(0,0)
         scoreboard.right_point()
 
     if keys["Up"]:                              # here when the key is evaluated to be True, "after it was changed by the key_press function" it will trigger the movement", and once it gets False "after it was changed by the key_release function" it will stop the movement.

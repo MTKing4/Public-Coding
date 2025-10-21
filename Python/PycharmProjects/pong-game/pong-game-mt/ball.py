@@ -20,13 +20,19 @@ class Ball(Turtle):
 
     def bounce_x(self):
         self.x_move *= -1
-        self.x_move *= 1.1
-        self.y_move *= 1.1
+        if abs(self.x_move) <= abs(25.937424601) and abs(self.y_move) <= abs(25.937424601):
+            self.x_move *= 1.1
+            self.y_move *= 1.1
+            print(self.x_move, self.y_move)
 
     def bounce_y(self):
         self.y_move *= -1
 
     def reset_ball(self):
         self.bounce_x()
-        self.x_move = 10
+        if self.xcor() < 0:
+            self.x_move = 10
+        elif self.xcor() > 0:
+            self.x_move = -10
         self.y_move = 10
+        self.goto(0, 0)
