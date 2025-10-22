@@ -5849,3 +5849,954 @@ def botato(hamodi):
 
 # 2.
 # TODO you can make Todo notes like so, putting them all over the code and a access them from the bottom left button called TODO (three dots and lines)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# list Comprehension
+
+# useful to create lists from sequences, sequences are: (lists, ranges, tuples, strings) with one line
+# superior to making an emtpy list and a for loop with its operation that takes 4 lines
+
+# syntax: new_list = [new_item for item in list]
+
+# Example 1 (without list Comprehension)
+
+numbers = [1, 2, 3]
+new_list = []
+for n in numbers:
+    add_1 = n + 1
+    new_list.append(add_1)          #it took 4 Lines to create the new list
+
+# Example 1 (with list Comprehension)
+
+numbers = [1, 2, 3]
+new_list = [n + 1 for n in numbers]
+
+# Example 2 (with list Comprehension)
+
+name = "angela"
+letters = [letter for letter in name]
+
+# Example 3 (with list Comprehension)
+
+range_sequence = range(1, 5)
+new_r = [number * 2 for number in range_sequence]
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Conditional list Comprehension
+
+# syntax: new_list = [new_item for item in list if test]
+
+# Example
+
+names = ["Alex", "beth", "Caroline", "Dave", "Eleanor", "Freddie"]
+
+new_names = [name for name in names if len(name) < 5]               # prints only names shorter than 5 letters
+
+upper_long = [name.upper() for name in names if len(name) > 5]      # prints only names longer than 5 letters and makes them all uppercase
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Exercise 1 - Square Numbers
+
+numbers = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+
+squared_numbers = [number ** 2 for number in numbers]
+
+print(squared_numbers)
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Exercise 2 - Filter Even Numbers
+
+numbers = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+
+even_numbers = [number for number in numbers if number % 2 == 0]
+
+print(even_numbers)
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Exercise 3 - find the common numbers between two files and convert them to integers
+# (my code, Superior) (her solution is not only retarded but it's also wrong, I'm not even going to include it.)
+
+with open("file1.txt") as file_1, open("file2.txt") as file_2:                      # can access multiple files using one with open()
+    numbers_1 = [int(num.strip()) for num in file_1.readlines()]                    # file_1.readlines() is a list so we can use it in a list comprehension directly to to strip endlines and convert to ineger for a cleaner search for commons in the results list
+    numbers_2 = [int(num.strip()) for num in file_2.readlines()]
+    result = [number_1 for number_1 in numbers_1 if number_1 in numbers_2]
+    print(result)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# US States Game line Improvement with list comprehension (based on her code)
+
+# Old lines
+
+        missing_states = []
+        for state in all_states:
+            if state not in guessed_states:
+                missing_states.append(state)
+
+# New line
+
+        missing_states = [state for state in all_states if state not in guessed_states]
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Dictionary Comprehensions
+# Syntax: new_dict = { new_key : new_value for item in list}                             # to create a dictionary from a list
+# Syntax: new_dict = { new_key : new_value for (key, Value) dict.items()}                # to create a dictionary from a dictionary, The dict.items() method in Python returns a view object that displays a LIST of a dictionary's key-value TUPLE pairs.
+# Syntax: new_dict = { new_key : new_value for (key, Value) dict.items() if test}
+
+# Example 1
+
+names = ["Alex", "beth", "Caroline", "Dave", "Eleanor", "Freddie"]
+
+from random import randint
+
+students_scores = {student : randint(0, 100) for student in names}
+
+print(students_scores)
+
+# Example 2 - taking the previous dictionary and create a new one with a condition
+
+passed_students = {student:marks for (student, marks) in students_scores.items() if marks > 60 }
+
+# Exercise - 1
+# convert a string to a list delimited by space and create a dictionary where the value is the number of letters in the key
+
+sentence = "What is the Airspeed Velocity of an Unladen Swallow"
+list_str = sentence.split(" ")
+new_dict = {item:len(item) for item in list_str}
+print(new_dict)
+
+
+# Exercise - 2
+# change the key of a dictionary temperature from c to f and store it in a new f dictionary
+
+weather_c = {
+    "Monday": 12,
+    "Tuesday": 14,
+    "Wednesday": 15,
+    "Thursday": 14,
+    "Friday": 21,
+    "Saturday": 22,
+    "Sunday": 24
+}
+
+weather_f = {day:(temp * 9/5) + 32 for (day, temp) in weather_c.items()}
+
+print(weather_f)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# iterating through a dataframe with iterrows()
+
+student_dict = {
+    "student": ["Angela", "James", "Lily"],
+    "score": [56, 76, 98]
+}
+
+
+import pandas
+
+student_data_frame = pandas.DataFrame(student_dict)
+# print(student_data_frame)
+
+for (index, row) in student_data_frame.iterrows():                    # iterrows() iterates through rows in pandas
+    if row.student == "Angela":                                       # row.student can also be typed row["student"]
+        print(row.score)                                              # the row here is a pandas series
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Nato Alphabet (my code)
+
+import pandas
+
+nato_alpha = pandas.read_csv("nato_phonetic_alphabet.csv")
+
+phonetic_alphabet_dict =  {row.letter:row.code for (index, row) in  nato_alpha.iterrows()}              # converts data frame to a dictionary where letter column is the key and code is the value
+print(phonetic_alphabet_dict)
+
+
+word = input("word: ").upper()
+nato_translation = [phonetic_alphabet_dict[letter] for letter in word]                      # translates your text to the nato alphabet in a list
+
+print(nato_translation)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# list() functions
+
+
+# list()
+# list() refers to the built-in constructor used to create a new list object. It can be used in a few ways:
+
+# 1. Creating an empty list.
+
+my_list = list()
+print(my_list)
+
+# 2. Converting an iterable to a list: When an iterable (like a string, tuple, or another list) is passed as an argument to list(), it creates a new list containing the elements of that iterable.
+
+# Example 1:
+
+my_string = "hello"
+list_from_string = list(my_string)
+print(list_from_string)
+
+# Example 2:
+
+my_tuple = (1, 2, 3)
+list_from_tuple = list(my_tuple)
+print(list_from_tuple)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# set()
+#The set() function in Python is a built-in function used to create a set object. A set is an unordered collection of unique and immutable elements
+
+# Key Characteristics of Sets:
+# 1. Unordered: Elements in a set do not have a defined order, and you cannot access them by index.
+# 2. Unique Elements: Sets automatically remove duplicate elements. If you add multiple instances of the same value, only one will be stored.
+# 3. Mutable (the set itself): You can add or remove elements from a set after it's created using methods like add(), remove(), or discard().
+# 3. Immutable Elements (contents): The elements within a set must be immutable data types (e.g., numbers, strings, tuples). You cannot store mutable objects like lists or other sets directly as elements of a set, as they are not "hashable." check "Mutability Immutability, Hashability" section below for more details, line: 6217
+
+# Common Uses:
+# Removing Duplicates: Efficiently remove duplicate values from a list or other iterable.
+# Membership Testing: Check if an element is present in a collection using the in operator, which is highly optimized for sets.
+# Mathematical Set Operations: Perform operations like union (union() or |), intersection (intersection() or &), difference (difference() or -), and symmetric difference (symmetric_difference() or ^).
+
+# Example 1
+
+my_empty_set = set()
+print(my_empty_set)
+
+# Example 2
+
+my_list = [1, 2, 2, 3, 4, 4, 5]
+my_set = set(my_list)  # my_set will be {1, 2, 3, 4, 5}
+print(my_set)
+
+# Example 3
+
+my_string = "hello"
+char_set = set(my_string)  # char_set will be {'h', 'e', 'l', 'o'} (order may vary)
+
+
+# Why create an empty set() ?
+
+# 1. Collect unique items dynamically (Removing duplicates),You start with nothing, then add things as you find them:
+# Example 4
+
+seen_numbers = set()
+
+for n in [1, 2, 2, 3, 1, 4]:
+    seen_numbers.add(n)                 # you can add items to sets with .add
+
+print(seen_numbers)  # {1, 2, 3, 4}
+
+# 2. Fast membership checks, Check if an element is present in a collection using the in operator, which is highly optimized for sets.
+# 3. To avoid duplicates automatically
+
+# Example 5
+
+names = set()
+names.add("Alice")
+names.add("Bob")
+names.add("Alice")  # ignored
+print(names)        # {'Alice', 'Bob'}
+
+
+# Example 6 - using list() with set()
+# Remove duplicates from list Using set() (Does not preserve order):
+
+my_list = [1, 2, 2, 3, 4, 4, 5]
+unique_list = list(set(my_list))            #removed duplicates with set() then converted it back to a list with list()
+print(unique_list)                          # Output: [1, 2, 3, 4, 5] (Order may vary)
+
+
+# Example 7
+# Can also create sets manually like so:
+
+my_set = {1, 2, 3, 3, "apple", "banana"}            #notice that I added a duplicate object, 3, but it gets ignored automatically when the line executes
+print(my_set)
+
+# Example 8
+# You can even see (ignoring of duplicate data) with mixed data types that compare equal:
+
+my_set = {1, True}
+print(my_set)       # {1}
+
+# Example 9
+# Using the set() constructor: This method is used to create an empty set or to convert an iterable (like a list, tuple, or string) into a set.
+
+empty_set = set()
+list_to_set = set([1, 2, 2, 3, 4])          # Duplicates are automatically removed
+string_to_set = set("hello")                # Creates a set of individual characters
+print(list_to_set, string_to_set)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Dictionary fromkeys() Method
+
+# The fromkeys() method returns a dictionary with the specified keys and the specified value. Syntax: dict.fromkeys(keys, value)
+# dict.fromkeys() is a class method in Python that provides a convenient way to create a new dictionary. It takes two arguments:
+# 1. keys (required): An iterable (like a list, tuple, or set) containing the elements that will be used as keys in the new dictionary.
+# 2. value (optional): An initial value to be assigned to all keys in the new dictionary. If this argument is omitted, the default value assigned to each key will be None.
+#How it works:
+# The fromkeys() method iterates through the provided keys iterable and creates a new dictionary where each element from keys becomes a key. All these keys are then assigned the same value (either the one you provided or None by default).
+
+# Example 1
+# Create a dictionary with default None values
+
+my_list = ['a', 'b', 'c']
+my_dict_none = dict.fromkeys(my_list)             # dict.fromkeys() is making each item from the list a key, and assigning None by default as the value to all keys
+print(my_dict_none)
+
+# Example 2
+# Create a dictionary with a specified value
+
+my_list = ['a', 'b', 'c']
+my_dict_value = dict.fromkeys(my_list, 0)     # assigning 0 to all keys
+print(my_dict_value)
+
+# Important Considerations: Mutable Objects as Values: If you use a mutable object (like a list or another dictionary) as the value argument, all keys will point to the same instance of that mutable object. Modifying the object through one key will reflect the change when accessing it through any other key. If you need distinct mutable objects for each key, a dictionary comprehension is generally more appropriate.
+# what this means if the value was a list or dictionary, all keys will be pointing to the same shared list/dictionary because they are mutable, so making a change on one key will be changed across all other keys as well
+
+# Example 3
+# Example with a mutable object (caution advised)
+
+mutable_value = []
+my_list = ['a', 'b', 'c']
+my_dict_mutable = dict.fromkeys(my_list, mutable_value)
+my_dict_mutable['a'].append(1)                              # the list is shared across all keys so changing it here will change it for all keys
+print(my_dict_mutable)
+
+# Example 4
+# Example with an immutable object
+
+mutable_value = 4
+my_list = ['a', 'b', 'c']
+my_dict_mutable = dict.fromkeys(my_list, mutable_value)
+my_dict_mutable['a'] = 2                                    # this changes only 'a' key because it is an immutable value
+print(my_dict_mutable)
+
+# Example 5
+# if you want a distinct list/dictionary for each key:
+# Use a dictionary comprehension for distinct mutable values
+# Note: this does not use the dict.fromkeys() method, we're creating the list manually like so key: []
+
+my_list = ['a', 'b', 'c']
+my_dict_distinct_mutable = {key: [] for key in my_list}     #this is dictionary comprehension; creates the dictionary by making the list items into keys with key : and giving them an empty list value []
+my_dict_distinct_mutable['a'].append(2)
+my_dict_distinct_mutable['c'].append(1)                     # each key now have their own list
+print(my_dict_distinct_mutable)
+
+# Example 2 - list(dict.fromkeys())
+# Remove duplicates from list Using dict.fromkeys() (Preserves order):
+
+my_list = ["a", "b", "a", "c", "c"]
+unique_list = list(dict.fromkeys(my_list))
+print(unique_list)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Dictionary items() Method
+
+# The dict.items() method in Python returns a view object that displays a list of a dictionary's key-value tuple pairs.
+
+# main characteristics:
+
+# 1. Returns a View Object: It does not return a new list of tuples, but rather a dynamic view of the dictionary's items. This means that if the dictionary is modified after items() is called, the view object will reflect those changes.
+# 2. Contains Key-Value Tuples: Each element in the view object is a tuple, where the first element of the tuple is a key from the dictionary and the second element is its corresponding value.
+# 3. No Parameters: The items() method does not take any arguments.
+# 4. Usage: It is commonly used for iterating through a dictionary to access both its keys and values simultaneously.
+
+# Example
+
+my_dict = {
+    'name': 'Alice',
+    'age': 30,
+    'city': 'New York'
+}
+
+print(my_dict.items())                        #output: dict_items([('name', 'Alice'), ('age', 30), ('city', 'New York')])
+
+
+for key, value in my_dict.items():              # iterating through the items like so: key for key and value for value
+    print(f"Key: {key}, Value: {value}")        # output: Key: name, Value: Alice, etc
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# zip()
+
+# it iterates the first with the first, 2nd with 2nd of each list, and omits extra items (when strict=False) if one of the lists contains more items (i.e. different lengths), in the example below, 'd' was omitted because list_1 doesn't have a 4th item
+# syntax zip(*iterables, strict=False)
+# *iterables: One or more iterables (such as lists, tuples, or strings) to be zipped together. This is a required argument.
+# strict: (Optional) A boolean value. If set to True, it raises a ValueError if the iterables (like in the example below) have different lengths. The default value is False.
+
+# Example
+
+list1 =[1, 2, 3]
+list2 =['a', 'b', 'c', 'd']
+result =[(x, y) for x, y in zip(list1, list2)]              # or zip(list1, list2, strict=False)
+print(result)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# id() function
+# The id() function in Python is a built-in function that returns the "identity" of an object. This identity is an integer that is guaranteed to be unique and constant for that object during its lifetime. In CPython, the most common implementation of Python, this identity corresponds to the object's memory address.
+# Key characteristics of id():
+# Unique and Constant: Each object has a unique identity, and this identity remains constant as long as the object exists in memory.
+# Memory Address (CPython): In CPython, the returned integer is essentially the memory address where the object is stored.
+# Object Lifetime: While an object's id is constant during its lifetime, the same id value can be reused by a different object after the original object has been garbage collected.
+# Syntax: The function takes a single argument, which is the object whose identity you want to retrieve: id(object).
+
+# Example:
+
+name = "mohammed"
+print(id(name))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# hash() function
+
+# The built-in hash() function in Python returns an integer hash value for a given object. This hash value serves as a "digital fingerprint" for the object and is primarily used for efficient storage and retrieval in hash-based data structures like dictionaries and sets.
+# Purpose: The primary purpose of hash() is to enable fast lookups in hash tables, which are the underlying implementation of Python dictionaries and sets. When you add an item to a dictionary or set, its hash value is used to determine where to store it, allowing for near-constant time average-case lookup performance.
+# Input: It takes a single argument, object, which must be hashable.
+# Output: It returns an integer representing the hash value of the object.
+# Hashable Objects: Only immutable objects like numbers (integers, floats), strings, and tuples (containing only hashable elements) can be hashed. Mutable objects like lists and dictionaries are not hashable because their content can change, which would lead to inconsistent hash values.
+# Consistency: For a given hashable object, hash() will return the same hash value within a single Python session. However, the exact hash value may differ across different Python sessions due to security considerations (hash randomization).
+# Equality and Hashing: A fundamental principle is that if two objects are equal (i.e., obj1 == obj2 is True), then their hash values must also be equal (i.e., hash(obj1) == hash(obj2) must be True). The reverse is not necessarily true; different objects can, in rare cases, have the same hash value (known as a hash collision).
+# Custom Objects: You can define how custom objects are hashed by implementing the __hash__() method within the class definition. This method should return an integer hash value based on the object's immutable attributes.
+
+# Example
+# Hashing various immutable objects
+
+print(hash(123))
+print(hash("hello"))
+print(hash(3.14))
+print(hash((1, 2, 3)))
+
+# Attempting to hash a mutable object (will raise an error)
+print(hash([1, 2, 3]))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# hashing Integers and Range() hashing and equality
+
+# 1.
+# why is print(hash(123)) is returning the hash as 123 every time?
+
+# it’s completely intentional. Normally, different objects produce different hash values, and hash values are consistent for the lifetime of the program.
+
+# Special case for integers
+# For integers (int type), the hash of an integer is the integer itself.
+
+hash(n) == n
+
+# So:
+
+print(hash(123))      # 123
+print(hash(-5))       # -5
+print(hash(0))        # 0
+
+# This is by design in Python.
+
+# Why?
+# Integers are already perfectly good hash values:
+# - They’re unique (each distinct integer has a unique numeric value)
+# - They’re immutable (can’t change)
+# - They’re already fast to compare and store
+
+# this works for float as well
+
+print(hash(123.0))  # 123
+print(hash(123))    # 123
+
+# 2.
+# Range Equality
+# is range mutable or immutable
+# range objects are immutable.
+# Two range objects are considered equal if they represent the same sequence of numbers — even if they’re different objects.
+
+# Example
+
+range(1, 5) == range(1, 5)   #  True
+range(1, 5) == range(0, 4)   #  False
+
+# And since they’re equal, they have the same hash:
+# hash(range(1, 5)) == hash(range(1, 5))   # True
+
+# that means:
+
+my_set = {range(1, 5), range(1, 5)}
+print(my_set)                           # {range(1, 5)}  ← duplicates removed (same hash & equality)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Mutability Immutability, Hashability
+
+# 1.
+# immutable
+# An immutable data type is something that cannot be changed after it’s created.
+# Once you make it, its contents are fixed forever — any “change” actually creates a new object in memory.
+
+# Mutables: list, dict, set
+# Immutables: tuple, str, int, float, bool, range
+
+
+
+# Example: immutable string
+
+name = "John"
+print(id(name))        # e.g., 140123456
+name += " Doe"         # creates a *new* string
+print(id(name))        # different memory address
+
+#Even though you “changed” the string, Python actually created a new one — the original "John" never changed.
+
+# Example: mutable list
+
+numbers = [1, 2, 3]
+print(id(numbers))
+numbers.append(4)      # modifies in place
+print(id(numbers))     # same memory address
+
+# Lists can be modified in place (by adding, removing, or changing elements). That’s what “mutable” means.
+
+# 2.
+# Why must set elements be immutable?
+# Sets in Python are built on hash tables — a data structure that uses hashing for very fast lookups (in checks, adding, removing).
+# To work correctly, a set needs each element to have a fixed hash value.
+# If an object could change after being added, its hash could change — and the set would lose track of where it’s stored.
+
+
+# 3.
+# What does hashable mean?
+# An object is hashable if it has:
+# - A valid, unchanging __hash__() value
+# - And can be compared to others with __eq__()
+# Basically, being hashable means: “It can serve as a reliable key or element in a set or dictionary.”
+
+hash(42)          # works
+hash("hello")     # works
+hash((1, 2, 3))   # works
+hash([1, 2, 3])   # TypeError: unhashable type: 'list'
+
+# 4.
+# Why lists and sets are not hashable
+# Because they’re mutable — their contents can change and when the content changes, the hash also changes, therefore it's forbidden
+
+# 5.
+# So what can go inside a set?
+# Only immutable, hashable things
+# int, str, tuple, bool, range
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# All Python data types
+
+# Python has around 40 data types, depending on how you count them — but the core built-in types are 14 major ones, grouped into numeric, sequence, set, and mapping categories.
+
+#1. Basic (Scalar / Primitive) Data Types
+
+# Type          # Example               Description
+# int           42, -5                  Integer numbers (arbitrary precision)
+# float         3.14, -2.7              Decimal (floating-point) numbers
+# complex       2 + 3j                  Complex numbers (real + imaginary)
+# bool          True, False             Boolean values (subclass of int)
+# NoneType      None                    Represents “no value” or null
+
+
+# 2. Sequence Data Types
+
+# Type          # Example               Description
+# str           "Hello"                 Immutable text sequence
+# list          [1, 2, 3]               Mutable ordered collection
+# tuple         (1, 2, 3)               Immutable ordered collection
+# range         range(5)                Immutable sequence of numbers
+# bytes         b"abc"                  Immutable sequence of bytes
+# bytearray     bytearray(b"abc")       Mutable sequence of bytes
+# memoryview    memoryview(b"abc")      Memory-efficient view of byte data
+
+
+# 3. Set Data Types
+
+# Type          # Example               Description
+# set           {1, 2, 3}               Mutable unordered collection of unique elements
+# frozenset     frozenset({1, 2, 3})    Immutable version of a set
+
+
+# 4. Mapping Data Types
+
+# Type          # Example               Description
+# dict          {"a": 1, "b": 2}        Key–value mapping
+
+
+# 5. Callable / Functional Data Types
+
+# Type                          # Example               Description
+# function                      def f(): ...            User-defined function
+# builtin_function_or_method    len, print              Built-in C-implemented functions
+# lambda                        lambda x: x*2           Anonymous function
+# method                        "abc".upper             Bound method object
+
+
+# 6. Iterator / Generator / Coroutine Types
+
+# Type                          # Example                   Description
+# generator                     (x for x in range(3))       Lazily evaluated iterator
+# iterator                      iter([1,2,3])               Object implementing __next__()
+# async_generator               async def gen(): yield      Asynchronous generator
+# coroutine                     async def f(): ...          Asynchronous coroutine
+# async_iterator                aiter(obj)                  Async object implementing __anext__()
+
+
+# 7. Specialized / Utility Data Types
+
+# Type                                  # Example                                   Description
+# type                                  type(123)                                   The class of all classes
+# object                                object()                                    The root base type of all objects
+# ellipsis                              ...                                         Used in slicing and annotations
+# NotImplementedType                    NotImplemented                              Signals unsupported operation
+# slice                                 slice(0, 5, 2)                              Represents slice object
+# code                                  Compiled code objects (e.g. compile(...))   Represents Python bytecode
+# module                                import math                                 Module object
+# class                                 class A: pass                               User-defined class
+#classmethod, staticmethod, property    —                                           Special method wrappers
+
+
+# 8. From types and collections Modules (standard library core)
+# These are still considered part of Python’s data type system, but live in standard modules.
+
+# Type                                  # Example               Description
+# SimpleNamespace                       types                   Namespace container
+# MappingProxyType                      types                   Read-only dict view
+# deque                                 collections             Double-ended queue
+# defaultdict                           collections             Dict with default factory
+# Counter                               collections             Multiset of elements
+# OrderedDict                           collections             Dict that remembers order (now redundant in 3.7+)
+# ChainMap                              collections             Combine multiple dicts logically
+# namedtuple                            collections             Tuple subclass with named fields
+
+
+# Immutable types:
+# int, float, complex, bool, str, tuple, frozenset, bytes, range, NoneType
+
+# Mutable types:
+# list, dict, set, bytearray
+
+
+# in summary:
+
+# | Category                  | Count (approx.)              |
+# | ------------------------- | ---------------------------- |
+# | Basic (scalar)            | 5                            |
+# | Sequence                  | 7                            |
+# | Set                       | 2                            |
+# | Mapping                   | 1                            |
+# | Callable                  | 4                            |
+# | Iterator/Generator        | 5                            |
+# | Special/Utility           | 8                            |
+# | Collections/Types module  | 8                            |
+# | **Total (core + stdlib)** | **≈ 40 built-in data types** |
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# tkinter
+
+import tkinter
+
+window = tkinter.Tk()
+window.title("GUI Program")
+window.minsize(500, 300)
+
+
+my_label = tkinter.Label(text="Label", font=("Arial", 24, "bold"))      # creating a label on the screen
+my_label.pack(side="bottom", expand=True)                               # will make the label show on the screen, centered by default, side will allow you to choose where to show it, expand will allow it to take up all the area in the screen (allowing it to be bang in the center)
+
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Functions with default Arguments (Optional Arguments)
+
+def function(a=1, b=2, c=3)     # parameter values were declared here by default, meaning if its get called without specifying the arguments, it will take the default values specifed here
+
+function()                  # i can call the function normally because all all its arguments are optional and are already set in its declaration
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Unlimited Positional Arguments
+
+def add(*args):
+    for n in args:
+        print(n)
+
+
+# Example
+
+def add(*args):                 #puts all arguments into a tuple, * is all we need to define it, args is the default naming for the arugments, but we can call it anything else
+    total = 0
+    for n in args:              # since it's a tuple, we can use indexes like args[0]
+        total += n
+        return total
+
+
+print(add(2, 8, 9))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Unlimited Keyword Arguments
+
+def calculate(n, **kwargs):
+    n += kwargs["add"]                      # this is saying when the argument is called "add" add it with n
+    n *= kwargs["multiply"]                 # basically we're looking if there is an argument called multiply defined when the function was called (will return a key error if it was not defined in the function call)
+
+calculate(2, add=3, multiply=5)          # we're defining the arguments in the function call itself, kwargs is basically now a dictionary, type dict, now n is added to 3 then n=5 is mutiplied with 5
+
+
+# Example with a class
+
+class Car:
+    def __init__(self, **kwargs):
+        self.make = kwargs["make"]
+        self.model = kwargs["model"]
+        self.type = kwargs["type"]              # this will cause a key error because "type" is not defined in the function call
+        self.year = kwargs.get("year")          # use get() as an alternative way to retrieve the value, will not cause an error if it wasn't defined in function call, returns None if we try to print it
+
+my_car = Car(make="Toyota", model="Corolla")
+
+print(my_car.model)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# tkinter, a button to change the label text based on the input in a textbox
+
+from tkinter import *
+
+window = Tk()
+window.title("GUI Program")
+window.minsize(500, 300)
+
+
+my_label = Label(text="Label", font=("Arial", 24, "bold"))
+my_label.pack()
+
+my_label["text"] = "New Text"           #changing the label text (using dictionary syntax because this is a multi keyword argument)
+my_label.config(text="New Text")        # can also change it with config()
+
+
+def button_clicked():
+    text_entered = entry.get()                      # get() will get the text typed in the textbox
+    my_label.config(text=text_entered)              # text entered will change the label
+
+button = Button(text="Click Me", command=button_clicked)                # command argument can execute a function when the button is pressed
+button.pack()
+
+
+
+entry = Entry(width=20)
+entry.pack()
+
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# all other tkinter elements
+
+from tkinter import *
+
+#Creating a new window and configurations
+window = Tk()
+window.title("Widget Examples")
+window.minsize(width=500, height=500)
+
+#Labels
+label = Label(text="This is old text")
+label.config(text="This is new text")
+label.pack()
+
+#Buttons
+def action():
+    print("Do something")
+
+#calls action() when pressed
+button = Button(text="Click Me", command=action)
+button.pack()
+
+#Entries
+entry = Entry(width=30)
+
+#Add some text to begin with
+entry.insert(END, string="Some text to begin with.")
+
+#Gets text in entry
+print(entry.get())
+entry.pack()
+
+#Text
+text = Text(height=5, width=30)
+
+#Puts cursor in textbox.
+text.focus()
+
+#Adds some text to begin with.
+text.insert(END, "Example of multi-line text entry.")        # END means: Insert the string 'Example of multi-line text entry.' at the end of whatever text is already inside the Text widget.
+
+#Gets current value in textbox at line 1, character 0
+print(text.get("1.0", END))                                 # gets text from: "1.0" line one, character 0, to the END of the string
+text.pack()
+
+#Spinbox
+def spinbox_used():
+    #gets the current value in spinbox.
+    print(spinbox.get())
+spinbox = Spinbox(from_=0, to=10, width=5, command=spinbox_used)                # from_ and to are the minimum and maximum allowed numbers in the spinbox
+spinbox.pack()
+
+#Scale
+#Called with current scale value.
+def scale_used(value):
+    print(value)
+scale = Scale(from_=0, to=100, command=scale_used)                              # same as spinbox
+scale.pack()
+
+#Checkbutton
+def checkbutton_used():
+    #Prints 1 if On button checked, otherwise 0.
+    print(checked_state.get())
+
+#variable to hold on to checked state, 0 is off, 1 is on.
+checked_state = IntVar()                                                                        # is a special variable class that holds an integer value and can be linked to a widget, like a checkbox, so that the widget and variable stay in sync automatically.
+checkbutton = Checkbutton(text="Is On?", variable=checked_state, command=checkbutton_used)      # variable → Connects that variable to the Checkbutton.
+checked_state.get()                                                                             # When the box is unchecked, checked_state.get() returns 0. When the box is checked, it returns 1.
+checkbutton.pack()
+
+#Radiobutton
+def radio_used():
+    print(radio_state.get())
+
+#Variable to hold on to which radio button value is checked.
+radio_state = IntVar()
+radiobutton1 = Radiobutton(text="Option1", value=1, variable=radio_state, command=radio_used)       # value is the ID of the grouped radio buttons
+radiobutton2 = Radiobutton(text="Option2", value=2, variable=radio_state, command=radio_used)
+radiobutton1.pack()
+radiobutton2.pack()
+
+
+#Listbox
+def listbox_used(event):                                             # Tkinter will call listbox_used(event) and pass an event object. Inside listbox_used you can access: event.widget → the widget that triggered the event (here, the listbox) Or directly use the listbox variable from outer scope.
+    # Gets current selection from listbox
+    print(listbox.get(listbox.curselection()))                       # curselection() = current selection, It returns a tuple of the index numbers of the currently selected items in the listbox., ex. (1,)
+
+listbox = Listbox(height=4)
+fruits = ["Apple", "Pear", "Orange", "Banana"]
+for item in fruits:
+    listbox.insert(fruits.index(item), item)               # listbox.insert(index, item) inserts item at the given index (0-based), fruits.index(item) fruits.index(item) returns the first index of item in the fruits list
+listbox.bind("<<ListboxSelect>>", listbox_used)                     # Binds the virtual event <<ListboxSelect>> to the function listbox_used, <<ListboxSelect>> fires whenever the selection in the listbox changes (user click, arrow keys, programmatic change).
+listbox.pack()
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# index() function
+
+# The index() method of a list returns the position (index number) of the first occurrence of a given value inside the list.
+
+# Basic syntax:
+
+list.index(value, start, end)
+
+# value - The item you’re searching for
+# start (optional) - Where to start searching
+# end (optional) - Where to stop searching
+
+# If start and end aren’t given, it searches the whole list.
+
+# Example -
+
+fruits = ["apple", "banana", "cherry", "banana"]
+
+print(fruits.index("banana"))      # → 1
+print(fruits.index("banana", 2))   # → 3 (starts searching at index 2)
+
+# Note: If the value isn’t found, Python raises a ValueError:
+
+colors = ["red", "green", "blue"]
+print(colors.index("yellow"))  # ValueError: 'yellow' is not in list
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# pack(), place(), and grid()
+
+from tkinter import *
+
+
+def button_clicked():
+    text_entered = entry.get()
+    my_label.config(text=text_entered)
+
+
+window = Tk()
+window.title("GUI Program")
+window.minsize(500, 300)
+window.config(padx=20, pady=20)                                  # adding padding, can be added to any widget
+
+
+my_label = Label(text="Label", font=("Arial", 24, "bold"))
+my_label.config(text="New Text")
+my_label.place(x=100, y=50)                                     # place is precise, uses coordinates
+
+button = Button(text="Click Me", command=button_clicked)
+button.grid(column=0, row=0)                                    # grid can't be mixed with pack, it will cause a slave error
+
+entry = Entry(width=20)
+entry.grid(column=1, row=1)                                     # grid is relative to other widgets, you can't put something at row 2 if there's no widget at row 1 for example, it will take row 1
+
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Mile to Km Converter GUI Program (All me)
+
+from tkinter import *
+
+def button_calculate():
+    mile_value = int(textbox.get())
+    km_value = mile_value * 1.6
+    label_km_int.config(text=km_value)
+
+window = Tk()
+window.title("Mile to Km Converter")
+window.minsize(200, 200)
+window.config(padx=20, pady=20)
+
+textbox = Entry(width=20)
+textbox.grid(column=1, row=0)
+
+label_miles = Label(text="Miles")
+label_miles.grid(column=2, row=0)
+
+label_equal = Label(text="is equal to")
+label_equal.grid(column=0, row=1)
+
+label_km_int = Label(text="0")
+label_km_int.grid(column=1, row=1)
+
+label_km = Label(text="Km")
+label_km.grid(column=2, row=1)
+
+button_calc = Button(text="Calculate", command=button_calculate)
+button_calc.grid(column=1, row=2)
+
+window.mainloop()
