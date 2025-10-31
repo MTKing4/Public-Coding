@@ -516,7 +516,7 @@ for number in range(nr_numbers):
     number = random.choice(numbers)
     password = password + number
 
-password = ''.join(random.sample(password, len(password)))              #to randomize the order of letters in a string we use random.sample() takes two arguments, the string, and the number of letters, can use len(), this random method returns a list, to convert it back to a string, we use join() method, joining an empty string with our randomized string like so ''.join(random.sample())
+password = ''.join(random.sample(password, len(password)))              #to randomize the order of letters in a string we use random.sample() takes two arguments, the string, and the number of letters, can use len(), this random method returns a list, to convert it back to a string, we use join() method, joining an empty string with our randomized string like so ''.join(random.sample()), the '' can be anything, say if we add '#' it will add # after each letter, also works with lists, tuples, and dictionaries
 print(password)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -7019,3 +7019,189 @@ window.mainloop()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Password Manager GUI (my code)
+
+from tkinter import messagebox
+import pyperclip
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+import random
+
+letters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B',
+            'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+            'Q,' 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+numbers = ['0','1','2','3','4','5','6','7','8','9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+def generate_pass():
+    password = ""
+    for letter in range(4):
+        letter = random.choice(letters)
+        password += letter
+
+    for symbol in range(4):
+        symbol = random.choice(symbols)
+        password += symbol
+
+    for number in range(4):
+        number = random.choice(numbers)
+        password += number
+
+    password = ''.join(random.sample(password, len(password)))
+    pyperclip.copy(password)                                            # this will copy password to clipboard, NEAT!
+    password_field.delete(0, END)
+    password_field.insert(0, password)
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def save():
+    website_field_text = website_field.get()
+    user_name_field_text = user_name_field.get()
+    password_field_text = password_field.get()
+
+
+    if website_field_text == "" or user_name_field_text == "" or password_field_text == "":
+        messagebox.showinfo(title="Empty Fields", message="Please fill out all the fields!")                        # create popups with messagebox
+
+    else:
+        is_ok = messagebox.askokcancel(title=website_field_text, message=f" These are the details entered \n"
+                                                                 f"Email {user_name_field_text}\n"
+                                                                 f"Password: {password_field_text}\n"
+                                                                 f"Is it ok to save?")
+
+        if is_ok:
+            with open("data.txt", mode= "a") as file_1:
+                file_1.write(f"{website_field_text} | {user_name_field_text} | {password_field_text}\n")
+                website_field.delete(0, END)                            # delete contents of text field from start 0 to finish END
+                user_name_field.delete(0, END)
+                password_field.delete(0, END)
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+from tkinter import *                   # imports all Classes and Constants but not modules
+
+window = Tk()
+window.title("Password Manager")
+window.config(padx=50, pady=50)
+
+canvas = Canvas(width=200, height=200)
+image = PhotoImage(file="logo.png")
+canvas.create_image(100, 100, image=image)
+canvas.grid(column=1, row=0)
+
+website = Label(text="website: ")
+website.grid(column=0, row=1)
+
+user_name = Label(text="Email/Username: ")
+user_name.grid(column=0, row=2)
+
+password = Label(text="Password: ")
+password.grid(column=0, row=3)
+
+website_field = Entry(width=45)
+website_field.grid(column=1,row= 1, columnspan=2)
+website_field.focus()                                                       # lets the typing cursor focus this text field on app launch
+
+user_name_field = Entry(width=45)
+user_name_field.grid(column=1,row= 2, columnspan=2)
+user_name_field.insert(0, "mohammad@gmail.com")                 # inserts text to textfield, syntax: insert(index, string) index can also be END (tkinter constant representing the end of the string)
+
+password_field = Entry(width=27)
+password_field.grid(column=1,row= 3, columnspan=1)
+
+
+generate_password = Button(text="Generate Password", width=14, command=generate_pass)
+generate_password.grid(column=2, row=3)
+
+add_pass = Button(text="Add", width=38, command=save)
+add_pass.grid(column=1, row=4, columnspan=2)
+
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Password Manager GUI (her code)
+
+from tkinter import *
+from tkinter import messagebox
+from random import choice, randint, shuffle
+import pyperclip
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+#Password Generator Project
+def generate_password():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    password_letters = [choice(letters) for _ in range(randint(8, 10))]
+    password_symbols = [choice(symbols) for _ in range(randint(2, 4))]
+    password_numbers = [choice(numbers) for _ in range(randint(2, 4))]
+
+    password_list = password_letters + password_symbols + password_numbers
+    shuffle(password_list)
+
+    password = "".join(password_list)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+def save():
+
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty.")
+    else:
+        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} "
+                                                      f"\nPassword: {password} \nIs it ok to save?")
+        if is_ok:
+            with open("data.txt", "a") as data_file:
+                data_file.write(f"{website} | {email} | {password}\n")
+                website_entry.delete(0, END)
+                password_entry.delete(0, END)
+
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+window = Tk()
+window.title("Password Manager")
+window.config(padx=50, pady=50)
+
+canvas = Canvas(height=200, width=200)
+logo_img = PhotoImage(file="logo.png")
+canvas.create_image(100, 100, image=logo_img)
+canvas.grid(row=0, column=1)
+
+#Labels
+website_label = Label(text="Website:")
+website_label.grid(row=1, column=0)
+email_label = Label(text="Email/Username:")
+email_label.grid(row=2, column=0)
+password_label = Label(text="Password:")
+password_label.grid(row=3, column=0)
+
+#Entries
+website_entry = Entry(width=35)
+website_entry.grid(row=1, column=1, columnspan=2)
+website_entry.focus()
+email_entry = Entry(width=35)
+email_entry.grid(row=2, column=1, columnspan=2)
+email_entry.insert(0, "angela@gmail.com")
+password_entry = Entry(width=21)
+password_entry.grid(row=3, column=1)
+
+# Buttons
+generate_password_button = Button(text="Generate Password", command=generate_password)
+generate_password_button.grid(row=3, column=2)
+add_button = Button(text="Add", width=36, command=save)
+add_button.grid(row=4, column=1, columnspan=2)
+
+window.mainloop()
