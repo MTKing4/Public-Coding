@@ -2634,6 +2634,73 @@ except ValueError:
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Raise Exceptions
+
+# Example 1
+
+try:
+    a_dictionary = {"key": "value"}
+    print(a_dictionary["sdogj"])
+except KeyError as error_message:
+    print(f"The key {error_message} does not exist.")
+finally:
+    raise KeyError("this an error that I made up.")                              # raise will manually raise an exception even if there is no actual error
+
+# Example 2
+
+height = float(input("Height: "))
+weight = int(input("Weight: "))
+
+if height > 3:
+    raise ValueError("Human Height should not be over 3 meters.")
+
+bmi = weight / height ** 2
+
+print(bmi)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Exception Exersice
+
+fruits = ["apple", "Pear", "Orange"]
+
+
+def make_pie(index):
+    try:
+        fruit = fruits[index]
+    except IndexError:
+        print("there are only 3 fruits")
+    else:
+        print(fruit + " pie")
+
+make_pie(4)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# NATO alphabet with exception handling
+
+import pandas
+
+nato_alpha = pandas.read_csv("nato_phonetic_alphabet.csv")
+
+
+
+phonetic_alphabet_dict =  {row.letter:row.code for (index, row) in  nato_alpha.iterrows()}
+print(phonetic_alphabet_dict)
+
+while True:
+    try:
+        word = input("word: ").upper()
+        nato_translation = [phonetic_alphabet_dict[letter] for letter in word]
+
+    except KeyError:
+        print("Only Letters Please")
+    else:
+        print(nato_translation)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #classes
 
 #classes are used to model real complex concepts where normal types like integers, strings, booleans, lists, dictionaries can't model, like a shopping cart for example or drawing a point.
@@ -7199,6 +7266,264 @@ password_entry = Entry(width=21)
 password_entry.grid(row=3, column=1)
 
 # Buttons
+generate_password_button = Button(text="Generate Password", command=generate_password)
+generate_password_button.grid(row=3, column=2)
+add_button = Button(text="Add", width=36, command=save)
+add_button.grid(row=4, column=1, columnspan=2)
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Password Manager GUI Improved with JSON, Exception Handling and Search password function (my code)
+
+from tkinter import messagebox
+import pyperclip
+import json
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+import random
+
+letters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B',
+            'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+            'Q,' 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+numbers = ['0','1','2','3','4','5','6','7','8','9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+def generate_pass():
+    password = ""
+    for letter in range(4):
+        letter = random.choice(letters)
+        password += letter
+
+    for symbol in range(4):
+        symbol = random.choice(symbols)
+        password += symbol
+
+    for number in range(4):
+        number = random.choice(numbers)
+        password += number
+
+    password = ''.join(random.sample(password, len(password)))
+    pyperclip.copy(password)
+    password_field.delete(0, END)
+    password_field.insert(0, password)
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+
+def save():
+    website_field_text = website_field.get()
+    user_name_field_text = user_name_field.get()
+    password_field_text = password_field.get()
+    new_data = \
+        {
+            website_field_text:
+                {
+                    "email": user_name_field_text,
+                    "password": password_field_text
+                }
+        }
+
+
+    if website_field_text == "" or user_name_field_text == "" or password_field_text == "":
+        messagebox.showinfo(title="Empty Fields", message="Please fill out all the fields!")
+
+    else:
+        is_ok = messagebox.askokcancel(title=website_field_text, message=f" These are the details entered \n"
+                                                                 f"Email {user_name_field_text}\n"
+                                                                 f"Password: {password_field_text}\n"
+                                                                 f"Is it ok to save?")
+
+        if is_ok:
+            try:
+                with open("data.json", mode= "r") as file_1:
+                    data = json.load(file_1)                                  # reading old data - reading json files (it converts it to a python dictionary)
+                    data.update(new_data)                                     # updating old data - this is how to update json files, new_data is a dictionary, it will append to the old data, not replace them
+            except FileNotFoundError:
+                messagebox.showinfo(title="File not found", message="File not found, creating one now.")
+                with open("data.json", mode="w") as file_1:
+                    json.dump(new_data, file_1, indent=4)                     # Creating the file the first time and fill it with data
+            else:
+                with open("data.json", mode="w") as file_1:
+                    json.dump(data, file_1, indent=4)                         # saving the updated data - json.dump writes to the json file, indent beautifies the code
+            finally:
+                website_field.delete(0, END)
+                password_field.delete(0, END)
+
+
+# ---------------------------- SEARCH WEBSITE ------------------------------ #
+
+def find_password():
+    website_field_text = website_field.get()
+    try:
+        with open("data.json", mode="r") as file_1:
+            data = json.load(file_1)
+            messagebox.showinfo(title=f"{website_field_text} Credentials", message=f"Email: {data[website_field_text]["email"]}\nPassword: {data[website_field_text]["password"]}")
+    except KeyError:
+        messagebox.showerror(title="Entry not found.", message="Entry not found.")
+    except FileNotFoundError:
+        messagebox.showerror(title="File not found.", message="File not found, please enter data first.")
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+from tkinter import *
+
+window = Tk()
+window.title("Password Manager")
+window.config(padx=50, pady=50)
+
+canvas = Canvas(width=200, height=200)
+image = PhotoImage(file="logo.png")
+canvas.create_image(100, 100, image=image)
+canvas.grid(column=1, row=0)
+
+website = Label(text="website: ")
+website.grid(column=0, row=1)
+
+user_name = Label(text="Email/Username: ")
+user_name.grid(column=0, row=2)
+
+password = Label(text="Password: ")
+password.grid(column=0, row=3)
+
+website_field = Entry(width=27)
+website_field.grid(column=1,row= 1)
+website_field.focus()
+
+user_name_field = Entry(width=45)
+user_name_field.grid(column=1,row= 2, columnspan=2)
+user_name_field.insert(0, "mohammad@gmail.com")
+
+password_field = Entry(width=27)
+password_field.grid(column=1,row= 3, columnspan=1)
+
+
+generate_password = Button(text="Generate Password", width=14, command=generate_pass)
+generate_password.grid(column=2, row=3)
+
+add_pass = Button(text="Add", width=38, command=save)
+add_pass.grid(column=1, row=4, columnspan=2)
+
+search_pass = Button(text="Search", width=14, command=find_password)
+search_pass.grid(column=2, row=1)
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Password Manager GUI Improved with JSON, Exception Handling and Search password function (her code)
+
+from tkinter import *
+from tkinter import messagebox
+from random import choice, randint, shuffle
+import pyperclip
+import json
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+#Password Generator Project
+def generate_password():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    password_letters = [choice(letters) for _ in range(randint(8, 10))]
+    password_symbols = [choice(symbols) for _ in range(randint(2, 4))]
+    password_numbers = [choice(numbers) for _ in range(randint(2, 4))]
+
+    password_list = password_letters + password_symbols + password_numbers
+    shuffle(password_list)
+
+    password = "".join(password_list)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
+
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+def save():
+
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+    new_data = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
+
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty.")
+    else:
+        try:
+            with open("data.json", "r") as data_file:
+                #Reading old data
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            #Updating old data with new data
+            data.update(new_data)
+
+            with open("data.json", "w") as data_file:
+                #Saving updated data
+                json.dump(data, data_file, indent=4)
+        finally:
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
+
+
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website} exists.")
+
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+window = Tk()
+window.title("Password Manager")
+window.config(padx=50, pady=50)
+
+canvas = Canvas(height=200, width=200)
+logo_img = PhotoImage(file="logo.png")
+canvas.create_image(100, 100, image=logo_img)
+canvas.grid(row=0, column=1)
+
+#Labels
+website_label = Label(text="Website:")
+website_label.grid(row=1, column=0)
+email_label = Label(text="Email/Username:")
+email_label.grid(row=2, column=0)
+password_label = Label(text="Password:")
+password_label.grid(row=3, column=0)
+
+#Entries
+website_entry = Entry(width=21)
+website_entry.grid(row=1, column=1)
+website_entry.focus()
+email_entry = Entry(width=35)
+email_entry.grid(row=2, column=1, columnspan=2)
+email_entry.insert(0, "angela@gmail.com")
+password_entry = Entry(width=21)
+password_entry.grid(row=3, column=1)
+
+# Buttons
+search_button = Button(text="Search", width=13, command=find_password)
+search_button.grid(row=1, column=2)
 generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(row=3, column=2)
 add_button = Button(text="Add", width=36, command=save)

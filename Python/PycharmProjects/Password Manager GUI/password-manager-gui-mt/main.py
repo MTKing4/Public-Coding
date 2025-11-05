@@ -1,5 +1,6 @@
 from tkinter import messagebox
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -38,6 +39,14 @@ def save():
     website_field_text = website_field.get()
     user_name_field_text = user_name_field.get()
     password_field_text = password_field.get()
+    new_data = \
+        {
+            website_field_text:
+                {
+                    "email": user_name_field_text,
+                    "password": password_field_text
+                }
+        }
 
 
     if website_field_text == "" or user_name_field_text == "" or password_field_text == "":
@@ -50,11 +59,34 @@ def save():
                                                                  f"Is it ok to save?")
 
         if is_ok:
-            with open("data.txt", mode= "a") as file_1:
-                file_1.write(f"{website_field_text} | {user_name_field_text} | {password_field_text}\n")
-                website_field.delete(0, END)                            # delete contents of text field from start 0 to finish END
-                user_name_field.delete(0, END)
+            try:
+                with open("data.json", mode= "r") as file_1:
+                    data = json.load(file_1)                                  # reading old data - reading json files (it converts it to a python dictionary)
+                    data.update(new_data)                                     # updating old data - this is how to update json files, new_data is a dictionary, it will append to the old data, not replace them
+            except FileNotFoundError:
+                messagebox.showinfo(title="File not found", message="File not found, creating one now.")
+                with open("data.json", mode="w") as file_1:
+                    json.dump(new_data, file_1, indent=4)                     # Creating the file the first time and fill it with data
+            else:
+                with open("data.json", mode="w") as file_1:
+                    json.dump(data, file_1, indent=4)                         # saving the updated data - json.dump writes to the json file, indent beautifies the code
+            finally:
+                website_field.delete(0, END)
                 password_field.delete(0, END)
+
+
+# ---------------------------- SEARCH WEBSITE ------------------------------ #
+
+def find_password():
+    website_field_text = website_field.get()
+    try:
+        with open("data.json", mode="r") as file_1:
+            data = json.load(file_1)
+            messagebox.showinfo(title=f"{website_field_text} Credentials", message=f"Email: {data[website_field_text]["email"]}\nPassword: {data[website_field_text]["password"]}")
+    except KeyError:
+        messagebox.showerror(title="Entry not found.", message="Entry not found.")
+    except FileNotFoundError:
+        messagebox.showerror(title="File not found.", message="File not found, please enter data first.")
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -78,8 +110,8 @@ user_name.grid(column=0, row=2)
 password = Label(text="Password: ")
 password.grid(column=0, row=3)
 
-website_field = Entry(width=45)
-website_field.grid(column=1,row= 1, columnspan=2)
+website_field = Entry(width=27)
+website_field.grid(column=1,row= 1)
 website_field.focus()                                                       # lets the typing cursor focus this text field on app launch
 
 user_name_field = Entry(width=45)
@@ -96,5 +128,7 @@ generate_password.grid(column=2, row=3)
 add_pass = Button(text="Add", width=38, command=save)
 add_pass.grid(column=1, row=4, columnspan=2)
 
+search_pass = Button(text="Search", width=14, command=find_password)
+search_pass.grid(column=2, row=1)
 
 window.mainloop()
