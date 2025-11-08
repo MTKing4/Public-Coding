@@ -6,6 +6,7 @@
 /.idea/**/contentModel.xml
 /*.iws
 /*.iml
+/*.xml
 /__pycache__/
 /*.pyc
 /venv/
