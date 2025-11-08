@@ -78,3 +78,5 @@ Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.i
 Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/poetry.lock
 Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/pyproject.toml
 Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/data.json
+*.xml
+*.iml
