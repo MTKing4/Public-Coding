@@ -7675,4 +7675,103 @@ next_card()
 window.mainloop()
 
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# smtplib and datetime
+
+# Sending emails
+
+import smtplib
+
+my_email = "placeholder"
+password = "placeholder"
+my_email_2 = "placeholder"
+
+connection = smtplib.SMTP("placeholder")                     # connect to email server
+connection.starttls()                                           # TLS: Transport Layer Security, used to secure the connection to the email server
+connection.login(user=my_email, password=password)
+connection.sendmail(from_addr=my_email,
+                    to_addrs=my_email_2,
+                    msg="Subject:Hello\n\nThis is the body for the email")
+connection.close()                                              # we can also use with open here
+
+
+#------------------------------------------------------------
+
+# getting the time of today
+
+import datetime as dt
+
+now = dt.datetime.now()                             # prints the current actual time
+year = now.year                                     # now.methods will give you all sorts of methods, day, week, month, year, etc
+month = now.month
+day_of_week = now.weekday()                         # weekday() returns which day of the week it is, starts with Monday as 0 ends with Sunday as 6
+print(day_of_week)
+
+date_of_birth = dt.datetime(year=2022, month=2, day=3, hour=4) # to get a specific date, year, month, day are required to execute, the rest are optional
+
+print(date_of_birth)
+
+
+#------------------------------------------------------------
+
+# if today is tuesday send random motivation email
+
+import smtplib, random, datetime as dt
+
+
+my_email = "placeholder"
+password = "placeholder"
+my_email_2 = "placeholder"
+
+
+with open("quotes.txt") as file:
+    motivation_list = file.readlines()
+
+motivation_msg = random.choice(motivation_list)
+print(motivation_msg)
+
+
+now = dt.datetime.now()
+if now.weekday() == 1:                          # if today is tuesday
+    connect = smtplib.SMTP("smtp.gmail.com")
+    connect.starttls()
+    connect.login(user=my_email, password=password)
+    connect.sendmail(from_addr=my_email, to_addrs=my_email_2, msg=f"Subject:Motivation\n\n{motivation_msg}")
+
+#------------------------------------------------------------
+
+#Automated Birthday Wisher (run in projet)
+
+# Sends email based on the date with a random letter from 3 letters
+
+from datetime import datetime
+import pandas
+import random
+import smtplib
+
+MY_EMAIL = "placeholder"
+MY_PASSWORD = "placeholder"
+
+today = datetime.now()
+today_tuple = (today.month, today.day)
+
+data = pandas.read_csv("birthdays.csv")
+birthdays_dict = {(data_row["month"], data_row["day"]): data_row for (index, data_row) in data.iterrows()}
+if today_tuple in birthdays_dict:
+    birthday_person = birthdays_dict[today_tuple]
+    file_path = f"letter_templates/letter_{random.randint(1,3)}.txt"
+    with open(file_path) as letter_file:
+        contents = letter_file.read()
+        contents = contents.replace("[NAME]", birthday_person["name"])
+
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(MY_EMAIL, MY_PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs=birthday_person["email"],
+            msg=f"Subject:Happy Birthday!\n\n{contents}"
+        )
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
