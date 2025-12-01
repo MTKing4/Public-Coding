@@ -7903,3 +7903,100 @@ if -5 <= abs(MY_LAT) - abs(iss_latitude) <= 5:
 
 else:
     print("ISS is not close to your current position")
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Enviroment Variables
+# Notes:
+# 1. in terminal (cmd): set                 # will display all enviroment variables (env in unix)
+# 2. set variable_name=value                # will store a value you want to an enviroment variable (ex. api keys, auth tokens etc.)
+# 3. accessing an enviroemnt variable in code:
+import os
+api_key = os.environ.get("api_key")         # the name of the enviroment variable in paranthesis
+
+# 4. in pythonanywhere you can export your enviroment variables when you run the code like so:
+export api_key=value; auth_token=value; python main.py              # this will run the code and pass the enviroment variables you need
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Habit Tracker - post, put, delete requests
+
+import requests
+from datetime import datetime
+
+USERNAME = "placeholder"
+TOKEN = "placeholder"
+GRAPH = "placeholder"
+
+#--------------------------Create a user--------------------------
+
+pixela_endpoint= "https://pixe.la/v1/users"
+
+user_params = {
+    "token": TOKEN,
+    "username": USERNAME,
+    "agreeTermsOfService": "yes",
+    "notMinor": "yes"
+}
+
+response = requests.post(url=pixela_endpoint, json=user_params)
+print(response.text)
+
+#--------------------------Create a graph-------------------------
+
+graph_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs"
+
+graph_config = {
+    "id": GRAPH,
+    "name": "Cycling Graph",
+    "unit": "Km",
+    "type": "float",
+    "color": "momiji"
+}
+
+headers = {
+    "X-USER-TOKEN": TOKEN
+}
+
+response = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
+print(response.text)
+
+
+#---------------------Add a pixel to the Graph--------------------
+
+pixel_creation_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH}"
+
+# date = datetime(year=2025, month=11, day=29) #can get specific time like so
+
+date = datetime.now()
+
+
+pixel_data = {
+    "date": date.strftime("%Y%m%d"),
+    "quantity": "31.46"
+}
+
+response = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=headers)
+print(response.text)
+
+
+#---------------------update a pixel using PUT--------------------
+
+
+update_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH}/{date.strftime('%Y%m%d')}"
+
+new_pixel_data = {
+    "quantity": "3.46"
+}
+
+response = requests.put(url=update_endpoint, json=new_pixel_data, headers=headers)
+print(response.text)
+
+
+#---------------------delete a pixel using DELETE--------------------
+
+delete_endpoint = f"{pixela_endpoint}/{USERNAME}/graphs/{GRAPH}/{date.strftime('%Y%m%d')}"
+
+
+
+response = requests.delete(delete_endpoint, headers=headers)
+print(response.text)
