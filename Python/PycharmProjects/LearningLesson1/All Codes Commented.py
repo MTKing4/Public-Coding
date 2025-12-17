@@ -41,6 +41,9 @@ print("Hello! " + input("what is your name? "))
 
 print("*" * 10) #can multiply a string with an integer to display the string 10 times#
 
+#multiple assignment, sets multiple variables to the same value
+Spongebob = Patrick = Sandy = Squidward = 30
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Excersice to switch up the variables
 
@@ -79,8 +82,22 @@ str() #converts a value to a string#
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#Subscript
-print("Hello"[0]) #subscripting us using square brackets to print specific letters based on the index number between the brackets (index number = the position/order of the letter in the string)
+#Substrings (string slicing)
+print("Hello"[0]) #slicing is using square brackets to print specific letters based on the index number between the brackets (index number = the position/order of the letter in the string)
+print("Meow Bitcha"[1:-1:2]) # Syntax [start:stop:step]
+print("Meow Bitcha"[::-1]) # reveres the string
+
+# or use the slice() function, the benefit of it is that it's reusable
+
+website = "https://www.google.com"
+website2 ="https://www.youtube.com"
+
+slice = slice(12, -4)
+
+print(website[slice])
+print(website2[slice])
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #for large integers to be easily read, like 1,000,000 in python we type _ instead, and python will ignore it
 print(1_000_000)
@@ -89,7 +106,7 @@ print(1_000_000)
 str() # to a string
 float() # to a float
 
-#flocats can be mathed with integers
+#floats can be mathed with integers
 print(1_000_000 + float(10.45))
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,15 +135,20 @@ course = 'Python for beginners'
 # index   01234567#
 print(course.upper()) #it creates a new string, it won't modify the original string#
 print(course.lower())
-print(course.find('y')) #it will return the index of the first occurence of 'y', it will return '-1' if not found#
-print(course.find('for')) #it will return the index of the first letter of 'for' of the first occurence#
-print(course.replace('for', 'Loves')) #if look for a character that doesn't exist nothing's going to happen#
+print(course.find('y')) #it will return the index of the first occurrence of 'y', it will return '-1' if not found#
+print(course.find('for')) #it will return the index of the first letter of 'for' of the first occurrence#
+print(course.replace('for', 'Loves')) #if it looks for a character that doesn't exist, nothing's going to happen#
 print('Python' in course) # looks for the word Python, 'in' is an operator, a special keyword. the result is a boolean value#
 print(course[0:3]) #it will print only the letters from index 0 to 3 excluding 3, can also use [1:] to return all the characters til the end of the string  starting from 1, also if you type it like so [:3] python will assume the first index is 0, if you use [:] it will bring everyhting#
 print(course[-1]) #index of the last character, -2 index of the second last character etc#
-print(course[1:-1]) # will bring from the second index to the last index exluding the last index -1
+print(course[1:-1]) # will bring from the second index to the last index excluding the last index -1
 print(len(course)) # len() function is used to count the characters in your string, can also count the number of items in a list
 print(course.title()) # makes all initials Caps in the words of the string
+print(course.capitalize()) # Capitalizes the first letter of the first word in the string
+print(course.isdigit()) # returns True or False, checks if the string is a digit
+print(course.isalpha()) # returns True or False, checks if the string is alphabet (without spaces)
+print(course.count("o")) # counts the number of occurrences character or word in the string
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -184,7 +206,7 @@ print(not price > 10)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#if statment
+#if statement
 temperature = 25
 if temperature > 30:  # the colon ':' means 'then',#
     print("It's a hot day")  #used " instead of of ' because there's ' already in the string#
@@ -304,6 +326,16 @@ print(names)  # Will return the original list unchanged#
 #NOTE: most/all of these work with tuples as well
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Combining Lists
+# you can combine multiple lists into 1 list using +
+
+list_1 = [1, 2]
+list_2 = [3, 4]
+
+print(list_1 + list_2)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # nested lists
 
 fruits = ["banana", "manga"]
@@ -321,16 +353,22 @@ numbers.append(6)                   # adds to the list at the end#
 numbers.insert(0, -1)               # first number is the index of where you want to insert, the second number is the number you want to insert
 numbers.remove(-1)
 numbers.pop()                       # it removes an item from the end of the list
-numbers.sort()                      # can't be printed, this only sorts the numbers ascendingly, printing it will return: None, which is an object in python that represents the absence of a value
+numbers.sort()                      # can't be printed, this sorts the numbers ascendingly, for strings it sorts them alphabetically, printing it will return: None, which is an object in python that represents the absence of a value
 numbers.reverse()                   # reverses the order of the list, also can't be printed
 numbers.copy()                      # copies the list, any changes to the original list won't affect it
 numbers.extend([34, 54, 65, 65])    # add more than 1 item (a list) to the list
-print(numbers.index(6))             # gives you the index number of the first occurance of the element, the number between the parenthesis is the item(integer, String, etc) you are looking for
+numbers.clear()                     # removes all the elements of the list
+print(numbers.index(6))             # gives you the index number of the first occurrence of the element, the number between the parenthesis is the item(integer, String, etc) you are looking for
 print(numbers)
-print(6 in numbers)                 # looks for 6 in the list, returms a boolean
+print(6 in numbers)                 # looks for 6 in the list, returns a boolean
 print(len(numbers))                 # len() returns the number of the elements in the list#
 print(numbers.count(6))             # returns the number of occurances this item has in the list, the number in the parenthesis is an item(integer, String, etc)
 
+# these methods also with work strings becasuse lists and strings are both iterable
+
+name = "bro code"
+if name.islower(): print("hello")   # islower() checks if the letters are small, returns True,False
+else: print("Bye")
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #treasure map exercise (my version: God Awful, she done it in three lines)
@@ -407,6 +445,44 @@ while i < len(numbers): # same result as the for loop above,
     print(numbers[i])
     i = i + 1
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Loop Control/ Blank Statements/Expressions
+
+break                # Statement → Used to terminate the loop entirely.
+continue             # Statement → Skips to the next iteration of the loop.
+pass                 # Statement → Does nothing; acts as a placeholder.
+
+...                  # Expression → Evaluates to the built-in Ellipsis object; often used as a placeholder in code stubs or slices.
+Ellipsis             # Object → The built-in Ellipsis object (same as ...); used as a placeholder or in advanced slicing.
+NotImplemented       # Object → Special constant used in operator overloading to signal an unsupported operation.
+None                 # Object → Represents the absence of a value; often used as a default or placeholder value.
+
+
+# Dummy Code
+
+while None:
+    if ... :
+        continue
+    elif Ellipsis:
+        pass
+    elif NotImplemented:
+        break
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Statements vs. Expressions
+
+# Statements:
+# 1. Perform an action.
+# 2. Do not return a value (or if they do, it’s ignored).
+# 3. Examples: break, continue, pass, if, for, while, def.
+
+#Expressions:
+# 1. Produce a value when evaluated.
+# 2. Can be used wherever Python expects a value.
+# 3. Examples: 3 + 4, "hello", ..., None, NotImplemented.
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Height Average (my code)
@@ -428,7 +504,7 @@ print(round(avg))
 
 #height average, teachers code easy mode (no for loop)
 
-student_heights = input("Input a list of student heights: ") .split()         # items entered will be elements in a list, when no delimiter is specified in spit() function, it will be space by default
+student_heights = input("Input a list of student heights: ") .split()         # items entered will be elements in a list, when no delimiter is specified in split() function, it will be space by default
 for n in range(0, len(student_heights)):                                      # this will loop to whatever is the end of the list (n will be the index number based on the range specifed from 0 to the number of the list, say 5, but 5 won't be included because it's a range, which is good because index numbers start from 0, so the 5th element index will be 4
     student_heights[n] = int(student_heights[n])                              # this line and the line above it is to iterate on all elements in the list and convert them from strings to integers
 print(student_heights)
@@ -717,11 +793,48 @@ numbers.count(3)  # Counts the number of occurrences of an element#
 numbers.index(1)  # returns the index of the first occurence of an element#
 print(numbers[2]) #can access individual items similar to lists
 
+# when are Parentheses () considered a tuple and when isn't?
+# Answer: when there's a Comma, A tuple is created by commas, not parentheses.
+
+#Example:
+
+x = (5)
+print(type(x))  # <class 'int'>
+
+x = (5,)                                 # this is also how to create a tupel with one element, since the comma is essential and typing only parenthesis like (5) will not make it a tuple
+print(type(x))  # <class 'tuple'>
+
+x = 5,                                   # this is also a tuple
+print(type(x))  # <class 'tuple'>
+
+y = 1
+x = 5, 45, 67, "string",  f"{y}string"   # still a tuple :)
+print(type(x))  # <class 'tuple'>
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # convert a tuple to a list:
 
 list = [1, 2, 3]
 tuple = tuple(list)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Sets
+# collection which is unorderd, unindexed. No Duplicate Values
+
+utensils = { "fork", "spoon", "knife"}
+dishes = {"bowl", "plate", "cup", "knife"}
+
+utensils.add("table")                       # add elements to a set
+utensils.remove("fork")                     # remove elements from a set
+utensils.clear()                            # will return set() when empty
+utensils.update(dishes)                     # add all the elements found within dishes to utensils set
+
+dinner_table = utensils.union(dishes)       # join two sets together with union()
+
+
+print(utensils.difference(dishes))          # returns the difference (what's in utensils that dishes doesn't have)
+print(utensils.intersection(dishes))          # returns the common items in both sets
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -733,15 +846,64 @@ print(msg)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# string.format() method
+# Optional method that gives users more control displaying output
+
+animal =  "cow"
+item = "moon"
+
+print("The "+animal+" Jumped over the "+item)                                           # basic strings
+print(f"The {animal} Jumped over the {item}")                                           # formatted strings
+print("The {} Jumped over the {}".format(animal, item))                                 # format() strings, the {} are called format fields they function as a placeholder for value or variable which is stored in the format() method, and they work in the order they come, the first {} takes the first format() value, 2nd for 2nd etc.
+print("The {1} Jumped over the {0}".format(animal, item))                               # format() strings with positional arguments, by typing the indexes in the {}, you can change the order of the values in the string
+print("The {animal} Jumped over the {item}".format(animal="cow", item="moon"))          # format() strings with keyword arguments, this way we don't need variables and we can define them here as parameters, then put the arguments in the {}
+
+
+
+# Adding Padding with format()
+
+name = "Bro"
+
+print("Hello, my name is {:10}. Nice to meet you".format(name))                 # using colon : adding 10 after it will add 10 spaces after the value in {}
+print("Hello, my name is {:>10}. Nice to meet you".format(name))                # using colon : adding 10 after it will add 10 spaces after the value in {}, use > right align it
+print("Hello, my name is {:<10}. Nice to meet you".format(name))                # using colon : adding 10 after it will add 10 spaces after the value in {}, use < left align it
+print("Hello, my name is {:^10}. Nice to meet you".format(name))                # using colon : adding 10 after it will add 10 spaces after the value in {}, use ^ center align it
+print("Hello, my name is {name:>10}. Nice to meet you".format(name="bro"))      # to add keyword/positional arguments you add them before the colon :
+
+
+# formatting Numbers with format()
+
+number = 3.14159
+
+print("The number pi is {:.2f}".format(number))                                # .2f means show only two floating point numbers, it will also round your number
+
+number = 1000
+
+print("The number pi is {:,}".format(number))                                  # this will add comma , after each one thousand's place
+print("The number pi is {:b}".format(number))                                  # display number in binary
+print("The number pi is {:o}".format(number))                                  # display number in octal
+print("The number pi is {:x}".format(number))                                  # display number in Hexadecimal, (x for lowercase and X for uppercase)
+print("The number pi is {:e}".format(number))                                  # display number in Scientific Notation, (e for lowercase and E for uppercase)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #Math Functions#
 import math #importing a module
 
-print(math.ceil(2.9)) # ceiling of a number ,type math. and all the available methods/funcions from the math module/Library will show up
+print(math.ceil(2.9)) # ceiling of a number ,type math. and all the available methods/functions from the math module/Library will show up
 print(math.floor(2.9))
 x = 2.9
 print(round(x)) # Rounds the number
 print(round(x, 2)) # Rounds to 2 decimal digits of precision
 print(abs(-2.9)) #absolute number without a sign
+print(math.pow(2,3)) # Power function, 2^3 = 8, returns float
+print(math.sqrt(4)) # Square Root
+
+x = 1
+y = 2
+z = 3
+print(max(x, y, z)) # returns the biggest value from a set of values
+print(min(x, y, z)) # returns the smallest value from a set of values
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -771,7 +933,7 @@ print(f"down payment is: ${deduction}")
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Exercice to check your input, reject it if the characters are less or more than defined, otherwise print it, and make sure to prompt again after a rejected attempt and stop the loop when the characters are within limit
+# Exercise to check your input, reject it if the characters are less or more than defined, otherwise print it, and make sure to prompt again after a rejected attempt and stop the loop when the characters are within limit
 while True:
     name = input("Enter your Name: ")
     if  len(name) < 3:
@@ -934,6 +1096,20 @@ for x in range (4):
     for y in range(4): #when x = 0, the y loop will start executing all its iterations until range 4, then the y loop ends and the x loop continues when x = 1 and y loop executes all iterations again and hands it back to x and so on.
         print(f"({x}, {y})")
 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Create a square with nested for loops (bro code)
+
+rows = int(input("How many rows? "))
+columns = int(input("How many columns? "))
+symbol =  input("What is your symbol? ")
+
+
+for i in range(rows):
+    for j in range(columns):
+        print(symbol, end="")           # you can pick if you want to add something at the end of the print statement, end="" will make all the prints on the same line
+    print()                             # empty print will put the cursor on a new linef
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Challenge: Convert a List of numbers to characters displaying the shape of an "F" in nested loops
@@ -1060,7 +1236,7 @@ print(z)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#dictionaries (key => value pairs, equivalent of Assosicative Arrays in php)
+#dictionaries (key => value pairs, equivalent of Associative Arrays in php)
 customer = {
     "name": "John Smith", #keys can't be duplicated, meaning we can't have two keys called "name" for example
     "age": 30,
@@ -1088,6 +1264,25 @@ for key in customer:
     print(key)
     print(customer[key])                # or print(customer.get(key)) both work
 
+
+# other ways to get the keys or the values
+# 1. with keys(), values()
+
+print(customer.keys())
+print(customer.values())
+
+# 2. with items()
+
+for key, value in customer.items():
+    print(key, value)
+
+# Dictionary methods
+
+customer.update({"name":"Mohammad"})                    # update or create a pair (updating updates the value through its key)
+customer.update({"email":"potato@tomato.bongino"})
+customer.pop("name")                                    # remove a key-value pair from the dictionary
+customer.clear()                                        # remove everything, returns dict_items([])
+print(customer.items())
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #dictionaries exersice (very Fucking hard, i failed) Teacher's Code
@@ -2622,6 +2817,8 @@ while is_on:
 #the exit code when a program runs Successfully: Process finished with exit code 0
 #the exit code when a program encounters an error: Process finished with exit code 1
 
+# Example 1
+
 try:
     age = int(input("age: "))
     income = 20000
@@ -2631,6 +2828,20 @@ except ZeroDivisionError:
     print("Age cannot be zero") #can add multiple except statements to handle multiple exceptions in our code
 except ValueError:
     print("Invalid input")
+
+# Example 2
+
+try:
+    numerator = int(input("Enter a number to divide: "))
+    denominator = int(input("Enter a number to divide: "))
+    result = numerator / denominator
+except Exception as e:              # this will catch all exceptions ever
+    print(e)                        # this will print whatever exception we got
+else:
+    print(result)                   # print result if there are no exceptions
+finally:                            # whether or not we catch an exception we will always execute code block within the finally clause,
+    print("This will always execute")
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -3553,6 +3764,32 @@ cat1.meo()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Multiple Inheritance
+
+class Prey:
+    def flee(self):
+        print("This animal flees")
+
+class Predator:
+    def hunt(self):
+        print("this animal is hunting")
+
+
+class Rabbit(Prey):
+    pass
+
+class hawk(Predator):
+    pass
+class Fish(Prey, Predator):                 # it has two parent classes
+    pass
+
+
+fish = Fish()
+fish.flee()
+fish.hunt()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # inheritnace constructors
 
 class Animal:
@@ -3581,6 +3818,849 @@ print(nemo.num_eyes)
 
 juno = Animal()                                 # parent breathe method unaffected
 juno.breathe()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# method overriding
+
+class Animal:
+    def eat(self):
+        print("This animal is eating")
+
+class Rabbit(Animal):
+    def eat(self):                              # this is method overriding using the same function name, this will execute instead
+        print("This Rabbit is eating")
+
+
+rabbit = Rabbit()
+rabbit.eat()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# method chaining
+
+# calling multiple methods sequentially
+# each call performs an action on the same object and returns self
+
+class Car:
+    def turn_on(self):
+        print("You start the engine")
+        return self                             # this allows chaining methods now
+    def drive(self):
+            print("You drive the car")
+            return self
+    def brake(self):
+            print("You step on the brakes")
+            return self
+    def turn_off(self):
+            print("You turn off the engine")
+            return self
+
+
+
+car = Car()
+car.turn_on().drive().brake().turn_off()                        # by returning self it's possible to chain methods with .
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Abstract classes
+
+# it prevents a user from creating an object from that class
+# it compels a user to override abstract methods in a child class
+
+# abstract class: a class which contains one or more abstract methods.
+# abstract method: a method that has a declaration nut does not have an implementation.
+
+from abc import ABC, abstractmethod                 # abc stands for abstract based class
+
+class Vehicle(ABC):
+
+    @abstractmethod                                 # how to define an abstract method
+    def go(self):
+        pass
+
+class Car(Vehicle):
+    def go(self):
+        print("You drive the car")
+
+class Motorcycle(Vehicle):
+    def go(self):                       # both car and motorcycle classes are forced to override go() method, otherwise they will cause an error
+        print("You ride the motorcycle")
+
+class Bicycle(Vehicle):
+    pass                                # this will return an error because it's inheriting the abstract method of go(), it's forced to override go() otherwise it will not work
+
+vehicle = Vehicle()                     # this will return an error because it's an abstract class, which prevents creating objects from it
+car = Car()
+motorcycle = Motorcycle()
+
+vehicle.go()
+car.go()
+motorcycle.go()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# pass objects as arguments to a function
+
+class Car:
+    color = None
+
+def change_color(car, color):                   # this is a function, not a method
+    car.color = color
+
+car_1 = Car()
+car_2 = Car()
+car_3 = Car()
+
+change_color(car_1, "Red")
+change_color(car_2, "Blue")
+change_color(car_3, "Green")
+
+print(car_1.color)
+print(car_2.color)
+print(car_3.color)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Duck typing
+# concept where the class of an object is less important than the methods/attributes
+# class type is not checked if the minimum methods/attributes are present
+# "if it walks like a duck, and it quacks like a duck, then it must be a duck."
+# in simple terms, you can pass in a different class as long as it has the same methods/attribute names, even if the values are different
+
+class Duck:
+    def walk(self):
+        print("This duck is walking")
+    def talk(self):
+        print("This duck is walking")
+
+class Chicken:
+    def walk(self):
+        print("This Chicken is walking")
+    def talk(self):
+        print("This Chicken is walking")
+
+class Person:
+    def catch(self, duck):
+        duck.walk()
+        duck.talk()
+        print("you caught the animal")
+
+duck = Duck()
+chicken = Chicken()
+person = Person()
+
+person.catch(chicken)               # passing chicken works because it has the same methods
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# walrus operator :=
+
+# assigns values to variables as part of a larger expression
+
+happy = True
+print(happy)
+
+print(happy = True)                 # this meant to replace the two lines above but it won't work normally
+print(happy := True)                # using a walrus operator it works we're assigning a value to a variable and use it right away
+
+
+# Example without walrus
+
+foods = list()
+while True:
+    food = input("What food do you like?")
+    if food == "quit":
+        break
+    foods.append(food)
+
+
+# Example with walrus
+
+foods = list()
+while (food := input("What food do you like?")) != "quit":
+    foods.append(food)
+
+print(foods)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Higher Order Functions and Callback Functions
+
+# they are functions that either
+# 1. accept a function as an argument
+# 2. return a function
+
+# Callback Function is:
+# A function that is passed as an argument to another function and is intended to be called later by that function when a specific event happens or when a certain condition is met.
+
+# Example 1 - functions as arguments
+
+def loud(text):
+    return text.upper()
+
+def quiet(text):
+    return text.lower()
+
+
+def hello(func):                    # higher order function, taking a function as an argument
+    text = func("Hello")            # a Callback function being called, can be any function
+    print(text)
+
+hello(loud)                         # the Callback function is passed in when calling the higher order function
+hello(quiet)
+
+# Example 2 - Returning a function
+
+def divisor(x):                 #Higher order function as it returns a function
+    def dividend(y):
+        return y / x
+    return dividend             # here
+
+divide = divisor(2)             # here we are calling the higher order function and assigned x=2, then stored it in a variable
+print(divide(10))               # now calling that variable will call the inner function (because it's nested within a function) which is what's called a Callback Function, x is still = 2
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# ternary Conditional Expression
+
+# ternary conditional expression, also commonly referred to as a conditional expression or inline if-else statement, a concise way to write a simple if-else statement in a single line of code
+
+# Syntax
+value_if_true if condition else value_if_false
+
+# condition: This is a boolean expression that is evaluated first.
+# value_if_true: This value is returned if the condition evaluates to True.
+# value_if_false: This value is returned if the condition evaluates to False.
+
+# Example
+
+age = 25
+status = "Adult" if age >= 18 else "Minor"
+print(status)
+
+# NOTE: The else part is mandatory.
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# lambda Function
+
+# function written in 1 line using lambda keyword
+# accepts any number of arguments, but only has one expression.
+# (think of it as a shortcut)
+# (useful if needed for a short period of time, throw-away)
+
+# Syntax: lambda parameters:expression
+
+# Example 1 - without lambda
+
+def double(x):
+    return x * 2
+
+print(double(5))
+
+# Example 1 - with lambda
+
+double = lambda x: x * 2                    # here lambda is a higher order function because it returns a new function, double()
+print(double(5))
+
+# Example 2 - with lambda - with two parameters
+
+multiply = lambda x,y : x * y
+print(multiply(5, 3))
+
+# Example 3 - with lambda - with ternary conditional expression
+
+age_check = lambda age: True if age >= 18 else False                            # the expression here is a ternary Conditional Expression
+print(age_check(18))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Wrappers
+
+# A wrapper in programming is a concept where one function “wraps around” another function to add, modify, or control its behavior without changing the original function’s code.
+# A function that calls another function, often adding extra behavior before or after, or adapting it so it fits a specific context.
+
+# Example 1
+
+def greet(name):
+    print(f"Hello, {name}!")
+
+def wrapper(name):
+    print("About to greet someone...")
+    greet(name)  # call the original function
+    print("Greeting done!")
+
+wrapper("Alice")
+
+# Example 2 - Lambda as wrapper in Pong Game
+
+screen.onkeypress(lambda: key_press("Up"), "Up")
+
+# lambda: key_press("Up") is a wrapper around key_press("Up").
+# Why? Because:
+# 1. onkeypress() requires a no-argument function.
+# 2. key_press("Up") needs an argument.
+
+# So the lambda “wraps” key_press("Up") to adapt it for onkeypress:
+
+# lambda is the wrapper
+lambda: key_press("Up")  # wraps key_press("Up"), The wrapper doesn’t add extra logic here, but it controls when and how the original function is called.
+
+# Key Points About Wrappers
+# 1. Can add behavior (before, after, or around function call).
+# 2. Can adapt a function (like the above lambda adapting key_press to a no-argument callback).
+# 3. Often used in decorators in Python:
+
+def decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Before function")
+        result = func(*args, **kwargs)
+        print("After function")
+        return result
+    return wrapper
+
+@decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+
+# Output:
+# Before function
+# Hello!
+# After function
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Decorators
+
+# A decorator is a function that takes another function as input, adds or modifies its behavior, and then returns a new function — usually a “wrapped” version of the original.
+
+# Why Use a Decorator?
+# Because sometimes you want to add the same behavior to multiple functions — for example:
+# Instead of rewriting that logic inside each function, you use a decorator.
+
+# Example 1
+def decorator(func):
+    def wrapper():
+        print("Before the function runs")
+        func()
+        print("After the function runs")
+    return wrapper
+
+# here
+# decorator takes a function (func) as input.
+# It defines an inner function wrapper() that adds behavior before and after calling func().
+# Then it returns that wrapper() function.
+
+# Using the decorator manually
+
+def say_hello():
+    print("Hello!")
+
+decorated = decorator(say_hello)
+decorated()
+
+# Output
+# Before the function runs
+# Hello!
+# After the function runs
+
+# The @decorator Shortcut Syntax
+# Python provides a neat shorthand for this pattern:
+
+@decorator
+def say_hello():
+    print("Hello!")
+
+# is equivalent to:
+
+def say_hello():
+    print("Hello!")
+
+say_hello = decorator(say_hello)
+
+# So when you write @something above a function, you’re telling Python:
+# “Take this function and pass it to something, then replace it with the returned version.”
+
+# Decorator with Arguments
+# If your wrapped function takes arguments, your wrapper must handle them too.
+
+# Example - Timing a function
+
+import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end - start:.4f} seconds")
+        return result
+    return wrapper
+
+@timer
+def slow_function():
+    time.sleep(2)
+    print("Finished!")
+
+slow_function()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Wrappers Vs Decorators
+
+# A wrapper is the function that actually wraps another function’s behavior.
+# A decorator is the function (or syntax) that creates and applies that wrapper.
+
+# Example
+
+def decorator(func):          # <-- this is the DECORATOR
+    def wrapper(*args, **kwargs):  # <-- this is the WRAPPER
+        print("Before function call")
+        result = func(*args, **kwargs)
+        print("After function call")
+        return result
+    return wrapper
+
+# Then you apply it:
+@decorator
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Mohammed")
+
+# Output
+# Before function call
+# Hello, Mohammed!
+# After function call
+
+# So The decorator is the function that returns a wrapper, and the wrapper is the function that actually does the extra work before/after calling the original function.
+
+# wrapping the above example without a decorator
+
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet = decorator(greet)   # 👈 wrapping manually, no @
+
+
+# Why Use the @decorator Syntax?
+
+# Because it’s cleaner, clearer, and more reusable, especially when:
+# - You’re decorating many functions.
+# - You want to make your code readable at a glance.
+# - You’re using multiple decorators together.
+
+# Compare
+# Manual wrapping
+f1 = decorator(f1)
+f2 = decorator(f2)
+f3 = decorator(f3)
+
+# Vs
+@decorator
+def f1(): ...
+@decorator
+def f2(): ...
+@decorator
+def f3(): ...
+
+# Same behavior — but the @ form instantly tells the reader that a decorator is applied.
+
+# What’s Happening Internally
+
+# Even when you use the @decorator syntax, Python internally transforms it like this:
+
+@decorator
+def greet(): ...
+
+# becomes:
+greet = decorator(greet)
+
+# So, decorators are really just a more elegant way to reassign a function to its wrapped version.
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# map() function
+
+# The built-in map() function applies another function to each item in an iterable (like a list, tuple, etc.) and returns an iterator with the results.
+# i.e. map() lets you “map” a function over a collection of items.
+
+# Syntax
+map(function, iterable)
+
+# function — a function to apply to each element of the iterable.
+# iterable — the sequence (like a list or tuple) you want to process.
+
+# Returns a map object (an iterator), which you can convert to a list or loop through.
+
+# Example
+
+numbers = [1, 2, 3, 4, 5]
+
+def square(n):
+    return n ** 2
+
+result = map(square, numbers)
+
+print(result)          # <map object at 0x...>
+print(list(result))    # [1, 4, 9, 16, 25]
+
+# Example - Using lambda with map()
+# Because you often need map() for short, throwaway transformations, it’s very common to use a lambda instead of a full function definition:
+
+numbers = [1, 2, 3, 4, 5]
+result = map(lambda n: n ** 2, numbers)
+print(list(result))  # [1, 4, 9, 16, 25]
+
+# Important: map() Returns an Iterator
+# That means it doesn’t store results immediately — it lazily computes values as you loop over it.
+
+nums = [1, 2, 3]
+squares = map(lambda n: n**2, nums)
+
+for sq in squares:
+    print(sq)  # prints 1, 4, 9
+
+# After iterating once, the map object is exhausted — you’d need to recreate it to iterate again.
+
+# When to Use map() vs List Comprehension
+# These two are functionally similar:
+
+# Using map()
+squares = list(map(lambda n: n**2, [1, 2, 3]))
+
+# Using list comprehension
+squares = [n**2 for n in [1, 2, 3]]
+
+# Both produce [1, 4, 9].
+# Python developers often prefer list comprehensions for readability,
+# but map() is still useful when:
+
+# -You already have a named function to apply (str.upper, abs, etc.)
+# -You need to handle multiple iterables.
+# -You want lazy evaluation (since map() doesn’t build a list right away).
+
+# Example - converting data from strings to integers:
+
+data = ["1", "2", "3", "4"]
+numbers = list(map(int, data))
+print(numbers)  # [1, 2, 3, 4]
+
+# Example - processing user input
+
+input_data = "10 20 30"
+numbers = list(map(int, input_data.split()))
+print(numbers)  # [10, 20, 30]
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# filter() function
+
+# The filter() function in Python is used to select items from an iterable based on a condition.
+# filter() keeps only the elements for which the function you give it returns True.
+
+# Syntax
+filter(function, iterable)
+
+# function → a function that returns True or False
+# iterable → list, tuple, string, etc.
+
+# Returns a filter object → an iterator, which you usually convert to a list.
+
+# Example
+
+numbers = [1, 2, 3, 4, 5]
+evens = filter(lambda n: n % 2 == 0, numbers)
+print(list(evens)) # [2, 4]
+
+# Example - Filtering Out Empty or Falsey Values
+
+data = ["hello", "", None, "world", 0, "python"]
+clean = list(filter(None, data))
+print(clean)
+
+# Important: filter() Returns an Iterator
+
+data = filter(lambda x: x > 0, [1, -2, 3])
+print(data)  # <filter object at ...>
+print(list(data))  # [1, 3]
+
+# Once you iterate it, it’s exhausted.
+
+# When Should You Use filter()?
+#
+# Use filter() when:
+# -You want to keep only certain elements from a list.
+# -You want a clean, functional-programming style.
+# -You want lazy evaluation (filter doesn’t build a full list immediately).
+
+# Comparison: filter() vs List Comprehension
+
+# Many Python developers prefer list comprehensions:
+
+[x for x in numbers if x % 2 == 0]
+
+# This is equivalent to:
+
+list(filter(lambda x: x % 2 == 0, numbers))
+
+# Which is better?
+# -List comprehensions → more Pythonic and readable
+# -filter() → useful when:
+# --using an existing function
+# --working with functional programming
+# --processing streams/lazy data
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# reduce() function
+
+# The reduce() function repeatedly applies a function to items in an iterable, combining them into a single final value.
+# It’s the third member of the functional trio (map, filter, reduce) and the only one that reduces many values to one.
+# "Take a list and reduce it to a single result."
+
+# It is not a built-in function in Python.
+# You import it from functools:
+
+# Syntax
+reduce(function, iterable, initializer=None)
+
+# Parameters:
+
+# -function → must take two arguments
+# --first argument = accumulator
+# --second argument = next item
+# -iterable → list/tuple/etc.
+# -initializer (optional) → starting value for accumulator
+
+# How reduce() Works Internally
+
+# Given a list: [a, b, c, d]
+# reduce(func, list) does:
+
+# step 1: result = func(a, b)
+# step 2: result = func(result, c)
+# step 3: result = func(result, d)
+# final result = one value
+
+# Example — Sum All Numbers
+
+from functools import reduce
+numbers = [1, 2, 3, 4, 5]
+total = reduce(lambda acc, n: acc + n, numbers)
+print(total)
+
+
+# Example — With initializer
+
+from functools import reduce
+result = reduce(lambda acc, n: acc + n, [1, 2, 3], 10)          # it means the accumilator will start with a value of 10
+print(result)
+
+# output = 16]
+# Explanation: starts at 10 →
+# 10 + 1 + 2 + 3 = 16
+
+# Example — Longest Word
+
+from functools import reduce
+words = ["apple", "banana", "kiwi"]
+longest = reduce(lambda a, b: a if len(a) > len(b) else b, words)
+print(longest)
+
+# Example — Flatten a list of lists
+
+lists = [[1, 2], [3, 4], [5, 6]]
+flat = reduce(lambda acc, lst: acc + lst, lists)
+print(flat)
+
+# What Reduce Really Represents
+
+# It represents a powerful concept:
+# (Repeatedly combine values until only one remains.)
+# This is very common in:
+# -math (sum, product, gcd, max, min)
+# -data processing
+# -functional pipelines
+# -aggregations (totals, averages)
+
+# When to Use reduce()
+
+# Use reduce when:
+# -You want to turn many values → one result
+# -Your combining logic is not a simple built-in function
+# -You want a functional style pipeline
+
+# But note:
+# In many cases, Python has built-in functions that are clearer
+# (example: sum(), max(), min(), any(), all())
+# So reduce is most useful when the aggregation logic is custom.
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# reduce() vs map() vs filter()
+
+# | Function   | Purpose                                               |
+# | ---------- | ----------------------------------------------------- |
+# | `map()`    | Apply a function to every item (same number of items) |
+# | `filter()` | Keep only items that pass a condition                 |
+# | `reduce()` | Combine all items into one                            |
+
+# Example
+
+# [1,2,3,4,5]
+#
+# map → [2,4,6,8,10]
+# filter → [2,4]
+# reduce → 15
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Sort() and sorted()
+
+# Sort() method: used with lists (it's a list method)
+# Sorted() function: used with iterables
+
+# Sort()
+#-----------------------------------------------------------------------------------------------------------------------
+
+# The sort() method in Python is a built-in method of list objects used to sort the elements of the list in place.
+# This means it modifies the original list directly and does not return a new sorted list.
+
+# Syntax:
+
+list.sort(reverse=False, key=None)
+
+# Parameters:
+
+# reverse (optional): A boolean value. If set to True, the list is sorted in descending order. The default value is False, which sorts the list in ascending order.
+# key (optional): A function to be called on each list element prior to making comparisons. This allows for custom sorting criteria.
+
+# Example - Ascending Sort (Default).
+
+numbers = [34, 1, 9, 5, 22]
+numbers.sort()
+print(numbers)
+# Output: [1, 5, 9, 22, 34]
+
+#----------------------------------------------------
+# Example - Descending Sort.
+
+numbers = [34, 1, 9, 5, 22]
+numbers.sort(reverse=True)
+print(numbers)
+# Output: [34, 22, 9, 5, 1]
+
+#----------------------------------------------------
+# Example - Custom Sort using key.
+
+cars = [
+    {'car': 'Ford', 'year': 2005},
+    {'car': 'Mitsubishi', 'year': 2000},
+    {'car': 'BMW', 'year': 2019}
+]
+
+
+# Sort by the 'year' value of the dictionaries
+def get_year(e):
+    return e['year']
+
+
+cars.sort(key=get_year)
+print(cars)
+# Output: [{'car': 'Mitsubishi', 'year': 2000}, {'car': 'Ford', 'year': 2005}, {'car': 'BMW', 'year': 2019}]
+
+#----------------------------------------------------
+
+# Example - using Lambda as the function
+# You can use a lambda as a key in sorting.
+
+students = [
+    ("Alice", 25),
+    ("Bob", 20),
+    ("Charlie", 23)
+]
+
+# Sort by age
+students.sort(key=lambda student: student[1])
+print(students)
+# [('Bob', 20), ('Charlie', 23), ('Alice', 25)]
+
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Sorted()
+
+# Sorted() function is used with iterables
+
+# Example 1
+
+students = ("Squidward", "Sandy", "Patrick", "Spongbob", "Mr.Krabs")
+
+students = sorted(students, reverse=True)                     # sorted with tuples as well, returns a list, reverese=True makes sorting descending
+
+print(students)
+
+# Example 2 - list of tuples
+
+students = [("Squidward", "F", 60),
+            ("Sandy", "A", 33),
+            ("Patrick", "D", 33),
+            ("Spongbob", "B", 20),
+            ("Mr.Krabs", "C", 78)]
+
+students.sort(key=lambda grades:grades[1], reverse=True)         # sort here works because students is a list of tuples, but not a tuple itself
+
+print(students)
+
+# Example 3 - tuple of tuples
+
+students = (("Squidward", "F", 60),
+            ("Sandy", "A", 33),
+            ("Patrick", "D", 33),
+            ("Spongbob", "B", 20),
+            ("Mr.Krabs", "C", 78))
+
+students_sorted = sorted(students, key=lambda grades:grades[1], reverse=False)
+
+print(students_sorted)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# time module
+
+import time
+
+#--------displaying time--------
+print(time.ctime(0))                                              # ctime() converts a time expressed in seconds to readable string, when putting () empty it will display the current time, when putting 0 it will print the epoch: which is when your computer thinks time began (reference point)
+print(time.time())                                                # returns current seconds since epoch started
+print(time.ctime(time.time()))                                    # time.time() will print the amount of seconds since epoch and time.ctime() will convert those seconds to a readable format for the current date and time
+
+
+#--------formatting time--------
+time_object = time.localtime()                                    # time.localtime() will create a time object based on the current time
+time_object = time.gmtime()                                       # converts your time to GMT/UTC standard time
+local_time = time.strftime("%B %d %Y %H:%M:%S", time_object)      # strftime() stands for string format time, used to format time, syntax time.strftime(format, your_time) format argument will use keywords for formatting which is found here: https://docs.python.org/3/library/time.html
+
+
+#--------parsing time-----------
+time_string = "20 April, 2020"                                    # this will be converted by using the correct keys for each in strptime()
+time_object = time.strptime(time_string, "%d %B, %Y")             # strptime() stands for string parse time, which will parse a string representation of a time/date and returns a time object
+
+
+#--------converting tuple to time-----------
+time_tuple = (2020, 4, 20, 4, 20, 0, 0, 0, 0)                     # (year, month, day, hours, minutes, seconds, day_of_week, day_of_year, daylight_savings_time)
+time_string = time.asctime(time_tuple)                            # time.asctime() accepts a time object or a tuple representation of time, it will convert it to a readable string, ex. Mon Apr 20 04:20:00 2020
+print(time_string)
+
+
+#--------converting tuple to seconds since epoch-----------
+time_tuple = (2020, 4, 20, 4, 20, 0, 0, 0, 0)
+time_string = time.mktime(time_tuple)                             # time.mktime() takes a time object or tuple representation of time and converts it to seconds since epoch
+print(time_string)
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -3926,7 +5006,7 @@ paddle2 = Paddle()
 paddle2.paddle_creation(-590, 0)
 
 
-keys = {"Up": False, "Down": False, "w": False, "s": False}         #keys are being used as toggles, they will be changed to True when the key is pressed, and False when not pressed
+keys = {"Up": False, "Down": False, "w": False, "s": False}         # keys are being used as toggles, they will be changed to True when the key is pressed, and False when not pressed
 
 def key_press(key):
     keys[key] = True                                                # this is setting the key "up" for example to True, allowing the movement to happen when the value is Evaluated to be True in the main loop
@@ -4099,6 +5179,184 @@ class Scoreboard(Turtle):
     def right_point(self):
         self.score_right += 1
         self.update_score()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Pong Game (my code)
+# OOP, Inheritence, Without lambda, Wrapper Functions
+# Ball Speeding
+
+#------------------------------------------File: main.py----------------------------------------------------------------
+
+import time
+from turtle import Screen, Turtle
+
+from ball import Ball
+from scoreboard import Scoreboard
+from paddle import Paddle
+
+
+
+screen = Screen()
+screen.setup(1200, 800)
+screen.bgcolor('black')
+screen.tracer(0)
+
+paddle1 = Paddle()
+paddle1.paddle_creation(580, 0)
+
+paddle2 = Paddle()
+paddle2.paddle_creation(-590, 0)
+
+
+keys = {"Up": False, "Down": False, "w": False, "s": False}         #keys are being used as toggles, they will be changed to True when the key is pressed, and False when not pressed
+
+def key_press(key):
+    keys[key] = True                                                # this is setting the key "up" for example to True, allowing the movement to happen when the value is Evaluated to be True in the main loop
+
+
+def key_release(key):
+    keys[key] = False                                               # this is setting the key "up" for example to False, stopping the movement to happen when the value is Evaluated to be False in the main loop
+
+
+screen.listen()
+
+#--------------------------------------------------------
+
+# Original Code with Lambda
+
+# screen.onkeypress(lambda: key_press("Up"), "Up")                # lambda in Python creates a tiny unnamed function on the fly. It lets you pass arguments into functions for event handlers, without calling them immediately.
+# screen.onkeyrelease(lambda: key_release("Up"), "Up")            # what lambda is doing here is basically: “When the Up key is pressed, run this little function that calls key_press("Up").” Python doesn’t execute it right away — it just saves that tiny function to be triggered later.
+#
+# screen.onkeypress(lambda: key_press("Down"), "Down")            # without lambda for example: ```screen.onkeypress(key_press("Up"), "Up")``` this calls the function immediately when Python reads the line, instead of waiting for the key press. That’s not what we want.
+# screen.onkeyrelease(lambda: key_release("Down"), "Down")
+#
+# screen.onkeypress(lambda: key_press("w"), "w")
+# screen.onkeyrelease(lambda: key_release("w"), "w")
+#
+# screen.onkeypress(lambda: key_press("s"), "s")
+# screen.onkeyrelease(lambda: key_release("s"), "s")
+
+#--------------------------------------------------------
+
+# Code without Lambda (much longer)
+
+# What Happened is that:
+# 1. screen.onkeypress(Func, Key) expects a function object, not a function call, i.e. takes a function without calling it like key_press, we wanted to pass an argument to it but we can't with normal functions because key_press("Up") will execute it right away, so we have to create a function then execute key_press("Up") inside it, lambda does this in one line with a temporary function that executes key_press("Up") and pass an argument in it all in the same line, and because lambda is a function without a caller (), it won't be executed right away, so the function with the argument inside it won't be executed, without lambda, we will have to create 8 separate functions and execute Key_press("Up") in them with the passed argument ("Up") this makes the lines much longer
+# 2. onkeypress() is a higher-order function — it takes another function (lambda) as an argument.
+# 3. lambda: key_press("Up") is a Callback function
+# 4. A callback function is: A function that is passed as an argument to another function and is intended to be called later by that function when a specific event happens or when a certain condition is met.
+# 5. Lambda acts as a wrapper around key_press
+# 6. A wrapper in programming is a concept where one function “wraps around” another function to add, modify, or control its behavior without changing the original function’s code.
+#    here: screen.onkeypress(lambda: key_press("Up"), "Up")
+#    lambda: key_press("Up") is a wrapper around key_press("Up"). Why? Because:
+#    1. onkeypress() requires a no-argument function.
+#    2. key_press("Up") needs an argument.
+#    So the lambda “wraps” key_press("Up") to adapt it for onkeypress:
+
+# for paddle 1
+# creating functions
+
+def press_up():
+    key_press("Up")
+
+def release_up():
+    key_release("Up")
+
+def press_down():
+    key_press("Down")
+
+def release_down():
+    key_release("Down")
+
+# Then assign them:
+screen.onkeypress(press_up, "Up")
+screen.onkeyrelease(release_up, "Up")
+screen.onkeypress(press_down, "Down")
+screen.onkeyrelease(release_down, "Down")
+
+
+# for paddle 2
+# creating functions
+
+def press_up():
+    key_press("w")
+
+def release_up():
+    key_release("w")
+
+def press_down():
+    key_press("s")
+
+def release_down():
+    key_release("s")
+
+# Then assign them:
+screen.onkeypress(press_up, "w")
+screen.onkeyrelease(release_up, "w")
+screen.onkeypress(press_down, "s")
+screen.onkeyrelease(release_down, "s")
+
+#--------------------------------------------------------
+
+
+scoreboard = Scoreboard()
+ball = Ball()
+
+line = Turtle()
+line.color("white")
+line.speed(0)
+line.penup()
+line.hideturtle()
+line.goto(0, 400)
+line.setheading(-90)
+for _ in range(40):
+    line.pendown()
+    line.forward(10)
+    line.penup()
+    line.forward(10)
+
+game_on = True
+while game_on:
+    screen.update()
+    time.sleep(0.02)
+    ball.move()
+
+    if ball.ycor() > 380 or ball.ycor() < -380:
+        ball.bounce_y()
+
+    if ball.xcor() > 550 and ball.distance(paddle1.paddles[0]) < 100:
+        ball.bounce_x()
+
+    if ball.xcor() < -550 and ball.distance(paddle2.paddles[0]) < 100:
+        ball.bounce_x()
+
+    if ball.xcor() > 600:
+        ball.reset_ball()
+        scoreboard.left_point()
+
+    if ball.xcor() < -600:
+        ball.reset_ball()
+        ball.goto(0,0)
+        scoreboard.right_point()
+
+    if keys["Up"]:                              # here when the key is evaluated to be True, "after it was changed by the key_press function" it will trigger the movement", and once it gets False "after it was changed by the key_release function" it will stop the movement.
+        paddle1.up()
+    if keys["Down"]:
+        paddle1.down()
+
+    if keys["w"]:
+        paddle2.up()
+    if keys["s"]:
+        paddle2.down()
+
+screen.exitonclick()
+
+# Unchanged files
+#------------------------------------------File: paddle.py--------------------------------------------------------------
+#------------------------------------------File: ball.py----------------------------------------------------------------
+#------------------------------------------File: scoreboard.py----------------------------------------------------------
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -4528,6 +5786,9 @@ class CarManager:
 #Modules
 #breaking up the code accross multiple files, each file is called a module and it should contain all the related functions and classes, it is good for better code orginizaion and reusabilty
 
+# to see the list of all available modules python has, use:
+help("modules")
+
 #------------------------------------------File: Converters.py----------------------------------------------------------
 def lbs_to_kg(weight):
     return weight * 0.45
@@ -4591,7 +5852,7 @@ ecommerce.shipping.calc_shipping() #usuing the function, syntax: package.module.
 
 #2
 #single function
-from ecommerce.shipping import calc_shipping #using from to import only the functio
+from ecommerce.shipping import calc_shipping #using from to import only the function
 calc_shipping() #functions can be called directly now
 
 #multiple functions
@@ -4675,6 +5936,13 @@ with open("my_file.txt") as file:
     contents = file.read()
     print(contents)
 
+#opening a file using with and checking if it's closed after
+
+with open("my_file.txt") as file:
+    print(file.read())
+print(file.closed)                      # this will return True if the file is closed
+
+# Writing to a file
 
 with open("my_file.txt", mode="a") as file:             # default open mode is ready only: mode="r", and mode="w" means open file in write mode (will replace everything), to add to file without replace use mode="a" which stands for append
     file.write("\nNew text.")
@@ -4682,6 +5950,51 @@ with open("my_file.txt", mode="a") as file:             # default open mode is r
 
 with open("new_file.txt", mode="w") as file: # if new_file.txt doesn't exist, it will create that file for you, only works with write mode "w"
     file.write("\nNew text.")
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Copying a file
+
+import shutil
+
+# copyfile()                    # copies contents of a file
+# copy()                        # copyfile() + permission mode + destination can be a directory
+# copy2()                       # copy() + copies metadata (file's creation and modification times)
+
+shutil.copyfile("my_file.txt", "C:\\Users\\Mohammad Tareq\\Desktop\\my_file.txt")       # copy() and copy2() arguments are exactly the same as this
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Moving a file
+
+import os
+
+source = "C:\\test.txt"
+destination = "C:\\Users\\Mohammad Tareq\\Desktop\\test.txt"
+
+try:
+    if os.path.exists(destination):
+        print("There is already a file there")
+    else:
+        os.replace(source, destination)                     # moving a file, works with folders too
+        print(source+" was moved")
+except FileNotFoundError:
+    print(source+" was not found")
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Deleting a file or a directory
+
+import os
+import shutil
+
+path = "test.txt"
+path_folder = "folder"
+path_folder_with_files = "folder_with_files"
+
+os.remove(path)                             # deletes a file
+os.rmdir(path_folder)                       # deletes an empty directory
+shutil.rmtree(path_folder_with_files)       # deletes a directory with its files, DANGEROUS
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -4822,6 +6135,28 @@ print(path.rmdir()) # to remove the directory
 path1 = Path()
 for file in path1.glob('*.py'): # this method returns a generator object, with it you can search for the files and directories in the current path, '*' Means everything, '*.*' will get all the files without the directories, '*.py' search all the files with the .py extionsion
     print(file) #this loop will return all .py files
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# File Detection
+
+import os
+
+path = "C:\\Users\\Mohammad Tareq\\Desktop\\text.txt"                                      # adding a second backslash \, which acts as an escape sequence for a backslash within a string
+path_folder = "C:\\Users\\Mohammad Tareq\\Desktop\\Apps"
+
+
+if os.path.exists(path):                                                  # checks if a file exists
+    print("That location exists")
+    if os.path.isfile(path):                                              # checks if the path is for a file
+        print("That file is a file")
+    if os.path.isdir(path_folder):                                        # checks if the path is for a directory
+        print("That folder is a directory")
+    else:
+        print("That folder does not exist")
+
+else:
+    print("it doesn't exist")
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -5996,6 +7331,18 @@ with open("file1.txt") as file_1, open("file2.txt") as file_2:                  
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# if else Conditional list Comprehension (multiple output)
+
+# syntax: new_list = [expression if condition else expression_2 for item in iterable ]
+
+students = [100, 90, 80, 70, 60, 50, 40, 30, 0]
+
+passed_students = [i if i >= 60 else "FAILED" for i in students]
+
+print(passed_students)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # US States Game line Improvement with list comprehension (based on her code)
 
 # Old lines
@@ -6055,6 +7402,30 @@ weather_c = {
 weather_f = {day:(temp * 9/5) + 32 for (day, temp) in weather_c.items()}
 
 print(weather_f)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# if else Conditional dictionary Comprehension (multiple output)
+
+cities = {'New York': 32, 'Boston':75, 'Los Angeles':100, 'Chicago': 50}
+desc_cities = {key: ("Warm" if value >= 40 else "cold") for (key, value) in cities.items()}
+print(desc_cities)
+
+
+# using a function with dictionary Comprehension
+
+cities = {'New York': 32, 'Boston':75, 'Los Angeles':100, 'Chicago': 50}
+
+def check_temp(value):
+    if value >70:
+        return "hot"
+    elif 69 >= value >= 40:
+        return "warm"
+    else:
+        return "cold"
+
+desc_cities = {key: check_temp(value) for (key, value) in cities.items()}
+print(desc_cities)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -6299,18 +7670,41 @@ for key, value in my_dict.items():              # iterating through the items li
 
 # zip()
 
+# aggregates elements from two or more iterables (list, tuples, sets, etc)
+# creates a zip object with paired elements stored in tuples for each element
 # it iterates the first with the first, 2nd with 2nd of each list, and omits extra items (when strict=False) if one of the lists contains more items (i.e. different lengths), in the example below, 'd' was omitted because list_1 doesn't have a 4th item
 # syntax zip(*iterables, strict=False)
 # *iterables: One or more iterables (such as lists, tuples, or strings) to be zipped together. This is a required argument.
 # strict: (Optional) A boolean value. If set to True, it raises a ValueError if the iterables (like in the example below) have different lengths. The default value is False.
 
-# Example
+# Example -1
 
 list1 =[1, 2, 3]
 list2 =['a', 'b', 'c', 'd']
 result =[(x, y) for x, y in zip(list1, list2)]              # or zip(list1, list2, strict=False)
 print(result)
 
+
+# Example - 2
+
+usernames = ["Dude", "Bro", "Mister"]
+passwords = ("p@sswords", "abc123", "guest")
+
+users = zip(usernames, passwords)       # can cast it as list() or dict
+
+
+for i in users: print(i)            # will print the tuple of the pairs
+for i, j in users: print(i, j)      # this will print all values separately (works with normal lists two)
+
+# Example - 3 - more than 2 iterables
+
+usernames = ["Dude", "Bro", "Mister"]
+passwords = ("p@sswords", "abc123", "guest")
+login_date = ["1/1/2021", "1/2/2021", "1/3/2021"]
+
+users = zip(usernames, passwords, login_date)
+
+for i in users: print(i)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -6573,6 +7967,181 @@ hash([1, 2, 3])   # TypeError: unhashable type: 'list'
 # | Collections/Types module  | 8                            |
 # | **Total (core + stdlib)** | **≈ 40 built-in data types** |
 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# if __name__ = __main__
+
+
+# __name__ is a special variable Python sets automatically.
+# When you run a file directly (e.g., python script.py), Python sets __name__ to "__main__".
+# When the file is imported as a module, __name__ is set to the module’s name instead.
+
+# -Use this block for things like:
+# --Running tests
+# --Running example usage
+# --Preventing certain code from executing on import
+
+
+#-------------------------------------------------File: app.py----------------------------------------------------------
+
+
+def function():
+    print("Hello")
+
+
+if __name__ == "__main__":          # with this we're checking if the module is running directly or indirectly
+    print("Running directly")
+    function()
+else:
+    print("running indirectly")
+
+#----------------------------------------------File: module_2.py--------------------------------------------------------
+
+import app
+
+print(__mame__)                     # this will print __main__ of module_2.py when its run
+print(app.__name__)                 # this will print the app.py name that's being run indirectly
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# multi-threading
+
+# thread = a flow of execution, like a separate order of instructions
+#               each thread takes a turn running to achieve concurrency
+#               GIL = (Global interpreter lock)
+#               allows only one thread to hold the control of the python interpreter at any one time
+
+# programs and tasks are divided to two categories
+
+# 1. cpu bound = program/task spends most of its time waiting for internal events (CPU intensive)
+#                use multiprocessing
+
+# 2. io bound = program/task spends most of its time waiting for external events (user input, web scraping)
+#                use multithreading
+
+import threading
+import time
+
+def eat_breakfast():
+    time.sleep(3)
+    print("You ate breakfast")
+
+def drink_coffee():
+    time.sleep(4)
+    print("You drank coffee")
+
+def study():
+    time.sleep(5)
+    print("You finish studying")
+
+thread_1 = threading.Thread(target=eat_breakfast, args=())     # add a function to a thread
+thread_1.start()
+
+thread_2 = threading.Thread(target=drink_coffee, args=())
+thread_2.start()
+
+thread_3 = threading.Thread(target=study, args=())
+thread_3.start()
+
+thread_1.join()                         # thread synchronization: joining thread_1 with main thread will mean that the main thread will not continue its execution until this thread is finished.
+thread_2.join()
+thread_3.join()
+
+print(threading.active_count())                 # prints current active threads
+print(threading.enumerate())                    # MainThread is responsible for running our program (one thread) when running without multithreading
+print(time.process_time())                      # will print the process duration
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Daemon thread = a thread that runs in the background, not important for a program to run
+#                 your program will not wait for daemon threads to complete before exiting
+#                 non-daemon threads cannot normally be killed, will stay alive, until task is complete
+
+#                 ex. background tasks, garbage collection, waiting for input, long-running processes
+
+# TL:DR: daemon threads will stop once the main thread stops, non-daemon threads will not
+
+import threading
+import time
+
+
+def timer():
+    print()
+    count = 0
+    while True:
+        time.sleep(1)
+        count += 1
+        print("logged in for ", count, "seconds")
+
+
+thread_1 = threading.Thread(target=timer, daemon=True)          # daemon=True, that's all we need to make a normal thread a daemon :D
+thread_1.daemon = True                                          # another way to set a daemon
+thread_1.start()
+
+print(thread_1.daemon)                                         # checks if the thread is a daemon or not
+
+answer = input("Do you wish to exit?\n")
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# multi-processing
+
+# mult-processing = running tasks in parallel on different cpu cores, bypasses GIL used for threading
+#                   multiprocessing = better for cpu bound tasks (heavy cpu usage)
+#                   multithreading = better for io bound tasks (waiting around)
+
+
+from multiprocessing import Process, cpu_count
+import time
+
+def counter(num):
+    count = 0
+    while count < num:
+        count += 1
+
+def main():
+    print(cpu_count())          # returns the number of cpu cores you can run separate processes on
+
+    start_time = time.perf_counter()
+
+    process_1 = Process(target=counter, args=(125_000_000,))          # creating a process, args takes a tuple, so we add (num,) to differentiate it from an expression
+    process_2 = Process(target=counter, args=(125_000_000,))          # counting to one billion, can increase the processors to increase the processing speed i.e. counting speed
+    process_3 = Process(target=counter, args=(125_000_000,))
+    process_4 = Process(target=counter, args=(125_000_000,))
+    process_5 = Process(target=counter, args=(125_000_000,))
+    process_6 = Process(target=counter, args=(125_000_000,))
+    process_7 = Process(target=counter, args=(125_000_000,))
+    process_8 = Process(target=counter, args=(125_000_000,))
+
+    process_1.start()
+    process_2.start()
+    process_3.start()
+    process_4.start()
+    process_5.start()
+    process_6.start()
+    process_7.start()
+    process_8.start()
+
+    process_1.join()                                                    # process synchronization
+    process_2.join()
+    process_3.join()
+    process_4.join()
+    process_5.join()
+    process_6.join()
+    process_7.join()
+    process_8.join()
+
+
+
+    end_time = time.perf_counter()
+    print("finished in", start_time-end_time, "seconds")
+
+if __name__ == '__main__':
+    main()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
