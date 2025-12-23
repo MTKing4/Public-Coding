@@ -4076,6 +4076,21 @@ print(age_check(18))
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# nested functions
+
+def outer_function():
+    print("i'm outer")
+
+    def nested_functions():         # nested function, can't be called from outside
+        print("i'm inner")
+
+    return nested_functions         # returning the nested function so that we can call it from the outer scope
+
+inner_function = outer_function()   # the result of outer_function() now is the nested function, and is now stored in inner_function(), which can be called the outer scope
+inner_function()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Wrappers
 
 # A wrapper in programming is a concept where one function “wraps around” another function to add, modify, or control its behavior without changing the original function’s code.
@@ -9743,3 +9758,117 @@ driver.close()                  # closes the tab
 driver.quit()                   # quits the entire browser
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Flask framework for Web Developement
+
+# Notes
+# 1. type in terminal> set FLASK_APP=module_name.py to add it as an enviroment variable
+# 2. type in terminal> flask run to run the server
+
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"       # it accepts HTML tags directly
+
+@app.route("/bye")
+def say_hi():
+    return "bye"
+
+@app.route("/username/<name>")          # Variable URLs: <name> is how you declare a variable in the url that will get passed to the function
+def greet(name):
+    return f"Hello {name+2}"
+
+
+@app.route("/email/<path:email>")       # converter, syntax: <converter:variable>, basically static typing, by default without a converter the type is string, when type is path, whatever is typed in the url will be included in the variable, ex. /email/mohammad/2, the variable will be mohammad/2
+def inbox(email):
+    return f"Hello {email}"
+
+@app.route("/phone/<name1>/<int:number>")       # Multiple variables
+def call(name1, number):
+    return f"Hello {name1} {number}"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)               # this equates to flask run, now IDE buttons for starting and stopping the code will run and close the server, adding debud=True will enable the debugger, automatic reloader, and debug mode on flask app
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# her Flask Project
+
+from flask import Flask
+
+app = Flask(__name__)
+
+#Decorators to add a tag around text on web page.
+def make_bold(function):
+    def wrapper():
+        return "<b>" + function() + "</b>"
+    return wrapper
+
+def make_emphasis(function):
+    def wrapper():
+        return "<em>" + function() + "</em>"
+    return wrapper
+
+def make_underlined(function):
+    def wrapper():
+        return "<u>" + function() + "</u>"
+    return wrapper
+
+@app.route('/')
+def hello_world():
+    #Rendering HTML Elements
+    return '<h1 style="text-align: center">Hello, World!</h1>' \
+           '<p>This is a paragraph.</p>' \
+           '<img src="https://media.giphy.com/media/hvS1eKlR75hMr0l7VJ/giphy.gif" width=200>'
+
+
+#Different routes using the app.route decorator
+@app.route("/bye")
+@make_bold                  # can have multiple decorators
+@make_emphasis
+@make_underlined
+def bye():
+    return "Bye!"
+
+
+#Creating variable paths and converting the path to a specified data type
+@app.route("/username/<name>/<int:number>")
+def greet(name, number):
+    return f"Hello there {name}, you are {number} years old!"
+
+
+if __name__ == "__main__":
+    #Run the app in debug mode to auto-reload
+    app.run(debug=True)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Decorators with args and kwargs
+
+## ********Day 55 Start**********
+## Advanced Python Decorator Functions
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.is_logged_in = False
+
+def is_authenticated_decorator(function):
+    def wrapper(*args, **kwargs):           # wrapper adding *args and *kwargs because it's wrapping around a function that needs an argument
+        if args[0].is_logged_in == True:    # args[0] means get the first positional argument, here we're passing the object attribute from the user class, user.is_logged_on won't work here because it's out of scope so it needs to be passed in
+            function(args[0])
+    return wrapper
+
+@is_authenticated_decorator
+def create_blog_post(user):                 # this function needs an argument
+    print(f"This is {user.name}'s new blog post.")
+
+new_user = User("angela")
+new_user.is_logged_in = True
+create_blog_post(new_user)
