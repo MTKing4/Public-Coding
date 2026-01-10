@@ -1,0 +1,173 @@
+/* CSS Notes */
+
+/* CSS Selector Types */
+
+
+/* 1. Selects all elements */
+
+* {
+  margin: 0;
+}
+
+
+/* 2. Element Selector */
+
+p { color: red; }
+div { padding: 10px; }
+
+/* select only <p> elements with class="center" will be red and center-aligned:  */
+p.center {
+  text-align: center;
+  color: red;
+}
+
+/* 3. Class Selector */
+
+.box { border: 1px solid black; }
+
+
+/* 4. ID Selector */
+
+#header { background: blue; }
+
+/* 5. Attribute Selectors */
+
+    /* 1) Has attribute */
+        input[required]
+
+    /* 2) Exact value */
+        input[type="text"]
+
+    /* 3) Contains word */
+        div[class~="box"]
+    
+    /* 4) Starts with */
+        a[href^="https"]
+    
+    /* 5) Ends with */
+        img[src$=".png"]
+    
+    /* 6) Contains substring */
+        a[href*="google"]
+
+
+/* 6. Grouping Selector */
+    /* Apply same style to multiple selectors */
+
+h1, h2, h3 {
+  font-family: Arial;
+}
+
+
+/* 7 Descendant Selector */
+    /* Selects any child at any level */
+
+div p {
+  color: green;
+}
+
+
+/* 8. Child Selector */
+    /* Selects direct children only */
+
+ul > li {
+  list-style: none;
+}
+
+/* 9. Adjacent Sibling Selector */
+    /* Selects the immediately next sibling */
+
+h1 + p {
+  margin-top: 0;
+}
+
+/* 10. General Sibling Selector */ 
+    /* Selects all following siblings */
+
+h1 ~ p {
+  color: gray;
+}
+
+/* 11. Pseudo-classes */
+    /* Select elements based on state or position */
+
+
+    /* Common ones: */
+        :hover
+        :active
+        :focus
+        :visited
+        :checked
+        :disabled
+        :enabled
+
+    /* Structural: */
+        :first-child
+        :last-child
+        :nth-child(2)
+        :nth-child(even)
+        :nth-of-type(3)
+        :only-child
+
+    /* Logic: */
+        :not(.active)
+
+
+/* 12. Pseudo-elements */
+     /* Select parts of elements */
+        ::before
+        ::after
+        ::first-letter
+        ::first-line
+        ::selection
+    
+/* e.x     */
+
+p::first-letter {
+font-size: 2em;
+}
+
+
+ /* 13. Combinators (Summary) */
+
+ /*
+ Symbol   |   Meaning
+------------------------
+ "space"  |   Descendant
+  >       |   Child
+  +       |   Adjacent sibling
+  ~       |   General sibling
+*/
+
+/* 14. Compound Selectors */
+    /* Multiple selectors combined */
+
+div.box#main[data-type="card"]
+
+
+/* 15. :is(), :where(), :has() (Modern CSS) */
+
+     /* :is() */
+        :is(h1, h2, h3) {
+          color: red;
+        }
+
+     /* :where() (no specificity) */
+        :where(section, article) {
+        margin: 20px;
+        }
+
+     /* :has() (parent selector!) */
+        div:has(img) {
+        border: 2px solid red;
+        }
+
+
+ /* 16. Namespace Selectors (Rare) */
+     /* Used mainly in SVG/XML */
+
+svg|circle {                /* selects <circle> elements inside the SVG namespace <svg> */
+      fill: red;
+      stroke: black;
+      stroke-width: 3;
+    }

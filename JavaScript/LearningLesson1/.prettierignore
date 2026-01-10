@@ -1,0 +1,6 @@
+"files.exclude": {
+    "**/All_Codes_Commented.js": true
+},
+"search.exclude": {
+    "**/All_Codes_Commented.js": true
+}
