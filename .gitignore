@@ -1,91 +1,35 @@
-/.idea/**/workspace.xml
-/.idea/**/tasks.xml
-/.idea/**/usage.statistics.xml
-/.idea/**/dictionaries
-/.idea/**/shelf
-/.idea/**/contentModel.xml
-/*.iws
-/*.iml
-/*.xml
-/__pycache__/
-/*.pyc
-/venv/
-/.venv/
-/env/
-/.env/
-/.DS_Store
-/Thumbs.db
-/.env
-/.env.*
-/build/
-/dist/
-/*.egg-info/
-Python/PycharmProjects/LearningLesson1/.idea/LearningLesson1.iml
-Python/PycharmProjects/LearningLesson1/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/Turtle Crossing Game/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/.idea/modules.xml
-Python/PycharmProjects/Turtle Crossing Game/.idea/Turtle Crossing Game.iml
-Python/PycharmProjects/Turtle Crossing Game/.idea/vcs.xml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/misc.xml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/__pycache__/car_manager.cpython-313.pyc
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/__pycache__/player.cpython-313.pyc
-Python/Visual Studio Code/Excel Automation/.idea/Excel Automation.iml
-Python/Visual Studio Code/Excel Automation/.idea/inspectionProfiles/profiles_settings.xml
-Python/Visual Studio Code/Excel Automation/.idea/misc.xml
-Python/Visual Studio Code/Excel Automation/.idea/vcs.xml
-Python/Visual Studio Code/Excel Automation/.idea/modules.xml
+.idea/
+*.iws
+*.iml
+*.xml
+__pycache__/
 *.pyc
-Python/PycharmProjects/LearningLesson1/.idea/misc.xml
-/Python/PycharmProjects/LearningLesson1/.idea
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/turtle-crossing-game-mt.iml
-Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea/turtle-crossing-game-mt.iml
-/Python/PycharmProjects/Turtle Crossing Game/turtle-crossing-game-mt/.idea
-Python/PycharmProjects/Mile-to-km-converter-gui/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/Mile-to-km-converter-gui/.idea/vcs.xml
-Python/PycharmProjects/Mile-to-km-converter-gui/.idea/modules.xml
-Python/PycharmProjects/Mile-to-km-converter-gui/.idea/misc.xml
-Python/PycharmProjects/Mile-to-km-converter-gui/.idea/Mile-to-km-converter-gui.iml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.idea/misc.xml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.idea/modules.xml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.idea/pomodoro-ang.iml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.idea/vcs.xml
-Python/PycharmProjects/pomodoro/pomodoro-mt/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/pomodoro/pomodoro-mt/.idea/misc.xml
-Python/PycharmProjects/pomodoro/pomodoro-mt/.idea/modules.xml
-Python/PycharmProjects/pomodoro/pomodoro-mt/.idea/pomodoro-mt.iml
-Python/PycharmProjects/pomodoro/pomodoro-mt/.idea/vcs.xml
-Python/PycharmProjects/pomodoro/pomodoro-ang/.DS_Store
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang/.idea/misc.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang/.idea/modules.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang/.idea/password-manager-gui-ang.iml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang/.idea/vcs.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/misc.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/vcs.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/workspace.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/data.txt
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.idea/inspectionProfiles/profiles_settings.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.idea/misc.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.idea/modules.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.idea/password-manager-gui-ang-improved.iml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/.idea/vcs.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/poetry.lock
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-ang-improved/pyproject.toml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/data.json
+/.venv/
+.env/
+/Thumbs.db
+build/
+dist/
+*.egg-info
+*.pyc
 *.xml
 *.iml
-Python/PycharmProjects/Day-48/chromedriver.exe
-Python/PycharmProjects/us-states-game/us-states-game-mt/.idea/us-states-game.iml
-Python/PycharmProjects/us-states-game/us-states-game-mt/.idea/misc.xml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/password-manager-gui-mt.iml
-Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/.idea/modules.xml
-Python/PycharmProjects/LearningLesson1/ecommerce/__pycache__/__init__.cpython-313.pyc
-Python/PycharmProjects/us-states-game/us-states-game-mt/.idea/us-states-game.iml
-/Python/PycharmProjects/snake-game/__pycache__/
-/Python/PycharmProjects/pong-game/pong-game-ang/__pycache__/*
+**/chromedriver.exe
+*.DS_Store
+*.lock
+*.toml
+Python/PycharmProjects/Password Manager GUI/password-manager-gui-mt/data.json
+debug/
+*.exe
+*.obj
+*.pdb
+*.vsidx
+*.vcxproj
+v18/
+.vs/
+*.user
+*.filters
+*.slnx
+*.ilk
+.vscode/
+Python/PycharmProjects/snake-game-high-score/data.txt
+Python/PycharmProjects/snake-game-high-score/data.txt
