@@ -84,8 +84,8 @@ str() #converts a value to a string#
 
 #Substrings (string slicing)
 print("Hello"[0]) #slicing is using square brackets to print specific letters based on the index number between the brackets (index number = the position/order of the letter in the string)
-print("Meow Bitcha"[1:-1:2]) # Syntax [start:stop:step]
-print("Meow Bitcha"[::-1]) # reveres the string
+print("Meow Becca"[1:-1:2]) # Syntax [start:stop:step]
+print("Meow Becca"[::-1]) # reveres the string
 
 # or use the slice() function, the benefit of it is that it's reusable
 
@@ -1285,7 +1285,7 @@ customer.clear()                                        # remove everything, ret
 print(customer.items())
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#dictionaries exersice (very Fucking hard, i failed) Teacher's Code
+#dictionaries exersice (very hard, i failed) Teacher's Code
 phone = (input("Phone: "))
 numbers = {
     "1": "One",
@@ -1458,7 +1458,7 @@ print(f"{winner} wins")
 
 #from replit import clear                   # this only works on her stupid interactive course
 
-#from art import logo                       # not gonna bother with this shit, it's just art
+#from art import logo                       # not gonna bother with this, it's just art
 
 
 bids = {}
@@ -1471,7 +1471,7 @@ def find_highest_bidder(bidding_record):
     for bidder in bidding_record:
         bid_amount = bidding_record[bidder]                             # she stored the value in a variable so that it uses it  in the comparision instead of the dictionary index iteslf (smart)
         if bid_amount > highest_bid:
-            highest_bid = bid_amount                                    # now we can assign the value of the dictionary in a different variable (an integer) without facing a problem, because using the dictionary index here instead of the variable highest_bid will change the value which is not what we want (very fucking smart, i think)
+            highest_bid = bid_amount                                    # now we can assign the value of the dictionary in a different variable (an integer) without facing a problem, because using the dictionary index here instead of the variable highest_bid will change the value which is not what we want (very smart, i think)
             winner = bidder                                             # winner here is string (smart) yet another variable, so we made 2, one string for the key and one integer for the value ( my stupid code used one variable "winner" and i used two for loops to solve the problem (code was longer and harder to understand)
     print(f"the winner is {winner} with a bid of ${highest_bid}")
 
@@ -1801,7 +1801,7 @@ def is_leap(year):
     useful for documenting your functions,
     Awesome stuff"""
 
-    if year % 4 == 0:                               #chatGPT is so fucking smart, it made a much shorter version for this function than mine: return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+    if year % 4 == 0:                               #chatGPT is so smart, it made a much shorter version for this function than mine: return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
         if year % 100 == 0:
             if year % 400 == 0:
                 return True
@@ -1827,7 +1827,7 @@ print(days)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#calcuator (my code, a million times better than hers, hers is fucking trash and reta- never mind, hers is better) (super fucking easy, I finished it in the first 10 seconds of the video GG EZ :D )
+#calcuator (my code, a million times better than hers, hers is trash and reta- never mind, hers is better) (super easy, I finished it in the first 10 seconds of the video GG EZ :D )
 
 num1 = int(input("first number: "))
 num2 = int(input("second number: "))
@@ -2080,7 +2080,7 @@ prime_checker(number=n)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#Prime Number Checker function exersice (her code, it's better but it's Absolutely retarded, cuz it was WRONG, i fixed it :) )
+#Prime Number Checker function exersice (her code, it's better but it's Absolutely bad, cuz it was WRONG, i fixed it :) )
 
 def prime_checker(number):
     is_prime = True
@@ -3365,7 +3365,7 @@ def right():
 
 def clear():
     tim.clear()
-    tim.reset()             #can also use tim.home() but it's shittier, needs penup and pendown because it paint's on the way back
+    tim.reset()             #can also use tim.home() but it's worse, needs penup and pendown because it paint's on the way back
 
 
 screen.listen()
@@ -6298,12 +6298,12 @@ import pandas
 
 data = pandas.read_csv("Squirrel-Data.csv")
 fur = data["Primary Fur Color"]
-fur_colors = fur.value_counts()                                         # this function one handedly did all the work that retarded teacher did (get all the unique values and their count)
+fur_colors = fur.value_counts()                                         # this function one handedly did all the work that bad teacher did (get all the unique values and their count)
 colors_DF = pandas.DataFrame(fur_colors)
 colors_DF.to_csv("squirrel_count.csv")
 
 
-# Squirrel count (her code) (absolutely retarded, I did it with 1 function)
+# Squirrel count (her code) (absolutely bad, I did it with 1 function)
 
 import pandas
 
@@ -6331,13 +6331,13 @@ import pandas
 
 data = pandas.read_csv("Squirrel-Data.csv")
 fur = data["Primary Fur Color"]
-fur_colors = fur.value_counts()                                         # this function one handedly did all the work that retarded teacher did (get all the unique values and their count)
+fur_colors = fur.value_counts()                                         # this function one handedly did all the work that bad teacher did (get all the unique values and their count)
 colors_DF = pandas.DataFrame(fur_colors)
 colors_DF.to_csv("squirrel_count.csv")
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Squirrel color count (her code) (absolutely retarded, I did it with 1 function)
+# Squirrel color count (her code) (absolutely bad, I did it with 1 function)
 
 import pandas
 
@@ -7336,7 +7336,7 @@ print(even_numbers)
 #-----------------------------------------------------------------------------------------------------------------------
 
 # Exercise 3 - find the common numbers between two files and convert them to integers
-# (my code, Superior) (her solution is not only retarded but it's also wrong, I'm not even going to include it.)
+# (my code, Superior) (her solution is not only bad but it's also wrong, I'm not even going to include it.)
 
 with open("file1.txt") as file_1, open("file2.txt") as file_2:                      # can access multiple files using one with open()
     numbers_1 = [int(num.strip()) for num in file_1.readlines()]                    # file_1.readlines() is a list so we can use it in a list comprehension directly to to strip endlines and convert to ineger for a cleaner search for commons in the results list
@@ -8529,7 +8529,7 @@ def start_timer():
 
 def count_down(count_):                                                 # doing a loop with a recursive function to not overwrite the tkinter mainloop
     global check, start_button_timer
-    count_min = count_ // 60                                            # retarded teacher used math.floor(), Booooo
+    count_min = count_ // 60                                            # bad teacher used math.floor(), Booooo
     count_sec = count_ % 60
     if count_sec < 10:
         count_sec = f"0{count_sec}"
