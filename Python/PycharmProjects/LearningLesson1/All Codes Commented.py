@@ -9258,6 +9258,184 @@ next_card()
 
 window.mainloop()
 
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# open a file with tkinter (file dialog)
+
+from tkinter import *
+from  tkinter import filedialog
+
+
+def open_file():
+    filepath = filedialog.askopenfilename(initialdir="D:\\Mohammad Tareq\\Coding\\Personal-Coding\\Python\\PycharmProjects\\LearningLesson1", # askopenfilename() returns a string of the file path, initialdir is the initial directory we start at when we press the button
+                                          title="Open File",
+                                          filetypes=(("text files", "*.txt"),("All","*.*")))        # this will add a droplist that lets you choose the file types to show, contains tuples of two values ("text", "extension")
+    file = open(filepath, 'r')                                                                  # 'r' means read, there's also 'rt' read text, 'rb' read binary
+    print(file.read())
+    file.close()
+
+window = Tk()
+
+button = Button(text="Open", command=open_file)
+button.pack()
+
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# save a file with tkinter (file dialog)
+
+from tkinter import *
+from  tkinter import filedialog
+
+
+def save_file():
+    file = filedialog.asksaveasfile(initialdir="D:\\Mohammad Tareq\\Coding\\Personal-Coding\\Python\\PycharmProjects\\LearningLesson1",
+                                    defaultextension=".txt",
+                                    filetypes=[                     # can be [] or () for filetypes argument
+                                        ("Text File", ".txt"),
+                                        ("HTML File", ".html"),
+                                        ("ALL File", ".")
+                                    ])
+
+    if file is None:                                           # used for if we press save then close the save window to avoid getting an exception
+        return
+    file_text = str(text.get(1.0, END))                 # get the text from the text area, text.get() needs an starting index and has to be a float hence 1.0
+    file.write(file_text)
+    file.close()
+
+
+
+window = Tk()
+
+button = Button(text="save", command=save_file)
+button.pack()
+text = Text(window)
+text.pack()
+
+
+window.mainloop()
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# menubar with tkinter
+
+from tkinter import *
+
+def open_file():
+    print("File has been opened!")
+
+def save_file():
+    print("File has been saved!")
+
+
+window = Tk()
+
+open_image = PhotoImage(file="folder.png")
+save_image = PhotoImage(file="floppy-disk.png")
+exit_image = PhotoImage(file="door.png")
+
+menu_bar = Menu(window)       # first layer: is the whole menu bar at the top with all the menus
+window.config(menu=menu_bar)
+
+file_menu = Menu(menu_bar, tearoff=0)              # second layer: the itself menu, e.g. File, Edit etc. tearoff is to remove that dashed lines that can be used to move the file menu
+menu_bar.add_cascade(label="File",menu=file_menu)                  # add_cascade is a dropdown menu effect
+file_menu.add_command(label="Open", command=open_file, image=open_image, compound="left")       # compound will choose where the text shows, left or right
+file_menu.add_command(label="Save", command=save_file, image=save_image, compound="left")
+file_menu.add_separator()               # separator line
+file_menu.add_command(label="Exit", command=quit, image=exit_image, compound="left")           # can use special name quit to quit from a program
+
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+#tkinger progress bar
+
+from tkinter import *
+from tkinter.ttk import *
+import time
+
+def start():
+    tasks = 10
+    task = 0
+    while task<tasks:
+        time.sleep(0.5)
+        bar['value']+=10
+        task+=1
+        percent.set(str(int((task/tasks)*100)) + "%")         # .set is used to update the StringVar
+        task_label_text.set(str(task) + "/" + str(tasks) + " tasks completed")
+        window.update_idletasks()                       # after each iteration update the window
+
+window = Tk()
+
+percent = StringVar()           #  a specialized variable class in Python's Tkinter library used to manage and track changes to string values within a graphical user interface (GUI)
+task_label_text = StringVar()
+
+bar = Progressbar(window, orient=HORIZONTAL, length=300)
+bar.pack(pady=10)
+
+percent_label = (Label(window, textvariable=percent))
+percent_label.pack()
+
+task_label = (Label(window, textvariable=task_label_text))
+task_label.pack()
+
+button = Button(window, text="Download", command=start)
+button.pack()
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# key events with tkinter
+
+from tkinter import *
+
+
+def do_something(event):
+    print(f"You pressed {event.keysym}")  # this will print the key symbol you pressed
+    label.config(text=event.keysym)
+
+
+window = Tk()
+
+window.bind("<Key>",
+            do_something)  # bind Syntax: element.bind(event, function) so when an event is trigger, event can be like: w, a, f, l, Up ,Down Return (Enter) and Key (means any key)
+
+label = Label(window, font=("Helvetica", 100))
+label.pack()
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# mouse events with tkinter
+
+from tkinter import *
+
+def do_something(event):
+        print(f"You pressed at {event.x}, {event.y}")            # this will print the mouse coordinates
+
+window = Tk()
+
+window.bind("<Button-1>", do_something)     # left mouse
+window.bind("<Button-2>", do_something)     # middle mouse
+window.bind("<Button-3>", do_something)     # right mouse
+window.bind("<ButtonRelease>", do_something)     # release any mouse button
+window.bind("<Enter>", do_something)     # when your mouse (enters) hovers over the window
+window.bind("<Leave>", do_something)     # when your mouse Leaves the window
+window.bind("<Motion>", do_something)     # when your mouse moves
+
+window.mainloop()
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -9500,6 +9678,18 @@ api_key = os.environ.get("api_key")         # the name of the enviroment variabl
 
 # 4. in pythonanywhere you can export your enviroment variables when you run the code like so:
 export api_key=value; auth_token=value; python main.py              # this will run the code and pass the enviroment variables you need
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# NOTES: How to execute a code using bat or cmd with enviroment variables and the right python executable that has the modules installed
+
+# real example:
+# set SLACK_TOKEN=placeholder& "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe" script.py # you have to add the & after the enviroment variable
+
+# ways to execute (what to type in .bat or .cmd file)
+# 1. python script.py it means execute the script with the python in windows.py or PATH, it doesn't work if the script has modules
+# 2. "C:\Work\Reports\Hourly Updated Orders Slack Message\script.py" this equates to double clicking the file (i think), doesn't always work, not ideal
+# 3. "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe" script.py this one works best as it includes modules
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Habit Tracker - post, put, delete requests
