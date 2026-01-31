@@ -887,6 +887,40 @@ print("The number pi is {:e}".format(number))                                  #
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# formatted strings f"{}" format specifiers = {value:flags} format a value based on what flags are inserted
+
+# .(number)f round to that many decimal places (fixed point)
+# :(number) allocate that many spaces
+# :03 allocate and zero pad that many spaces
+# :< left alignment
+# :> right alignment
+# :^ center align
+# :+ use a plus sign to indicate positive value
+# := place sign to leftmost position
+# : insert a space before positive integers
+# :, comma separator
+
+price_1 = 3.14159
+price_2 = -987.65
+price_3 = 12.34
+price_4 = 1000
+
+
+print(f"Price 1 is {price_1:.2f}")      # limiting float numbers
+print(f"Price 2 is {price_2:10}")       # adding spaces before value
+print(f"Price 3 is {price_3:010}")      # adding spaces before value and pad spaces with zeros
+
+print(f"Price 1 is {price_1:<10}")      # left aligned
+print(f"Price 1 is {price_1:>10}")      # right aligned
+print(f"Price 1 is {price_1:^10}")      # center aligned
+print(f"Price 1 is {price_1:+}")        # show + sign for positive numbers and - for negative numbers
+print(f"Price 1 is {price_2:+}")        # show + sign for positive numbers and - for negative numbers
+print(f"Price 1 is {price_1: }")        # add space for positive numbers to align them with negative numbers with minus sign
+print(f"Price 1 is {price_4:,}")        # show thousands comma
+print(f"Price 1 is {price_4:+,.2f}")    # use mix of flags
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #Math Functions#
 import math #importing a module
 
@@ -3919,6 +3953,86 @@ change_color(car_3, "Green")
 print(car_1.color)
 print(car_2.color)
 print(car_3.color)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Polymorphism
+
+# Polymorphism = Greek word that means "have many forms or faces"
+#                Poly = Many
+#                Morphe = Form
+
+#               Two ways to achieve polymophism
+#               1. Inheritance = An object could be treated of the same type as a parent class
+#               2. "Duck typing" = An object must have necessary attributes/methods
+
+class Duck:
+    def sound(self):
+        print("Quack, quack!")
+
+class Cat:
+    def sound(self):
+        print("Meow!")
+
+def make_sound(animal):
+    # The function expects any object with a 'sound()' method
+    animal.sound()
+
+my_duck = Duck()
+my_cat = Cat()
+
+make_sound(my_duck) # Output: Quack, quack!
+make_sound(my_cat)  # Output: Meow!
+
+#----------------------------------------------
+
+# Bro Code's example
+
+from abc import ABC, abstractmethod
+
+class Shape:
+
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def area(self):
+        return self.side ** 2
+
+
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+
+    def area(self):
+        return self.base * self.height * 0.5
+
+class Pizza(Circle):            # this is inheriting the circle which is inheriting the shape
+    def __init__(self, topping, radius):
+        super().__init__(radius)
+        self.topping = topping
+
+
+# circle = Circle(2)           # circle is a circle and a shape, but not a square or a triangle
+
+shapes = [Circle(4), Square(5), Triangle(6, 7), Pizza("Meat", 15)]  # pizza has 3 forms now, pizza, circle and shape
+
+for shape in shapes:
+    print(shape.area())
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -7997,6 +8111,7 @@ hash([1, 2, 3])   # TypeError: unhashable type: 'list'
 # --Running example usage
 # --Preventing certain code from executing on import
 
+print(dir())    # use the directory function to display all python's built-in attributes i.e. special variables
 
 #-------------------------------------------------File: app.py----------------------------------------------------------
 
@@ -9439,6 +9554,66 @@ window.mainloop()
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# drag and drop with tkinter
+
+from tkinter import *
+
+def drag_start(event):
+    label.start_x = event.x         # label.start_x = value is called Dynamic attribute assignment, we're creating brand-new attributes that we're adding to that label, event.x, x is an already existing attribute for event, which is a coordinate where the event happened
+    label.start_y = event.y         # total of these statements will be coordinates of where we click in this label
+
+def drag_motion(event):
+    new_x = label.winfo_x() - label.start_x + event.x         # winfo_x return the widget’s top-left corner position, relative to its parent container, which is window, label = Label(window)
+    new_y = label.winfo_y() - label.start_y + event.y         # we offset label.winfo_y() (which is the top left) by subtracting the position where the mouse currently is label.start_y because We don't want the left edge of the label to jump to the mouse position. then add event.x: "How far is the mouse from that left edge?", this addition calculates where your mouse is relative to the Window, not the Label.
+    label.place(x=new_x, y=new_y)
+
+window = Tk()
+
+label = Label(window, bg="red",width=10, height=5)
+label.place(x=0, y=0)
+
+label.bind("<Button-1>",drag_start)
+label.bind("<B1-Motion>",drag_motion)
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# drag and drop multiple elements with tkinter
+
+from tkinter import *
+
+def drag_start(event):
+    widget = event.widget
+    widget.start_x = event.x         # label.start_x = value is called Dynamic attribute assignment, we're creating brand-new attributes that we're adding to that label, event.x, x is an already existing attribute for event, which is a coordinate where the event happened
+    widget.start_y = event.y         # total of these statements will be coordinates of where we click in this label
+
+def drag_motion(event):
+    widget = event.widget
+    new_x = widget.winfo_x() - widget.start_x + event.x         # winfo_x return the widget’s top-left corner position, relative to its parent container, which is window, label = Label(window)
+    new_y = widget.winfo_y() - widget.start_y + event.y         # we offset label.winfo_y() (which is the top left) by subtracting the position where the mouse currently is label.start_y because We don't want the left edge of the label to jump to the mouse position. then add event.x: "How far is the mouse from that left edge?", this addition calculates where your mouse is relative to the Window, not the Label.
+    widget.place(x=new_x, y=new_y)
+
+window = Tk()
+
+label_1 = Label(window, bg="red",width=10, height=5)
+label_1.place(x=0, y=0)
+
+label_1.bind("<Button-1>",drag_start)
+label_1.bind("<B1-Motion>",drag_motion)
+
+label_2 = Label(window, bg="blue",width=10, height=5)
+label_2.place(x=100, y=100)
+
+label_2.bind("<Button-1>",drag_start)
+label_2.bind("<B1-Motion>",drag_motion)
+
+window.mainloop()
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # smtplib and datetime
 
 # Sending emails
@@ -9949,10 +10124,10 @@ driver.quit()                   # quits the entire browser
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Flask framework for Web Developement
+# Flask framework for Web Development
 
 # Notes
-# 1. type in terminal> set FLASK_APP=module_name.py to add it as an enviroment variable
+# 1. type in terminal> set FLASK_APP=module_name.py to add it as an environment variable
 # 2. type in terminal> flask run to run the server
 
 
@@ -10062,3 +10237,306 @@ def create_blog_post(user):                 # this function needs an argument
 new_user = User("angela")
 new_user.is_logged_in = True
 create_blog_post(new_user)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# converting py to exe
+
+# 1. have pyinstaller and pip installed
+# 2. put .py and icon.ico in one folder then open cmd in that folder
+# 3. type this command: pyinstaller -F -w -i icon.ico main.py
+# 4. -F means all in one 1 file, -w means remove terminal window (if you have a GUI), -i icon.ico adds custom icon to .exe, main.py the name of the main python file
+# 5. use https://www.icoconverter.com/ to convert your image file to ico format
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# match-case statements (New feature added in Python 3.10)
+
+# match-case statements (switch) : an alterantive to using many 'elif' statements
+#                                  execute some code if a value matches a 'case'
+#                                  benefits: cleaner and syntax is more readable
+
+def day_of_week(day):
+    match day:
+        case 1:
+            return "Sunday"
+        case 2:
+            return "Monday"
+        case 3:
+            return "Tuesday"
+        case 4:
+            return "Wednesday"
+        case 5:
+            return "Thursday"
+        case 6:
+            return "Friday"
+        case 7:
+            return "Saturday"
+        case _:                 # _ means else
+            return "Not a valid day"
+
+print(day_of_week(7))
+
+# using the | (or) operator
+
+def day_of_week(day):
+    match day:
+        case "Sunday" | "Monday":
+            return True
+        case "Tuesday" | "Wednesday":
+            return False
+
+print(day_of_week("Wednesday"))
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Encryption/Decryption Program
+
+import random
+import string
+
+
+
+chars = " " + string.punctuation + string.digits + string.ascii_letters       # constants to get all characters without having to typing them manually, there's also string.whitespace for spaces, but it includes carriage return so not good here
+
+chars = list(chars)
+key = chars.copy()      # copies the list
+
+random.shuffle(key)
+
+print(f"Chars: {chars}")
+print(f"Key: {key}")
+
+# Encryption
+
+plain_text = input("Enter a message to encrypt: ")
+cipher_message = ""
+
+for letter in plain_text:
+    index = chars.index(letter)
+    cipher_message += key[index]
+print(cipher_message)
+
+
+# Decryption
+
+cipher_text = input("Enter a message to decrypt: ")
+plain_text = ""
+
+for letter in cipher_text:
+    index = key.index(letter)
+    plain_text += chars[index]
+print(plain_text)
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# static methods = a method that belong to a class rather than any object from that class (instance)
+#                  Usually used for general utility functions
+
+# Instance methods = Best for operations on instances of the class (objects)
+# Static methods = Best for utility function that do not need access to the class data
+
+class Employee:
+    def __init__(self, name, position):
+        self.name = name
+        self.position = position
+
+    # instance method
+    def get_info(self):
+        return f"{self.name} = {self.position}"
+
+    # Static method
+    @staticmethod
+    def is_valid_position(position):
+        valid_positions = ["Manager", "Cashier", "Cook", "Janitor"]
+        return position in valid_positions
+
+
+print(Employee.is_valid_position("Potato"))     # access the static method through the class name directly, no need to create an object
+print(Employee.is_valid_position("Cook"))
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Class methods = Allows operations related to the class itself
+#                 takes (cls), as in class, as the first parameter, which represents the class itself
+
+class Student:
+
+    count = 0
+
+    def __init__(self, name, gpa):
+        self.name = name
+        self.gpa = gpa
+        Student.count += 1
+
+    def get_info(self):
+        return f"{self.name}, {self.gpa}"
+
+
+    @classmethod
+    def get_count(cls):
+        return f" total number of students {cls.count}"
+
+student_1 = Student("Spongebob", 3.2)
+
+print(Student.get_count())
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Difference between a static method and class method
+
+# The primary difference between a static method and a class method in Python is that a class method takes an implicit
+# first argument that points to the class (cls), while a static method takes no implicit first argument and functions
+# like a regular utility function housed within the class's namespace.
+
+# Core Differences
+# Aspect 	                       Class Method	                       Static Method
+# ---------                       --------------                      ----------------
+# Decorator	                      @classmethod	                        @staticmethod
+#-----------------------------------------------------------------------------------------------------------------
+
+# Implicit First Argument	      Yes, cls (a reference                 No
+#                                 to the class)
+#-----------------------------------------------------------------------------------------------------------------
+# Access to Class State	          Yes, can access/modify                No direct access (unless explicitly passed)
+#                                 class variables via cls
+#-----------------------------------------------------------------------------------------------------------------
+
+# Access to Instance State        No (cannot access self)	            No (cannot access self or cls)
+#-----------------------------------------------------------------------------------------------------------------
+
+# Primary Use Case                Alternative constructors,             Utility/helper functions that are
+#                                 methods needing class-level           logically related to the class
+#                                 data/behavior, or polymorphism        but independent of class or instance state
+#                                 via subclasses
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Magic methods = Dunder methods (double underscore) __init__, __str__, __eq__
+#                 they are automatically called by many of python built-in operations.
+#                 they allow developers to define or customize the behavior of objects
+#                 they are mostly used with classes
+
+
+class Book:
+
+    def __init__(self, title, auther, num_pages):
+        self.title = title
+        self.auther = auther
+        self.num_pages = num_pages
+
+    def __str__(self):
+        return f"{self.title} by {self.auther}"     # this will replace the class object output when printing the class directly
+
+    def __eq__(self, other):                        # used to compare if two objects are equals
+        return self.title == other.title \
+               and self.auther == other.auther         # other is the other object you are comparing with
+
+    def __lt__(self, other):                        # used to see if an object is lt (less than) another object
+        return self.num_pages < other.num_pages
+
+    def __gt__(self, other):                        # used to see if an object is gt (greater than) another object
+        return self.num_pages > other.num_pages
+
+    def __add__(self, other):                       # used to add an object to another object
+        return self.num_pages + other.num_pages
+
+    def __contains__(self, keyword):                # used to see if an object's argument contains a certain value
+        return keyword in self.title \
+               or keyword in self.auther
+
+    def __getitem__(self, key):                     # used to access object values (the arguments) by their attribute names like a dictionary
+        if key == 'title':
+            return self.title
+
+        elif key == 'auther':
+            return self.auther
+
+        elif key == 'num_pages':
+            return self.num_pages
+
+        else:
+            return None
+
+
+book_1 = Book("The Hobbit", "J.R.R. Tolkien", 310)
+book_2 = Book("Harry Potter and The Philosopher's stone", "J.K Rowling", 223)
+book_3 = Book("The Lion, the Witch and the Wardrobe", "C.S Lewis", 172)
+book_4 = Book("The Hobbit", "J.R.R. Tolkien", 310)
+
+
+print(book_3)
+print(book_1 == book_4)
+print(book_1 < book_4)
+print(book_1 > book_4)
+print(book_2 + book_3)
+print("Lion" in book_3)
+print(book_1['title'])
+print(book_1['auther'])
+print(book_1['num_pages'])
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# @property Decorator = is a Decorator used to define a method as a property (it can be accessed like an attribute)
+#                       Benefit: Add additional logic when reading, writing, or deleting attributes
+#                       Gives you getter (read), setter (write), and deleter (delete) method
+
+class Rectangle:
+    def __init__(self, width, height):
+        self._width = width             # added _ before the attribute's name to make it private (internal) (protected, but it can still be accessed, but you get a warning)
+        self._height = height
+
+    @property           # getter method. when accessing width now, this property will be returned instead of the width attribute
+    def width(self):
+        return f"{self._width:.1f}cm"
+
+    @property
+    def height(self):
+        return f"{self._height:.1f}cm"
+
+
+    @width.setter               # setter method
+    def width(self,new_width):
+        if new_width > 0:
+            self._width = new_width
+        else:
+            print("width must be greater than zero")
+
+
+    @height.setter
+    def height(self,new_height):
+        if new_height > 0:
+            self._height = new_height
+        else:
+            print("height must be greater than zero")
+
+
+    @width.deleter              # deleter method
+    def width(self):
+        del self._width
+        print("Width has been deleted")
+
+
+    @height.deleter
+    def height(self):
+        del self._height
+        print("Height has been deleted")
+
+
+rectangle = Rectangle(3, 4)
+
+rectangle.height = 0
+
+
+print(rectangle.width)
+print(rectangle.height)
+
+del rectangle.width             # attribute will be deleted and not accessible anymore
+del rectangle.height
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
