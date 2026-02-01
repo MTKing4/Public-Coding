@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mohammad</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body><div>
+    <h1> Random Number: {{num}}</h1>
+      </div>
+
+        <div>
+            {% for item in my_list %}      <!--multiline python snippet in HTML with jinja syntax-->
+                <h2>{{item*2}}</h2>
+                <h2>{{item}}</h2>
+            {% endfor %}
+        </div>
+
+    <div>
+        <a href="{{ url_for('get_blog', numb=3) }}">Go to Blog</a>      <!-- creating a url using get_url jinja method, this is looking for a get_blog method and pass the keyword argument num as a parameter to that method -->
+    </div>
+    <div>
+        <img src="static/image.png"></img>
+    </div>
+</body>
+</html>

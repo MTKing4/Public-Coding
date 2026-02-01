@@ -10240,6 +10240,68 @@ create_blog_post(new_user)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Flask Templates Rendering HTML, CSS, and Static files (images), Jinja, URLS
+
+#-------------------------------------------------File: server.py-------------------------------------------------------
+
+from flask import Flask, render_template
+import random
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    random_number = random.randint(1, 10)
+    list_ = [3, 4, 6, 7]
+    return render_template('index.html', num=random_number, my_list=list_)
+
+
+@app.route("/blog/<numb>")
+def get_blog(numb):             # numb is the parameter that jinja is gonna pass 3 into
+    print(numb)
+    return "Meow"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+#-------------------------------------------------File: index.html------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mohammad</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body><div>
+    <h1> Random Number: {{num}}</h1>
+      </div>
+
+        <div>
+            {% for item in my_list %}      <!--multiline python snippet in HTML with jinja syntax-->
+                <h2>{{item*2}}</h2>
+                <h2>{{item}}</h2>
+            {% endfor %}
+        </div>
+
+    <div>
+        <a href="{{ url_for('get_blog', numb=3) }}">Go to Blog</a>      <!-- creating a url using get_url jinja method, this is looking for a get_blog method and pass the keyword argument num as a parameter to that method -->
+    </div>
+    <div>
+        <img src="static/image.png"></img>
+    </div>
+</body>
+</html>
+
+#-------------------------------------------------File: styles.css------------------------------------------------------
+
+body {
+    background-color: lightblue
+}
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # converting py to exe
 
 # 1. have pyinstaller and pip installed
