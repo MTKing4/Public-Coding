@@ -1,36 +1,53 @@
-// static
+// getters and setters
 
-// static = keyword that defines properties or methods that belong
-//          to a class itself rather than the objects created from
-//          that class (class owns anything static, not the objects)
+// getters = special method that makes a property readable
+// setters = special method that makes a property writable
+
+// used validate and modify a value when reading/writing a property
+
+class Rectangle{
+    constructor(width, height){
+        this.width = width;
+        this.height = height;
+    }
+
+    set width(newWidth){                    //setter, writable but not readable
+        if(newWidth > 0){                   // validating if it's above zero
+            this._width = newWidth;         // using underscore _ in _width tells other developers that this is a private property
+        }
+        else{
+            console.error("width must be a positive number");       // .error to show an error message
+        }
+    }
+
+    set height(newHeight){           
+        if(newHeight > 0){           
+            this._height = newHeight;
+        }
+        else{
+            console.error("height must be a positive number");
+        }
+    }
 
 
-class MathUtil{
-    static PI = 3.14159;
+    get width(){
+        return this._width;
+    }
 
-    static getDiameter(radius){
-        return radius * 2;
+    get height(){
+        return `${this._height.toFixed(1)}cm`;     // can add addtional logic when returning a value
+    }
+
+    get area(){             // with get we can access a property thatv doesn't exist in the class definition or consstructor
+        return this._width * this._height;
     }
 }
 
-console.log(MathUtil.PI);       // no need to create an object to use this property
-console.log(MathUtil.getDiameter(10));
+const rectangle = new Rectangle(3, 4);
 
+rectangle.width = 5;
+rectangle.height = 6;
 
-// ex.2
-
-class User{
-
-    static userCount = 0;
-
-    constructor(userName){
-        this.userName = userName;
-        User.userCount++
-    }
-}
-
-const user1 = new User("Spongebob");
-const user2 = new User("3amobaba");
-
-console.log(user1.userName);
-console.log(User.userCount);
+console.log(rectangle.width);
+console.log(rectangle.height);
+console.log(rectangle.area);

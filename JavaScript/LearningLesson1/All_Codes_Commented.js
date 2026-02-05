@@ -1376,3 +1376,172 @@ console.log(User.userCount);
 //-------------------------------------------------------------------------------------------------------------
 
 
+// inheritance = allows a new class to inherit properties and methods
+//               from an existing class (parent -> child)
+//               helps with code reusability
+
+class Animal{
+    alive = true;               // this is not static, just the classic way of creating an attribute for the objects only difference is that it's without a constructor
+
+    eat(){
+        console.log(`This ${this.name} is eating`);         // name is defined in the child classes therefore it's possible to refrence them in the parent class after the objects were created.
+    }
+
+    sleep(){
+        console.log(`This ${this.name} is sleeping`);
+    }
+}
+
+class Rabbit extends Animal{
+    name = "rabbit";
+    
+    run(){          // this is a rabbit specific method
+        console.log(`This ${this.name} is running`)
+    }
+}
+
+class Fish extends Animal{
+    name = "fish";
+}
+
+
+const rabbit = new Rabbit();
+const fish = new Fish();
+
+console.log(rabbit.alive)
+rabbit.eat();
+rabbit.sleep();
+rabbit.run();
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// super = super keyword is used in classes to call the constructor or
+//         access the properties and methods of a parent (superclass)
+//         this = this object
+//         super = the parent
+
+class Animal {
+    constructor(name, age){          // super constructor, will have properties that are available to all children constructors
+        this.name = name;
+        this.age = age;
+    }
+
+    move(speed){
+        console.log(`The ${this.name} moves at ${speed} mph`);      // speed here is just a paramenter, we will chose to pass different arguments depnding on the child's class speed properties
+    }
+}
+
+
+class Rabbit extends Animal{
+    constructor(name, age, runSpeed){
+        super(name, age);                        // have to call the super class's constructor in order to make children constructors, and also to get the super constructor's properties
+        this.runSpeed = runSpeed;
+    }
+
+    run(){
+        console.log(`This ${this.name} can run`)
+        super.move(this.runSpeed)              // accessing the parent method and passing this child's class runSpeed property
+    }
+}
+
+
+class Fish extends Animal{
+    constructor(name, age, swimSpeed){
+        super(name, age);
+        this.swimSpeed = swimSpeed;
+    }
+
+    swim(){
+        console.log(`This ${this.name} can swim`)
+        super.move(this.swimSpeed)
+    }
+}
+
+
+class Hawk extends Animal{
+    constructor(name, age, flySpeed){
+        super(name, age);
+        this.flySpeed = flySpeed;
+    }
+
+    fly(){
+        console.log(`This ${this.name} can fly`)
+        super.move(this.flySpeed)
+    }
+
+}
+
+
+const rabbit = new Rabbit("rabbit", 1, 25)
+const fish = new Fish("fish", 2, 12)
+const hawk = new Hawk("hawk", 3, 50)
+
+
+console.log(rabbit.name);
+console.log(fish.name);
+console.log(rabbit.runSpeed);
+
+
+rabbit.run();
+fish.swim();
+hawk.fly();
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// getters and setters
+
+// getters = special method that makes a property readable
+// setters = special method that makes a property writable
+
+// used validate and modify a value when reading/writing a property
+
+class Rectangle{
+    constructor(width, height){
+        this.width = width;
+        this.height = height;
+    }
+
+    set width(newWidth){                    //setter, writable but not readable
+        if(newWidth > 0){                   // validating if it's above zero
+            this._width = newWidth;         // using underscore _ in _width tells other developers that this is a private property
+        }
+        else{
+            console.error("width must be a positive number");       // .error to show an error message
+        }
+    }
+
+    set height(newHeight){           
+        if(newHeight > 0){           
+            this._height = newHeight;
+        }
+        else{
+            console.error("height must be a positive number");
+        }
+    }
+
+
+    get width(){
+        return this._width;
+    }
+
+    get height(){
+        return `${this._height.toFixed(1)}cm`;     // can add addtional logic when returning a value
+    }
+
+    get area(){             // with get we can access a property thatv doesn't exist in the class definition or consstructor
+        return this._width * this._height;
+    }
+}
+
+const rectangle = new Rectangle(3, 4);
+
+rectangle.width = 5;
+rectangle.height = 6;
+
+console.log(rectangle.width);
+console.log(rectangle.height);
+console.log(rectangle.area);
