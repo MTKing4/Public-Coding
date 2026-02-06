@@ -1734,3 +1734,41 @@ console.log(person1.name)
 console.log(person1.age)
 console.log(person1.address)
 console.log(person3.address.street)
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Array of objects
+
+const fruits = [{name: "apple", color: "red", calories: 95},
+                {name: "orange", color: "orange", calories: 45},
+                {name: "banana", color: "yellow", calories: 105},
+                {name: "coconut", color: "white", calories: 159},
+                {name: "pineapple", color: "yellow", calories: 37}];
+
+
+console.log(fruits[0].name);            // accessing the property of the objects in the array
+
+fruits.push({name: "grapes", color: "purple", calories: 62});       // pushing, i.e. adding a new object to the array
+
+fruits.pop();               // remove the last element from the array
+
+fruits.splice(1, 2);        // remove an elenment at a certain indices, here we removed from index 1 to 2
+
+console.log(fruits);
+
+fruits.forEach(fruit => console.log(fruit.color));       // using forEach and arrow functions we can loop through the array and access the object properties
+
+const fruitNames = fruits.map(fruit => fruit.name);         // using map with arrow functions we can access the properties and add them to an a new array
+
+console.log(fruitNames);
+
+const yellowFruits = fruits.filter(fruit => fruit.color === "yellow");     // using filter with arrow functions we can create a new array with only the objects that match the certain conditions, in this case if their color property was yellow
+
+console.log(yellowFruits);
+
+const maxFruit = fruits.reduce((max, nextFruit) => nextFruit.calories > max.calories ? nextFruit: max); // using reduce, arrow function, and Ternary operator to return the fruit with the maximum calories, checking if next fruit's calories is bigger than the maximum ? if so return the nextFruit, otherwise : return the maximum
+
+
+console.log(maxFruit);
