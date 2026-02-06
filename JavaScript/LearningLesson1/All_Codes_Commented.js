@@ -1545,3 +1545,114 @@ rectangle.height = 6;
 console.log(rectangle.width);
 console.log(rectangle.height);
 console.log(rectangle.area);
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// destructuring
+
+// destructuring = extract values from arrays and objects, then assign them to variables
+//                 in a convenient way
+//                 [] = to perform array destructuring
+//                 {} = to perform object destructuring
+
+
+// Example 1
+// swap the value of two variables
+
+let a = 1;
+let b = 2;
+
+[a, b] = [b, a];     // on the left side we're using destructuring, on the right side we're creating an array
+
+console.log(a);
+console.log(b);
+
+//---------------------------------------------
+
+// Example 2
+// swap two elements within an array
+
+const colors = ["red", "green", "blue", "black", "white"];
+
+[colors[0], colors[4]] = [colors[4], colors[0]];
+
+
+console.log(colors);
+
+//---------------------------------------------
+
+// Example 3
+// assign array elements to variables
+
+const colors = ["red", "green", "blue", "black", "white"];
+
+const [firstColor, secondColor, thirdColor, ...extraColors] = colors;       // these valriables will take the first three elements of the array, we will use rest parameters to put the rest of the elements into an array ( see what i did there :) ) 
+
+console.log(firstColor);
+console.log(secondColor);
+console.log(thirdColor);
+console.log(extraColors);
+
+//---------------------------------------------
+
+// Example 4
+// extract values from objects
+
+const person1 = {
+    firstName: "Spongebob",
+    lastName: "Squarepants",
+    age: 30,
+    job: "Fry Cook"
+}
+
+const person2 = {
+    firstName: "Patrick",          // i neeeded to increment the property names so that i can initialize them because otherwise i can't initialize the same variable names from object 1, i can't access them 
+    lastName: "Star",
+    age: 34
+}
+
+const {firstName, lastName, age, job} = person1;        // object destructuring, we're extracting these valeus from the first object, and we can print them using these variable names
+
+console.log(firstName);
+console.log(lastName);
+console.log(age);
+console.log(job);
+
+const {firstName:firstName2, lastName:lastName2, age:age2, job:job2="Unemployed"} = person2;    // second object does not have a job property so we will assign it here, also i'm using aliasing here in firstName:firstName2 so that object 2 is stored in different variables, but when putting a different variable name you need to tell JS that this is an alias to the same property before the name change, it's essential to have a new variable name because you're declaring a new variable, if the variable name was not incremented it would conflict with a redeclaration error with object 1
+
+console.log(firstName2);
+console.log(lastName2);
+console.log(age2);
+console.log(job2);
+
+//---------------------------------------------
+
+// Example 5
+// destructure in function parameters
+
+
+function displayPerson({firstName, lastName, age, job="Unemployed"}){            // destructuring in function paramters (passing an object in a function then destructure it in the function), here job="Unemployed" is a default value, it will apply to object 2 because it doesn't have a job, but object 1 has a job so it doesn't use the default value and uses its own (amazing)
+    console.log(`name: ${firstName} ${lastName}`);
+    console.log(`age: ${age}`);
+    console.log(`job: ${job}`);
+
+}
+
+
+const person1 = {
+    firstName: "Spongebob",
+    lastName: "Squarepants",
+    age: 30,
+    job: "Fry Cook"
+}
+
+const person2 = {
+    firstName: "Patrick",          // i neeeded to increment the property names so that i can initialize them because otherwise i can't initialize the same variable names from object 1, i can't access them 
+    lastName: "Star",
+    age: 34
+}
+
+displayPerson(person1);
+displayPerson(person2);
