@@ -1656,3 +1656,81 @@ const person2 = {
 
 displayPerson(person1);
 displayPerson(person2);
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Nested Objects
+
+// nested objects = Objects inside of other objects.
+//                  Allows you to represent more complex data structures
+//                  Child Object is enclosed by a Parent Object
+
+//                  Examples:
+//                  Person{Address{}, ContactInfo{}}
+//                  ShoppingCart{Keyboard{}, Mouse{}, Monitor{}}
+
+
+const person = {
+    fullName: "Spongebob Squarepants",
+    age: 30,
+    isStudent: true,
+    hobbies: ["karate", "jellyfishing", "Cooking"],
+    address: {                                          //nested object
+        street: "124 Conch St.",
+        city: "Bikini Bottom",
+        country: "int. Waters"
+    }
+}
+
+console.log(person.fullName)
+console.log(person.age)
+console.log(person.isStudent)
+console.log(person.hobbies[0])              // using indexing to access specific object from that array
+console.log(person.address.street)          // accessing properties of a nested object
+
+
+for(const property in person.address){          //looping through the properties of a nested object
+    console.log(person.address[property])       // here we using index of [] instead of . property assessor to access its properties
+}
+
+//---------------------------------------------
+
+// Example 2
+
+class Person{                               // parent object
+    constructor(name, age, ...address){
+        this.name = name;
+        this.age = age;
+        this.address = new Address(...address);         // creating an address object from the address class, and passing our address properties using the ...spread operator
+    }
+}
+
+class Address{                              //child object
+    constructor(street, city, country){
+        this.street = street;
+        this.city = city;
+        this.country = country;
+    }
+}
+
+const person1 = new Person("Spongebob", 30, "124 Conch St.", 
+                                            "Bikini Bottom",
+                                            "Int. Waters");
+                                        
+
+const person2 = new Person("Patrick", 37, "128 Conch St.", 
+                                            "Bikini Bottom",
+                                            "Int. Waters");
+
+
+const person3 = new Person("Squidwards", 45, "126 Conch St.", 
+                                            "Bikini Bottom",
+                                            "Int. Waters");
+
+
+console.log(person1.name)
+console.log(person1.age)
+console.log(person1.address)
+console.log(person3.address.street)
