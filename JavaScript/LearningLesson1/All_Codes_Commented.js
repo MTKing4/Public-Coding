@@ -1821,3 +1821,42 @@ const maxFruit = fruits.reduce((max, nextFruit) => nextFruit.calories > max.calo
 
 
 console.log(maxFruit);
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// sort() method
+
+// sort() = method used to sort elements of an array in place.
+//          Sorts elements as strings in lexicographic order, not alphabetical
+//          lexicographic = (alphabet + numbers + symbols) as strings
+
+let fruits = ["apple", "orange", "banana", "coconut", "pineapple"];
+let numbers = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6];
+
+fruits.sort();                  //sorted the string
+numbers.sort();                 // sorted the number as a string so it goes like 1, 10, 2 etc
+numbers.sort((a, b) => a - b);       // this is a compare function, sort() takes each two adjacent numbers in the array, and decides which one should come first by the the sign of the number that is passed to it, if it's positive it swaps their order, if negative it keeps it as is, and if zero no change happens, to get the sign we simply subtract one from the other, if the first one (a) is larger, you get a positive number forcing a swap, if the first is smaller, the result is negative and no swap happens, therefore the array will be sorted numerically ascending, to do descending you flip the equation to b - a
+
+console.log(fruits);
+console.log(numbers);
+
+
+
+// sorting objects by a given property (with compare function)
+
+
+const people = [{name: "Spongebob", age: 30, gpa: 3.0},
+                {name: "Patrick", age: 37, gpa: 1.5},
+                {name: "Squidward", age: 51, gpa: 2.5},
+                {name: "Sandy", age: 27, gpa: 4.0}
+]
+
+
+people.sort((a, b) => a.age - b.age);           // sorting age numerically
+
+people.sort((a, b) => a.name.localeCompare(b.name));           // sorting name alphabetically, localeCompare() method compares two strings for lexicographic order
+people.sort((a, b) => b.name.localeCompare(a.name));           // sorting name alphabeticall in reverse, just swap a and b
+
+console.log(people)
