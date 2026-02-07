@@ -1211,6 +1211,55 @@ setTimeout(function(){console.log("Hello")}, 3000); // you can pass an entire fu
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Arrow Functions
+
+// arrow functions = a concise way to write function expressions
+//                   good for simple functions that you use only once
+//                   (parameters) => Code
+
+const hello = (name) => console.log(`Hello ${name}`);       // before the arrow => are the parameters we can type () if we don't have any paramaters to pass
+
+
+const hello2 = (name, age) => {console.log(`Hello ${name}`)       // can have multiple line statements by adding {}
+                        console.log(`You are ${age} Years old`)};
+hello("Man");
+hello2("Dude", 25);
+
+
+// Arrow function with setTimeout
+
+setTimeout( () => console.log("Hello"), 3000);
+
+
+// Arrow Function with map, filter, reduce
+
+// map
+
+const numbers = [1, 2, 3, 4, 5, 6];
+const squares = numbers.map((Element) => Math.pow(Element, 2));
+
+console.log(squares);
+
+
+// filter
+
+// finding even and odd numbers
+const evenNums = numbers.filter((Element) => Element % 2 === 0);
+const oddNums = numbers.filter((Element) => Element % 2 !== 0);
+
+console.log(evenNums)
+console.log(oddNums)
+
+
+// reduce
+
+const total = numbers.reduce((accumulator, element) => accumulator + element)
+
+console.log(total)
+
+//-------------------------------------------------------------------------------------------------------------
+
+
 // objects
 
 // object = A collection of related properties and/or methods (very similar to classes or structs)
