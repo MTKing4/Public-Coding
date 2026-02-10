@@ -1860,3 +1860,42 @@ people.sort((a, b) => a.name.localeCompare(b.name));           // sorting name a
 people.sort((a, b) => b.name.localeCompare(a.name));           // sorting name alphabeticall in reverse, just swap a and b
 
 console.log(people)
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// shuffle an array
+
+// using Fisher-Yates algorithm
+
+// The Fisher-Yates algorithm works by:
+// 1. Starting from the end
+// 2. Swapping each element with a random element before it (or itself)
+// 3. Moving backward
+
+// At each step: 
+// pick random index between 0 and i
+// swap array[i] with array[random]
+
+
+const cards = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+
+shuffle(cards);
+
+console.log(cards);
+
+
+function shuffle(array){
+    for(let i = array.length - 1; i > 0; i--){                          // we have 13 elements, but we're doing 12 iterations with i > 0, why not use i >= 0? Because when i becomes 0, there's nothing left to shuffle. Only one element remains and A single element cannot be shuffled so No swap needed
+        const random = Math.floor(Math.random() * (i + 1));             // i = 12 in the first iteration, so we need + 1 to get from the 13 possible outcomes with i+1 otherwise the 13th item at index 12 is unreachable.
+        
+            [array[i], array[random]] = [array[random], array[i]];      // using array destructuring two swap two items from the array
+
+    }
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
