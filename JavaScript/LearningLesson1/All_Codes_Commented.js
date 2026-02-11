@@ -1898,4 +1898,54 @@ function shuffle(array){
 
 //-------------------------------------------------------------------------------------------------------------
 
+// Dates
 
+// Date objects = Objects that contain values that represent dates and times
+//                These date objects can be changed and formatted
+
+const date = new Date();            // returns the current live date
+
+// possible arguments for Date(year, month, day, hour, minute, second, ms)
+
+// const date = new Date(2024, 0, 1, 2, 3, 4, 5);          // month 0 means january
+// const date = new Date("2024-01-02T12:00:00Z");            // T for time, Z for timezone (UTC)
+// const date = new Date(1700000000000);                     // milliseconds since epoch started
+
+const year = date.getFullYear();                             // get the year integer
+const month = date.getMonth();                               // get the month integer january is 0, december is 1
+const day = date.getDate();                                  // get the day integer
+const dayOfWeek = date.getDay();                             // get the day of the week integer, sunday is 0, monday is 1
+const hour = date.getHours();                                // get the hours integer, 24h system
+const minutes = date.getMinutes();                           // get the minutes integer
+const seconds = date.getSeconds();                           // get the seconds integer
+
+console.log(year);
+console.log(month);
+console.log(day);
+console.log(dayOfWeek);
+console.log(hour);
+console.log(minutes);
+console.log(seconds);
+
+
+// setting the datetime
+
+date.setFullYear(2024);                                     // set the year to what you want
+date.setMonth(0);                                           // set the month to what you want
+date.setDate(1);                                            // set the day to what you want
+date.setHours(1);                                           // set the hours to what you want
+date.setMinutes(1);                                         // set the minutes to what you want
+date.setSeconds(3);                                         // set the seconds to what you want
+
+console.log(date)
+
+
+// comparing the dates
+
+const date1 = new Date("2023-12-31");
+const date2 = new Date("2024-01-01");
+
+
+if (date2 > date1){
+    console.log("Happy New Year!");
+}
