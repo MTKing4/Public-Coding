@@ -1949,3 +1949,194 @@ const date2 = new Date("2024-01-01");
 if (date2 > date1){
     console.log("Happy New Year!");
 }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// closures
+
+// closure = A function defined inside of another function,
+//           the inner function has access to the variables
+//           and scope of the outer function.
+//           Allow for private variables and state maintenance
+//           Used frequently in JS frameworks: React, Vue, Angular
+
+
+
+function outer(){
+
+    let message = "Hello";          // this is considered a private variable
+
+    function inner(){
+          console.log(message);
+    }
+
+
+    inner();
+}
+
+message = "Goodbye";                // this won't update the message variable because it's unreachable i.e out of scope, this is creating a different variable in this scope
+
+outer();
+
+
+//---------------------------------------------
+
+// Example 2
+
+// incrementing a local (private) variable through a function call 
+
+// Problem:
+// ~~~~~~~~
+
+function increment(){
+    let count = 0
+    count++;
+    console.log(`count increased to ${count}`);
+}
+
+
+increment();
+increment();
+increment();
+// calling this functions multiple times will not go past count = 1 because it resets to 0 every time it was called, so 
+// we have to make the count variable public and put it outside the function, but then it will be unsecure
+// so the state of that variable is maintained, but it's not pivate
+// a closure maintains the state of a variable and makes it private
+
+
+// solution
+// ~~~~~~~~
+
+// inclose the scope within another function
+
+function createCounter(){
+
+    let count = 0
+
+    function increment(){
+        count++;
+        console.log(`count increased to ${count}`);
+    }
+
+    return{increment:increment};                // returning an object, syntax: property:value, the value will be the name of the increment method
+}
+
+
+const counter = createCounter();                // now we're creating an object to call the createCounter() function, calling it only once, so count will be initialized at 0, and only once i.e. it will not reset like in the previous example
+
+
+counter.increment();                            // now we're accessing the inner function and only executing that without the createCounter() function, so the count will not be reset to 0 in this case and the count will increase above 1
+counter.increment();
+counter.increment();
+
+console.log(counter.count);                     // this will return undefined because count variable is not accessable outside of the function
+
+counter.count = 0;                              // this is creating a new variable, it's not accessing the same count variable
+
+console.log(counter.count);                     // now this is going to display the new variable we just defined, not the inner variable
+
+
+
+
+// Adding a getCount function to return the count variable
+// ~~~~~~~~
+
+// inclose the scope within another function
+
+function createCounter(){
+
+    let count = 0
+
+    function increment(){
+        count++;
+        console.log(`count increased to ${count}`);
+    }
+
+    function getCount(){
+        return count;
+    }
+
+    return{increment:increment, getCount:getCount};                // returning the count as well
+}
+
+
+const counter = createCounter();
+
+counter.increment();
+counter.increment();
+
+console.log(`The current count is ${counter.getCount()}`)
+
+
+//---------------------------------------------
+
+// Example 3
+
+
+// score counter without closure
+// ~~~~~~~~
+
+let score = 0;
+
+function increaseScore(points){
+    score += points;
+    console.log(`+${points}pts`);
+}
+
+
+function decreaseScore(points){
+    score -= points;
+    console.log(`-${points}pts`);
+}
+
+
+function getScore(){
+    return score;
+}
+
+
+increaseScore(5);
+decreaseScore(2);
+console.log(`the final score ${getScore()}`);
+
+
+
+// score counter with closure
+// ~~~~~~~~
+
+function createGame(){
+    
+    let score = 0;
+
+    function increaseScore(points){
+        score += points;
+        console.log(`+${points}pts`);
+    }
+
+
+    function decreaseScore(points){
+        score -= points;
+        console.log(`-${points}pts`);
+    }
+
+
+    function getScore(){
+        return score;
+    }
+
+    return {increaseScore, decreaseScore, getScore};            // can return them without an alias
+}
+
+
+const game = createGame();                                      // creating a game object to access inner functions(methods)
+
+game.increaseScore(5);
+game.decreaseScore(2);
+console.log(`the final score ${game.getScore()}`);
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
