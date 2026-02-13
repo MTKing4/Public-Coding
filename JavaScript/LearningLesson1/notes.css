@@ -171,3 +171,33 @@ svg|circle {                /* selects <circle> elements inside the SVG namespac
       stroke: black;
       stroke-width: 3;
     }
+
+
+/* Digital Clock Program */
+
+body{
+    background-image: url(background1.webp);
+    background-size: cover;                     /* makes the image cover the entire body/container */
+    background-repeat: no-repeat;               /* makes the image not repeat if it was too small (not needed here) */
+    background-attachment: fixed;               /* this makes the background position fixed when scrolling down */
+    margin: 0;   
+}
+
+#clock-container{
+    display: flex;                      /* use flexbox: (Flexible Box Layout) is a 1D CSS layout model designed for arranging items in rows or columns, making it easy to align, space, and resize elements within a container. It automatically distributes space, allowing items to grow or shrink to fit different screen, mainly, phones use column, and computers use rows */
+    justify-content: center;            /* makes the content in the center horizontally */
+    align-items: center;                /* alight itmes vertically */
+    height: 100vh;                      /* increasing the height of the container by 100 viewports */
+    border: 2px solid;                  /* adding a border stroke to the container so that we can see the border of the container*/
+}
+
+#clock{
+    font-family: monospace;
+    font-size: 6.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(16, 17, 90);
+    backdrop-filter: blur(75px);                /* adding a blur background to the clock*/
+    background-color: hsl(0, 100%, 0.1);      /* adding fogginess to the width (not noticable for my image) */
+    width: 100%;                                /* increasing the width of the clock div*/
+}

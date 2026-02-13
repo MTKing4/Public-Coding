@@ -2168,3 +2168,82 @@ setTimeout(() => {window.alert("Hello")}, 3000);
 const timeoutId = setTimeout(() => {window.alert("Hello")}, 3000);        // assigning the funtion to a variable/constant, that will be the id
 
 clearTimeout(timeoutId);
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Digital Clock Program
+
+function updateClock(){
+    const now = new Date();
+    let hours = now.getHours()                               // we made hours a variable instead of a constant because we will modify it below
+    const meridiem = hours >= 12 ? "PM" : "AM"               // if hours is above 12 make it pm otherwise am
+    hours = hours % 12 || 12;                                // hours % 12 takes the remainder as the correct clock, so 13 % 12 is 1 O'clock, but the hours 12 and 0 (12 am) will result in 0 for both because 12 % 12 = 0, so we use the or || which considers the value 0 as false, therfore uses the or statement and replaces 0s with 12s
+    hours = hours = hours.toString().padStart(2, 0);         // toString.padStart(2, 0) is converting the text to string then padStart(2, 0) is add padding for the first 2 characters, pad them with 0
+    const minutes = now.getMinutes().toString().padStart(2, 0);
+    const seconds = now.getSeconds().toString().padStart(2, 0);
+    const timeString = `${hours}:${minutes}:${seconds} ${meridiem}`;
+
+    document.getElementById("clock").textContent = timeString;
+}
+
+updateClock();
+setInterval(updateClock, 1000);              // this will call a function repeatedly to update the clock
+
+
+// html file-----------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Digital Clock Program</title>
+//     <link rel="stylesheet" href="styles.css">
+// </head>
+// <body>
+    
+//     <div id="clock-container">
+//         <div id="clock">00:00:00</div>
+//     </div>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// css file-----------------------------------------------
+
+
+// body{
+//     background-image: url(background1.webp);
+//     background-size: cover;                     /* makes the image cover the entire body/container */
+//     background-repeat: no-repeat;               /* makes the image not repeat if it was too small (not needed here) */
+//     background-attachment: fixed;               /* this makes the background position fixed when scrolling down */
+//     margin: 0;   
+// }
+
+// #clock-container{
+//     display: flex;                      /* use flexbox: (Flexible Box Layout) is a 1D CSS layout model designed for arranging items in rows or columns, making it easy to align, space, and resize elements within a container. It automatically distributes space, allowing items to grow or shrink to fit different screen, mainly, phones use column, and computers use rows */
+//     justify-content: center;            /* makes the content in the center horizontally */
+//     align-items: center;                /* alight itmes vertically */
+//     height: 100vh;                      /* increasing the height of the container by 100 viewports */
+//     border: 2px solid;                  /* adding a border stroke to the container so that we can see the border of the container*/
+// }
+
+// #clock{
+//     font-family: monospace;
+//     font-size: 6.5rem;
+//     font-weight: bold;
+//     text-align: center;
+//     color: rgb(16, 17, 90);
+//     backdrop-filter: blur(75px);                /* adding a blur background to the clock*/
+//     background-color: hsl(0, 100%, 0.1);      /* adding fogginess to the width (not noticable for my image) */
+//     width: 100%;                                /* increasing the width of the clock div*/
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
