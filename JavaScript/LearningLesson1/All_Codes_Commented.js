@@ -2247,3 +2247,158 @@ setInterval(updateClock, 1000);              // this will call a function repeat
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Stopwatch Program
+
+const display = document.getElementById("display");
+let timer = null;
+let startTime = 0;
+let elapsedTime = 0;
+let isRunning = false;
+
+
+function start(){
+    
+    if(!isRunning){
+        startTime = Date.now() - elapsedTime;
+        timer = setInterval(update, 10);            // setInterval() method in JavaScript returns a unique positive integer, known as the interval ID. This ID is a numeric value used specifically to control or stop the repeated execution of the function using the clearInterval() method. 
+        isRunning = true;                           // Interestingly, setInterval() and setTimeout() share the same pool of IDs, and clearInterval() and clearTimeout() can technically be used interchangeably (though it's best practice to match them for code clarity). 
+    }
+}
+
+function stop(){
+
+    if(isRunning){
+        clearInterval(timer);
+        // elapsedTime = Date.now() - startTime   / i'm not sure i need this, don't know why he put it there :\
+        isRunning = false;
+    }
+}
+
+function reset(){
+    clearInterval(timer);
+    startTime = 0;
+    elapsedTime = 0;
+    isRunning = false;
+    display.textContent = "00:00:00:00"
+}
+
+function update(){
+    const currentTime = Date.now();
+    elapsedTime = currentTime - startTime;
+
+    let hours = Math.floor(elapsedTime / (1000 * 60 * 60));              // 1000 milliseconds * 60 seconds * 60 minutes, floor it to get rid of decimals
+    let minutes = Math.floor(elapsedTime / (1000 * 60) % 60);            // 1000 milliseconds * 60 seconds modulus 60 because when minutes reach 60 we want it to reset to 0
+    let seconds = Math.floor(elapsedTime / 1000 % 60);
+    let milliseconds = Math.floor(elapsedTime % 1000 / 10);             // milliseconds is 4 digits so we divide by 10 to get 2 digits
+
+    hours = String(hours).padStart(2, "0");
+    minutes = String(minutes).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+    milliseconds = String(milliseconds).padStart(2, "0");
+
+    display.textContent = `${hours}:${minutes}:${seconds}:${milliseconds}`;
+}
+
+// html file-----------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Stopwatch</title>
+//     <link rel="stylesheet" href="styles.css">
+// </head>
+// <body>
+    
+//     <h1 id="myH1">Stopwatch</h1>
+
+//     <div id="container">
+//         <div id="display">
+//             00:00:00:00
+//         </div>
+//         <div id="controls">
+//             <button id="startBtn" onclick="start()">Start</button>
+//             <button id="stopBtn" onclick="stop()">Stop</button>
+//             <button id="resetBtn" onclick="reset()">Reset</button>
+//         </div>
+//     </div>
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+// css file-----------------------------------------------
+
+// body{
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     background-color: hsl(180, 0%, 90%);
+// }
+
+// #myH1{
+//     font-size: 4rem;
+//     font-family: Arial, sans-serif;
+//     color: hsl(0, 0%, 25%);
+// }
+
+// #container{
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     padding: 30px;
+//     border: 5px solid;
+//     border-radius: 50px;                /* rounding the corners */
+//     background-color: white;
+// }
+
+// #display{
+//     font-size: 5rem;
+//     font-family: monospace;
+//     font-weight: bold;
+//     color: hsl(0, 0%, 30%);
+//     text-shadow: 2px 2px 2px hsl(0, 0%, 0.75);           /* 2 verical offset, 2 horizontal offset, 2 blur, shadow color */
+//     margin-bottom: 25px;                                   /* adding some margin space below the div element */
+// }
+
+// #controls button{                           /* select all the button elements inside controls div, to select only 1 button, do #controls #buttonId instead */
+//     font-size: 1.5rem;
+//     font-weight: bold;
+//     padding: 10px 20px;
+//     margin: 5px;
+//     min-width: 125;
+//     border: none;
+//     border-radius: 15px;                    /* will make the corners rounded */
+//     cursor: pointer;
+//     color: white;
+//     transition: background-color 0.5s ease;     /* transitioning between hover color and normal color now will take 0.5 seconds transition animation; */
+// }
+
+// #startBtn{
+//     background-color: green;
+// }
+
+// #startBtn:hover{            /* hover pseudo-class */
+//     background-color: rgb(0, 97, 0);
+// }
+
+// #stopBtn{
+//     background-color: red;
+// }
+
+// #stopBtn:hover{
+//     background-color: rgb(163, 0, 0);
+// }
+
+// #resetBtn{
+//     background-color: rgb(0, 119, 255);
+// }
+
+// #resetBtn:hover{
+//     background-color: rgb(0, 87, 185);
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+

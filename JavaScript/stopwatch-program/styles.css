@@ -1,0 +1,68 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsl(180, 0%, 90%);
+}
+
+#myH1{
+    font-size: 4rem;
+    font-family: Arial, sans-serif;
+    color: hsl(0, 0%, 25%);
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    border: 5px solid;
+    border-radius: 50px;                /* rounding the corners */
+    background-color: white;
+}
+
+#display{
+    font-size: 5rem;
+    font-family: monospace;
+    font-weight: bold;
+    color: hsl(0, 0%, 30%);
+    text-shadow: 2px 2px 2px hsl(0, 0%, 0.75);           /* 2 verical offset, 2 horizontal offset, 2 blur, shadow color */
+    margin-bottom: 25px;                                   /* adding some margin space below the div element */
+}
+
+#controls button{                           /* select all the button elements inside controls div, to select only 1 button, do #controls #buttonId instead */
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 5px;
+    min-width: 125;
+    border: none;
+    border-radius: 15px;                    /* will make the corners rounded */
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.5s ease;     /* transitioning between hover color and normal color now will take 0.5 seconds transition animation; */
+}
+
+#startBtn{
+    background-color: green;
+}
+
+#startBtn:hover{            /* hover pseudo-class */
+    background-color: rgb(0, 97, 0);
+}
+
+#stopBtn{
+    background-color: red;
+}
+
+#stopBtn:hover{
+    background-color: rgb(163, 0, 0);
+}
+
+#resetBtn{
+    background-color: rgb(0, 119, 255);
+}
+
+#resetBtn:hover{
+    background-color: rgb(0, 87, 185);
+}
