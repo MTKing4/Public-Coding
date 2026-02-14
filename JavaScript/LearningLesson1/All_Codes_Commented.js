@@ -2401,4 +2401,58 @@ function update(){
 
 //-------------------------------------------------------------------------------------------------------------
 
+// ES6 Modules
 
+// ES6 Module = An External file that contains reuseable code that can be imported into other JavaScript files.
+//              Write reuseable code for many different apps.
+//              Can contain variabeles, classes, functions ... and more
+//              introduced as part of ECMAScript 2015 update
+
+
+// index.js file--------------------------------------------------
+
+import {PI, getCircumference, getArea} from './mathUtil.js'
+
+
+console.log(PI)
+
+const Circumference = getCircumference(10);
+const area = getArea(10);
+
+
+console.log(Circumference)
+console.log(area)
+
+
+// mathUtil.js file-----------------------------------------------
+
+
+
+export const PI = 3.14159
+
+
+export function getCircumference(radius){
+    return 2 * PI * radius;
+}
+
+
+export function getArea(radius){
+    return PI * radius * radius;
+}
+
+
+// index.html file------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Document</title>
+// </head>
+// <body>
+    
+//     <script type="module" src="index.js"></script>      <!-- add type="module" to treat the script file as a module-->
+// </body>
+// </html>
