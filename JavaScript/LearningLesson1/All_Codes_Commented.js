@@ -2500,3 +2500,59 @@ func1(func2);
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Error Handling
+
+// Error = An Object that is created to represent a problem that occurs
+//         Occur often with user input or when establishing a connection
+
+
+// try {} = Encloses code that might potentially cause an error
+// catch {} = Catch and handly any thrown Errors from try {}
+// finally {} = (optional) Always executes. Used mostly for clean up
+//              ex. close files, close connections, release resources
+
+
+try{
+console.log("Hello");
+
+console.leg("bye");            // intentional mistake
+}
+catch(error){
+    // console.log(error);     // can use console.log or console.error
+    console.error(error);
+}
+finally{
+    console.log("Always execute");
+}
+
+console.log("End");            // still reach the end, program not interrupted due to handling the error
+
+
+// Example 2
+
+try{
+    const dividend = Number(window.prompt("Enter a Dividend: "));       // type casted as number so that we get NaN (not a number) value to catch in the if statement
+    const divisor = Number(window.prompt("Enter a Divisor: "));
+
+    if(divisor == 0){
+        throw new Error("Can't divide by zero");                   // Error constructor to construct a new error object (throw an error)
+
+    }
+
+    if(isNaN(dividend) || isNaN(divisor)){          // isNaN(value) method is used to check if a value is not a number
+        throw new Error("use numbers only");
+    }
+
+    const  result = dividend / divisor;
+    console.log(result);
+}
+catch(error){
+    console.error(error);
+}
+
+console.log("End");
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
