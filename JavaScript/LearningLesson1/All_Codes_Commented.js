@@ -2737,3 +2737,124 @@ welcomeMsg.textContent += username ===  "" ? "Guest" : username
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Element Selectors
+
+// element selectors = Methods used to target and manipulate HTML elements
+//                     They allow you to select one or multiple HTML elements
+//                     from the DOM (Document Object Model)
+
+
+document.getElementById();              // returns an Element or NULL
+document.getElementsByClassName();      // returns an HTML Collection
+document.getElementsByTagName();        // returns an HTML Collection
+document.querySelector();               // returns an the first matching Element or NULL
+document.querySelectorAll();            // returns a NodeList
+
+
+// getElementById()
+const myHeading = document.getElementById("my-heading");
+myHeading.style.backgroundColor = "yellow";                             // css properties from the dom use camelCase naming convention
+myHeading.style.textAlign = "center"
+
+console.log(myHeading);
+
+
+// getElementsByClassName()
+const fruits = document.getElementsByClassName("fruits");
+
+console.log(fruits);            // this returns an HTML Collection (similar to an array)
+
+fruits[0].style.backgroundColor = "red";        // can access the elements with indexing
+fruits[1].style.backgroundColor = "orange";
+fruits[2].style.backgroundColor = "yellow";
+
+
+for(let fruit of fruits){                   // iterating them with an enhanced for loop, note HTML collections don't support forEach() method
+    fruit.style.backgroundColor = "yellow";
+}
+
+Array.from(fruits).forEach(fruit => {            // type casting the HTML collection as an array with .from() method then use the .forEach() method
+    fruit.style.backgroundColor = "blue";
+});                  
+
+
+// getElementsByTagName()
+const h4Elements = document.getElementsByTagName("h4");
+const liElements = document.getElementsByTagName("li");
+
+h4Elements[0].style.backgroundColor = "yellow";
+h4Elements[1].style.backgroundColor = "yellow";
+
+
+for(let h4Element of h4Elements){
+    h4Element.style.backgroundColor = "purple";
+}
+
+for(let liElement of liElements){
+    liElement.style.backgroundColor = "lightgreen";
+}
+
+
+// querySelector()
+const element = document.querySelector(".fruits");                    // to select the element by class name use . then the name of the class, or tag name
+
+element.style.backgroundColor = "magenta";            // this will change the first matching element only
+
+
+// querySelectorAll()
+
+// NodeLists are similar to an HTML collection except it has built-in methods similar to arrays, however NodeLists are static, HTML Collections are live
+// since NodeLists are static they do not update automatically in the DOM, but HTML Collection do
+
+const foods = document.querySelectorAll(".fruits");
+
+foods[1].style.backgroundColor = "khaki";
+
+console.log(foods);
+
+foods.forEach(food =>{
+    food.style.backgroundColor = "teal"
+});
+
+
+// index.html file------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+//     <h1 id="my-heading">Food R Us </h1>
+
+//     <div class="fruits">Apple</div>
+//     <div class="fruits">Orange</div>
+//     <div class="fruits">Banana</div>
+
+//     <h4>Root vegetables</h4>
+//     <ul>
+//         <li>Beets</li>
+//         <li>Carrots</li>
+//         <li>Potatoes</li>
+//     </ul>
+
+//     <h4>Non-Root vegetables</h4>
+//     <ul>
+//         <li>Broccoli</li>
+//         <li>Celery</li>
+//         <li>Onions</li>
+//     </ul>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
