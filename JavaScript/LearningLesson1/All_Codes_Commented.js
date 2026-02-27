@@ -2858,3 +2858,152 @@ foods.forEach(food =>{
 //-------------------------------------------------------------------------------------------------------------
 
 
+// DOM Navigation
+
+// DOM Navigatoin = The process of navigating through the strcuture
+//                  of an HTML document using JavaScript.
+
+
+// .firstElementChild
+// .lastElementChild
+// .nextElementSibling
+// .previousElementSibling
+// .parentElement
+// .Children
+
+
+
+//--------------- .firstElementChild -----------------
+
+// Example 1
+const element = document.getElementById("fruits");
+const firstChild = element.firstElementChild;         // this will select the first child element from the fruits parent element
+firstChild.style.backgroundColor = "yellow";
+
+
+// Example 2
+const ulElements = document.querySelectorAll("ul");
+
+ulElements.forEach(ulElement => {
+    const firstChild = ulElement.firstElementChild;       // this will get the first child element from all ul elements
+    firstChild.style.backgroundColor = "yellow";
+});
+
+
+
+//--------------- .lastElementChild -----------------
+
+const element = document.getElementById("fruits");
+const lastChild = element.lastElementChild;
+lastChild.style.backgroundColor = "yellow";
+
+
+// index.html file------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+//     <ul id="fruits">
+//         <li>apple</li>
+//         <li>orange</li>
+//         <li>banana</li>
+//     </ul>
+
+//     <ul id="vegetables">
+//         <li>carrots</li>
+//         <li>onions</li>
+//         <li>potatoes</li>
+//     </ul>
+
+//     <ul id="desserts">
+//         <li>cake</li>
+//         <li>pie</li>
+//         <li>ice cream</li>
+//     </ul>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+//--------------- .nextElementSibling -----------------
+
+
+const element = document.getElementById("apple");   // if we select the list itself and ask for the next sibling it will select the next list, because all lists/elements are children of the body element
+const nextSibling = element.nextElementSibling;     // take the sibling of the element currently selected i.e. the element that comes after the current element, if we select the last element in the list, the next sibling will return nothing since there's no next sibling
+nextSibling.style.backgroundColor = "yellow";
+
+
+//--------------- .previousElementSibling -----------------
+
+
+const element = document.getElementById("orange");
+const previousSibling = element.previousElementSibling;         // selecting the previous element from the current selected element
+previousSibling.style.backgroundColor = "yellow";
+
+
+//--------------- .parentElement -----------------
+
+
+const element = document.getElementById("apple");
+const parent = element.parentElement;               // gets the parent element
+parent.style.backgroundColor = "yellow";
+
+
+//--------------- .Children -----------------
+
+
+// get them with Array() type cast and forEach()
+const element = document.getElementById("fruits");
+const children = element.children;          // this will return an HTML collection, which doesn't have a forEach() method so we type cast it as Array() then method chain it with forEach() that contains an arrow function
+
+Array.from(children).forEach(child => {
+    child.style.backgroundColor = "yellow";
+})
+
+
+// get them with index numbers
+const element = document.getElementById("fruits");
+const children = element.children;
+
+children[1].style.backgroundColor = "yellow";
+
+
+// index.html file------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+//     <ul id="fruits">
+//         <li id="apple">apple</li>
+//         <li id="orange">orange</li>
+//         <li id="banana">banana</li>
+//     </ul>
+
+//     <ul id="vegetables">
+//         <li id="carrots">carrots</li>
+//         <li id="onions">onions</li>
+//         <li id="potatoes">potatoes</li>
+//     </ul>
+
+//     <ul id="desserts">
+//         <li id="cake">cake</li>
+//         <li id="pie">pie</li>
+//         <li id="ice cream">ice cream</li>
+//     </ul>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
