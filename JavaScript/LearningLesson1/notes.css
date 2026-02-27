@@ -346,3 +346,15 @@ button:active{              /* when clicking the button*/
 .operator-btn:active{
     background-color: hsl(35, 100%, 75%);
 }
+
+
+/* ----------------------------------------------------------------------------------------------------- */
+
+
+/* Add and Change HTML */
+
+.box{
+    border: 3px solid;
+    width: 100%;
+    height: 125px;
+}

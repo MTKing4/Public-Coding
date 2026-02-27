@@ -3007,3 +3007,162 @@ children[1].style.backgroundColor = "yellow";
 //     <script src="index.js"></script>
 // </body>
 // </html>
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Add and Change HTML from .js files
+
+// Example - Adding an <h1> element
+
+//--------------- STEP 1 Create the element -----------------
+
+const newH1 = document.createElement("h1");
+
+//--------------- STEP 2 Add attributes/properties -----------------
+
+newH1.textContent = "I like pizza";
+newH1.id = "myH1";
+newH1.style.color = "tomato";
+newH1.style.textAlign = "center";
+
+//--------------- STEP 3 append element to DOM -----------------
+
+document.body.append(newH1);    // when appending an element to a parent it will be the last child
+
+document.body.prepend(newH1);    // you could prepend it to be the first child
+
+document.getElementById("box1").append(newH1);      // you can append it inside a div element or any element
+
+const box2 = document.getElementById("box2");       // put the new element between box1 and box2 (selecting box2 and put new element before it)
+document.body.insertBefore(newH1, box2)             // insert newH1 element before box2 using insertBefore() built-in method
+
+
+// index.html file ------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+//     <div id="box1" class="box">
+//         <p>Box1</p>
+//     </div>
+
+//     <div id="box2" class="box">
+//         <p>Box2</p>
+//     </div>
+
+//     <div id="box3" class="box">
+//         <p>Box3</p>
+//     </div>
+
+//     <div id="box4" class="box">
+//         <p>Box4</p>
+//     </div>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+//--------------- appending when the box elements don't have IDs -----------------
+
+const boxes = document.querySelectorAll(".box");        // this will be a node list (we're selecting everything that has a box class)
+document.body.insertBefore(newH1, boxes[1])             // we'll access the boxes with indexing
+
+//--------------- remove HTML element -----------------
+
+document.body.removeChild(newH1);
+
+// if it was within a box element with an ID
+document.getElementById("box1").removeChild(newH1);
+
+
+// index.html file without IDs------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+//     <div class="box">
+//         <p>Box1</p>
+//     </div>
+
+//     <div class="box">
+//         <p>Box2</p>
+//     </div>
+
+//     <div class="box">
+//         <p>Box3</p>
+//     </div>
+
+//     <div class="box">
+//         <p>Box4</p>
+//     </div>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+// style.css file ------------------------------------------------
+
+// .box{
+//     border: 3px solid;
+//     width: 100%;
+//     height: 125px;
+// }
+
+
+//---------------------------------------------
+
+// Example 2
+
+// Selecting items from a list that don't have IDs
+
+const listItems = document.querySelectorAll("#fruits li");   // select the ID of fruits then select any list item descendants within this ID, this will return a node list that stores all the current list items
+const newListItem = document.createElement("li");
+newListItem.textContent = "coconut";
+newListItem.style.fontWeight = "bold";
+newListItem.style.backgroundColor = "lightgreen";
+document.getElementById("fruits").insertBefore(newListItem, listItems[0]);
+document.getElementById("fruits").removeChild(newListItem); // removes it
+
+
+// index.html file ------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <ol id="fruits">
+//         <li>apple</li>
+//         <li>orange</li>
+//         <li>banana</li>
+//     </ol>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+

@@ -1,8 +1,5 @@
-body{
-    font-family: Verdana;
-    font-size: 1.5em;
-}
-
-#mySubmit{
-    font-size: 1.5em;
+.box{
+    border: 3px solid;
+    width: 100%;
+    height: 125px;
 }
