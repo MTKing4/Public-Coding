@@ -3166,3 +3166,127 @@ document.getElementById("fruits").removeChild(newListItem); // removes it
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Mouse Events
+
+// event listener = listen for specific events to create interactive web pages
+//                  events: click, mouseover, mousout
+//                  .addEventListener(event, callback);
+
+
+// Example 1
+
+// hovering and clicking
+
+const myBox = document.getElementById("myBox");
+
+function ChangeColor(event){        // event will be the event that was listened for from .addEventListener built-in method
+    event.target.style.backgroundColor = "tomato";           // target is what we clicked on (the element)
+    event.target.textContent = "OUCH! 🤕";
+}
+
+myBox.addEventListener("click", ChangeColor);       // a mouse click event, the function can be callback, anonymous, or arrow
+
+myBox.addEventListener("mouseover", event => {
+    event.target.style.backgroundColor = "yellow";              // when the mouse moves over the element
+    event.target.textContent = "Don't do it! 😲";
+})
+
+myBox.addEventListener("mouseout", event => {
+    event.target.style.backgroundColor = "lightgreen"          // when the mouse moves out of the element
+    event.target.textContent = "Click Me 😀"
+})
+
+
+// index.html file ------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <div id="myBox">
+//         Click Me 😀
+//     </div>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+//---------------------------------------------
+
+// Example 2
+
+// using a button
+
+const myBox = document.getElementById("myBox");
+const myButton = document.getElementById("myButton");
+
+
+function ChangeColor(event){        // event will be the event that was listened for from .addEventListener built-in method
+    myBox.style.backgroundColor = "tomato";           // target is what we clicked on (the element)
+    myBox.textContent = "OUCH! 🤕";
+}
+
+myButton.addEventListener("click", ChangeColor);       // a mouse click event, the function can be callback, anonymous, or arrow
+
+myButton.addEventListener("mouseover", event => {
+    myBox.style.backgroundColor = "yellow";              // when the mouse moves over the element
+    myBox.textContent = "Don't do it! 😲";
+})
+
+myButton.addEventListener("mouseout", event => {
+    myBox.style.backgroundColor = "lightgreen"          // when the mouse moves out of the element
+    myBox.textContent = "Click Me 😀"
+})
+
+
+// index.html file ------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <div id="myBox">
+//         Click Me 😀
+//     </div>
+
+//     <button id="myButton">Click Me</button>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// style.css file ------------------------------------------------
+
+// #myBox{
+//     background-color: lightgreen;
+//     width: 300px;
+//     height: 300px;
+//     font-size: 4.5rem;
+//     font-weight: bold;
+//     display: flex;
+//     align-items: center;
+//     text-align: center;
+// }
+
+// #myButton{
+//     font-size: 3rem;
+// }
+
+//-------------------------------------------------------------------------------------------------------------
+
+
