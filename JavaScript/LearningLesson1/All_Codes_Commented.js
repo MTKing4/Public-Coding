@@ -3290,3 +3290,120 @@ myButton.addEventListener("mouseout", event => {
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Key Events
+
+// eventListener = Listen for specific events to create interactive web pages
+//                 events: keydown, keyup (i.e. pressing and releasing keys)
+//                 document.addEventListener(event, callback);
+
+
+document.addEventListener("keydown", event => {
+    // console.log(event);             // this will print whatever key is pressed (useful to know what the key is called)
+    console.log(`key down is: ${event.key}`);            // show only the key
+});
+
+document.addEventListener("keyup", event => {
+    console.log(`key up is ${event.key}`);
+});
+
+
+
+// Example
+
+document.addEventListener("keydown", event => {
+    myBox.textContent = "😮";
+    myBox.style.backgroundColor = "tomato";
+});
+
+document.addEventListener("keyup", event => {
+    myBox.textContent = "😀";
+    myBox.style.backgroundColor = "lightblue";
+});
+
+
+// Example 2 - Move the object
+
+const myBox = document.getElementById("myBox");
+const moveAmount = 10;
+let x = 0;
+let y = 0;
+
+document.addEventListener("keydown", event => {
+    
+    if(event.key.startsWith("Arrow")){
+
+        event.preventDefault();     // prevent default scrolling when object is off screen
+
+        switch(event.key){
+            case "ArrowUp":
+               y -= moveAmount;
+               break;
+
+            case "ArrowDown":
+               y += moveAmount;
+               break;
+            
+            case "ArrowLeft":
+               x -= moveAmount;
+               break;
+
+            case "ArrowRight":
+               x += moveAmount;
+               break;
+        }
+        myBox.style.top = `${y}px`          // access the top property and make it equal to y ( this is what will apply the movement to the element)
+        myBox.style.left = `${x}px`         // access the left property and make it equal to x
+    }
+});
+
+document.addEventListener("keydown", event => {
+    myBox.textContent = "😮";
+    myBox.style.backgroundColor = "tomato";
+});
+
+document.addEventListener("keyup", event => {
+    myBox.textContent = "😀";
+    myBox.style.backgroundColor = "lightblue";
+});
+
+
+// index.html file ------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <div id="myBox">😀</div>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// style.css file ------------------------------------------------
+
+
+// body{
+//     margin: 0;
+// }
+
+// #myBox{
+//     background-color: lightblue;
+//     width: 200px;
+//     height: 200px;
+//     font-size: 7.5rem;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: relative;
+// }
+
+//-------------------------------------------------------------------------------------------------------------
+
+
