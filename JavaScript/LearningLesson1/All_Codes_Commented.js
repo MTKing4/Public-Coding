@@ -3407,3 +3407,77 @@ document.addEventListener("keyup", event => {
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Hide/Show HTML Elements
+
+const myButton = document.getElementById("myButton");
+const myImage = document.getElementById("myImage");
+
+
+// using element.style.display
+
+myButton.addEventListener("click", event => {
+
+    if (myImage.style.display === "none")
+    {
+        myImage.style.display = "block";            // block will make the element show, because it's a block level element
+        myButton.textContent = "Hide";
+    }
+    else{
+        myImage.style.display = "none";             // none will hide the element
+        myButton.textContent = "Show";
+    }
+    
+});
+
+
+// using element.style.visibility
+// this will reserve the empty space of that element, the button won't take its space like the previous example
+
+myButton.addEventListener("click", event => {
+
+    if (myImage.style.visibility === "hidden")
+    {
+        myImage.style.visibility = "visible";            // block will make the element show, because it's a block level element
+        myButton.textContent = "Hide";
+    }
+    else{
+        myImage.style.visibility = "hidden";             // none will hide the element
+        myButton.textContent = "Show";
+    }
+    
+    
+});
+
+
+// index.html file ------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <img id="myImage" src="strawberry.jpg"><br>
+    
+//     <button id="myButton">Hide</button><br>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// style.css file ------------------------------------------------
+
+
+// #myButton{
+//     font-size: 2rem;
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
