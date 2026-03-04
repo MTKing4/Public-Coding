@@ -3480,4 +3480,100 @@ myButton.addEventListener("click", event => {
 
 //-------------------------------------------------------------------------------------------------------------
 
+// NodeLists
+
+// NodeList = Static collection of HTML elements which can be selected by (id, class, element)
+//            Can be created by using querySelectorAll()
+//            similar to an array, but no (map, filter, reduce) but have forEach
+//            NodeList won't update to automatically reflect changes
+
+
+let buttons = document.querySelectorAll(".myButtons");
+
+
+// Add HTML/CSS properties to each button
+
+buttons.forEach(button => {
+    button.style.backgroundColor = "green";
+    button.textContent += "😁";
+});
+
+
+// Add an event listener to each button
+
+buttons.forEach(button => {
+    button.addEventListener("click", event => {
+        event.target.style.backgroundColor = "tomato";
+    });
+
+});
+
+
+// Add an element
+
+const newButton = document.createElement("button");
+newButton.textContent = "Button 5";
+newButton.classList = "myButtons";                  // classList is used for adding an element to a class
+document.body.appendChild(newButton);               // adding the button to the DOM
+
+
+console.log(buttons);           // even though we just added a new button to the DOM in the same class, the NodeList still showing only 4, because they're static and any changes done after its creation will not be added
+
+
+// to add the new button to the NodeList: we do another querySelectorAll
+
+buttons = document.querySelectorAll(".myButtons");
+
+console.log(buttons);
+
+
+
+// Remove an element when clicking on it
+
+buttons.forEach(button => {
+    button.addEventListener("click", event => {
+        event.target.remove();
+        buttons = document.querySelectorAll(".myButtons");          // need to update the NodeList manually because removing the elements doesn't remove them from the NodeList automatically
+        console.log(buttons);
+    })
+})
+
+
+// index.html file ------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+    
+//     <button class="myButtons">Button 1</button><br>
+//     <button class="myButtons">Button 2</button><br>
+//     <button class="myButtons">Button 3</button><br>
+//     <button class="myButtons">Button 4</button><br>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// style.css file ------------------------------------------------
+
+// .myButtons{
+//     font-size: 4rem;
+//     margin: 10px;
+//     border: none;
+//     border-radius: 5px;
+//     padding: 10px 15px;
+//     background-color: hsl(205, 100%, 60%);
+//     color: white;
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
 
