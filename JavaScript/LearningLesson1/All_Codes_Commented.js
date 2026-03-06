@@ -3577,3 +3577,92 @@ buttons.forEach(button => {
 //-------------------------------------------------------------------------------------------------------------
 
 
+// classLists
+
+// classList = Element property in JavaScript used to interact
+//             with an element's list of classes (CSS classes)
+//             Allows you to make reusable classes for many elements
+//             across your webpage.
+
+
+// add()
+// remove()
+// toggle() // remove if present, add if not)
+// replace(oldClass, newClass)
+// contains()
+
+const myButton = document.getElementById("myButton");
+
+myButton.classList.add("enabled");                  // added a class to the button element using classList.add()
+// myButton.classList.remove("enabled");               // removed the class
+
+myButton.addEventListener("mouseover", event => {
+    event.target.classList.add("hover");            // can also use toggle()
+})
+
+myButton.addEventListener("mouseout", event => {
+    event.target.classList.remove("hover");         // can also use toggle()
+})
+
+
+// use replace() to replace two classes with one another
+
+myButton.addEventListener("click", event => {
+
+    if (event.target.classList.contains("enabled"))         // using contains to see if the element contains that class
+    {
+        event.target.classList.replace("enabled", "disabled")
+    }
+
+    else if (event.target.classList.contains("disabled"))
+    {
+        event.target.classList.replace("disabled", "enabled")
+    }
+})
+
+
+// index.html file ------------------------------------------------
+
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+
+//     <button id="myButton">My Button</button>
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+// style.css file ------------------------------------------------
+
+
+// #myButton{
+//     font-size: 4rem;
+//     margin: 10px;
+//     border: none;
+//     border-radius: 5px;
+//     padding: 10px 15px;
+// }
+
+// .enabled{
+//     background-color: hsl(204, 100%, 50%);
+//     color: white;
+// }
+
+// .hover{
+//     box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);           /* 0 horizontal offset, 0 vertical offset, 10px blur effect, color black with alpha 20% */
+//     font-weight: bold;
+// }
+
+// .disabled{
+//     background-color: hsl(0, 0%, 60%);
+//     color: hsl(0, 0%, 80%);
+// }
