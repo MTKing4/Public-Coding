@@ -3896,3 +3896,73 @@ doChores();
 //-------------------------------------------------------------------------------------------------------------
 
 
+// JSON
+
+// JSON = (JavaScript Object Notation) data-interchange format
+//        Used for exchanging data between a server and a web application
+//        JSON files {key:value} like an object or [value1, value2, value3] like an array
+//        or [{}, {}, {}] an array of objects
+
+//        JSON.stringify() = converts a JS object to a JSON string.
+//        JSON.parse() = converts a JSON string to a JS object.
+
+
+// JSON's different forms
+
+
+// Array
+const names = ["Spongebob", "Patrick", "Squidward", "Sandy"]
+
+
+// Object
+const person = {
+    "name": "Spongebob",
+    "age": 30,
+    "isEmployed": true,
+    "hobbies": ["Jellyfishing", "Karate", "Cooking"]
+}
+
+
+// Array of objects
+const people = [{
+    "name": "Spongebob",
+    "age": 30,
+    "isEmployed": true
+},
+{
+    "name": "Patrick",
+    "age": 34,
+    "isEmployed": false    
+},
+{
+    "name": "Squidward",
+    "age": 50,
+    "isEmployed": true 
+},
+{
+    "name": "Sandy",
+    "age": 27,
+    "isEmployed": false
+}]
+
+const jsonString = JSON.stringify(people);      // stringify() converts arrays, objects, and array of objects to a long string JSON format
+
+
+const parsedData = JSON.parse(jsonString);      // parse() converts long strings back to objects/arrays/array of objects
+
+// console.log(parsedData);
+
+
+// Fetching a JSON file (i.e. reading a JSON file)
+
+fetch("people.json")            // fetch returns a promise so we follow it up with .then
+    .then(response => response.json())      // convert the response to json with .json() which also returns a promise, so we use another .then
+    .then(value => console.log(value))
+    // .then(values => values.forEach(value => console.log(value)))             // to iterate through each object inside the JSON file
+    // .then(values => values.forEach(value => console.log(value.name)))        // to iterate through each object's name key
+    .catch(error => console.error(error));                                      // add this just in case we can't access the JSON file
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
