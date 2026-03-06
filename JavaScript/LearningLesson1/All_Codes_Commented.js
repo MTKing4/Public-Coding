@@ -3727,3 +3727,76 @@ task1(() => {
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Promises
+
+// Promise = an Object that manages asynchronous operations.
+//           Wrap a promise Object around {asynchronous code}
+//           "I promise to return a value"
+//           Pending -> resolved or rejected
+//           new Promise((resolve, reject) => {asynchronous code})
+
+// do these chores in order (using promises instead of callback hell)
+
+function walkDog(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const dogWalked = true;
+
+        if(dogWalked){
+            resolve("You walk the dog");            // The value inside resolve() is the result of the promise
+        }
+        else{
+            reject("You didn't walk the dog");      // if the promise failed or rejected, execute this line, when a promise is rejected, the next chained promises won't execute
+        }
+    }, 1500);
+
+    });
+}
+
+function cleanKitchen(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const kitchenCleaned = true;
+
+        if(kitchenCleaned){
+            resolve("You clean the kitchen");
+        }
+        else{
+            reject("You didn't clean the kitchen");
+        }
+    }, 1500);
+
+    });
+}
+
+function takeOutTrash(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const trashOut = false;
+
+        if(trashOut){
+            resolve("You take trash out");
+        }
+        else{
+            reject("You didn't take trash out");
+        }
+    }, 1500);
+
+    });
+}
+
+// will be called with method chaining instead of a callback hell
+
+walkDog().then(value => {console.log(value); return cleanKitchen()})                                // value here is the value from the resolve method of walkDog() method
+         .then(value => {console.log(value); return takeOutTrash()})                                // Why value Contains the resolve() Value? because JavaScript automatically passes the resolved value to .then(). Why You return Another Promise? so that it is chained and it will be excuted next, So now the next .then() waits for that promise.
+         .then(value => {console.log(value); return console.log("You finished all the chores")})
+         .catch(error => console.error(error));                                                     // this will catch any rejected promises and throw it as an error
+
+
+//-------------------------------------------------------------------------------------------------------------
