@@ -3800,3 +3800,99 @@ walkDog().then(value => {console.log(value); return cleanKitchen()})            
 
 
 //-------------------------------------------------------------------------------------------------------------
+
+
+// Async/Await
+
+//      async = makes the function return a promise
+//      await = makes an async function wait for a promise
+
+//              Allows you to write asynchronous code in synchronous manner
+//              Async doesn't have resolve or reject parameters
+//              Everything after Await is placed in an event queue
+
+// previous example
+
+function walkDog(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const dogWalked = true;
+
+        if(dogWalked){
+            resolve("You walk the dog");            // The value inside resolve() is the result of the promise
+        }
+        else{
+            reject("You didn't walk the dog");      // if the promise failed or rejected, execute this line, when a promise is rejected, the next chained promises won't execute
+        }
+    }, 1500);
+
+    });
+}
+
+function cleanKitchen(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const kitchenCleaned = true;
+
+        if(kitchenCleaned){
+            resolve("You clean the kitchen");
+        }
+        else{
+            reject("You didn't clean the kitchen");
+        }
+    }, 1500);
+
+    });
+}
+
+function takeOutTrash(){
+
+    return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+        
+        const trashOut = true;
+
+        if(trashOut){
+            resolve("You take trash out");
+        }
+        else{
+            reject("You didn't take trash out");
+        }
+    }, 1500);
+
+    });
+}
+
+
+// using async/await-----------------
+
+async function doChores(){      // adding the word async to write a asynchronous code in a syncrhonous manner, this is an alternative way to execute asynchronous code with method chaining with .then
+
+    try{
+        const walkDogResult = await walkDog();      // because walkDog has a promise we need to await the result of that promise, await can only be used with async functions
+        console.log(walkDogResult);
+
+        const cleanKitchenResult = await cleanKitchen();
+        console.log(cleanKitchenResult);
+
+        const takeOutTrashResult = await takeOutTrash();
+        console.log(takeOutTrashResult);
+
+        console.log("You finished all the chores!"); 
+    }
+    catch(error){
+        console.error(error);       // this is to catch if a promise was rejected
+    }
+
+}
+
+doChores();
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
