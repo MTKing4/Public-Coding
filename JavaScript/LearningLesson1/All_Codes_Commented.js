@@ -3666,3 +3666,64 @@ myButton.addEventListener("click", event => {
 //     background-color: hsl(0, 0%, 60%);
 //     color: hsl(0, 0%, 80%);
 // }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Callback Hell
+
+
+// Callback Hell = Situation in JavaScript where callbacks
+//                 are nested within other callbacks to the
+//                 degree where the code is difficult to read.
+//                 It is an old pattern to handle asynchronous functions.
+//                 Use Promises + asynch/await to avoid Callback Hell
+
+
+// setTimeout is an asynchronus function, if task 2 takes less time than task 1 it will complete first
+// also since all tasks have delay, we will get the "all tasks complete" right away because it has no delay
+// in order to make the tasks execute one by one, we'll use callback, where after task 1 is completed, we call the next task, and nest it on call time
+
+// callback Hell example:
+
+function task1(callback){
+    setTimeout(() => {
+        console.log("task 1 complete");
+        callback();
+    }, 2000);
+}
+
+function task2(callback){
+    setTimeout(() => {
+        console.log("task 2 complete");
+        callback();
+    }, 1000);
+}
+
+function task3(callback){
+    setTimeout(() => {
+        console.log("task 3 complete");
+        callback();
+    }, 3000);
+}
+
+function task4(callback){
+    setTimeout(() => {
+        console.log("task 4 complete");
+        callback();
+    }, 1500);
+}
+
+task1(() => {
+    task2(() => {
+        task3(() => {
+            task4(() => console.log("All Tasks complete"));         // this is what callback hell looks like, pyramid shaped
+        });
+    });
+});
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
