@@ -3966,3 +3966,108 @@ fetch("people.json")            // fetch returns a promise so we follow it up wi
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Fetch Data from an API
+
+// fetch = function used for making HTTP request to fetch resources.
+//         (JSON style data, images, files)
+//         Simplifies asynchronous data fetching in JavaScript and
+//         used for interacting with APIs to retrieve and send
+//         data asynchronously over the web.
+//         fetch(url, {options})
+
+
+// using .then with fetch()
+
+fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+    .then(response => {
+
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+        return response.json();         // if it didn't fail, return our response in json format
+    })
+    .then(data => console.log(data.name))
+    .catch(error => console.error(error));
+
+
+
+// using async/await with fetch()
+
+async function fetchData(){
+
+    try{
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon/typhlosion");       // returns a promise
+
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+
+        const data = await response.json();         // this also returns a promise, that's why we're using await
+        console.log(data);
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+fetchData();
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// Pokemon fetch image API
+
+
+// index.js file ------------------------------------------------
+
+async function fetchData(){
+
+    try{
+
+        const pokemonName = document.getElementById("pokemonName").value.toLowerCase();       // .value will get the value typed inside the textbox
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);         // returns a promise
+
+        if(!response.ok){
+            throw new Error("Could not fetch resource");
+        }
+
+        const data = await response.json();         // this also returns a promise, that's why we're using await
+        
+        const pokemonSprite = data.sprites.front_default;
+        const imgElement = document.getElementById("pokemonSprite");
+
+        imgElement.src = pokemonSprite;
+        imgElement.style.display = "block";     // right now it's none, need to change it to block to show it
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+
+// index.html file ------------------------------------------------
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>My Website</title>
+//     <link rel="stylesheet" href="style.css">
+// </head>
+// <body>
+
+//     <input type="text" id="pokemonName" placeholder="Enter Pokemon Name">
+//     <button onclick="fetchData()">Fetch Pokemon</button><br>
+    
+//     <img src="" alt="Pokemon Sprite" id="pokemonSprite" style="display:none">          <!-- style="display: none" will make empty image objects invisible, if the value was block instead, the empty image object will be-->
+
+//     <script src="index.js"></script>
+// </body>
+// </html>
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
