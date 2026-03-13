@@ -4538,3 +4538,89 @@ export default Food
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Card Components
+
+
+// main.jsx file ------------------------------------------------
+
+
+// Unchanged
+
+
+// App.jsx file ------------------------------------------------
+
+
+import Card from './Card.jsx'
+
+
+function App() {
+
+  return(
+    <>
+    <Card></Card>
+    </>
+  )
+}
+
+export default App
+
+
+// Card.jsx file ------------------------------------------------
+
+
+import profilePic from './assets/card.jpg'
+
+function Card(){
+
+    return(
+        <div className="card">
+            <img className="card-image" src={profilePic} alt="the alternative text if the image didn't load"></img>
+            <h2 className="card-title">Mohammad</h2>
+            <p className="card-text">this is a template text that i don't know what to type in so i typed this text to fill in the void</p>
+
+        </div>
+    );
+}
+
+export default Card
+
+// with jsx, class is a reserved keyword, so we use className
+// to put a placeholder image in the src attribute type: https://via.placeholder.com/150 didn't work with me though
+
+
+// index.css file ------------------------------------------------
+
+
+// .card{
+//   border: 1px solid hsl(0, 0%, 80%);
+//   border-radius: 10px;
+//   box-shadow: 5px 5px hsla(0, 0%, 0%, 0.1)00;
+//   padding: 2px;
+//   margin: 10px;
+//   text-align: center;
+//   max-width: 250px;
+//   display: inline-block; /* inline-block = Same Line Placement: Elements with display: inline-block sit on the same line as other inline or inline-block elements, and do not force a new line before or after themselves, If there is not enough horizontal space on a single line, the element will wrap onto the next line*/
+// }
+
+// .card .card-image{
+//   max-width: 60%;
+//   height: auto; /* will automaticlly resize */
+//   border-radius: 50%;
+//   margin-bottom: 10px;
+// }
+
+// .card .card-title{
+//   font-family: Arial, sans-serif;
+//   margin: 0;
+//   color: hsl(0, 0%, 20%)
+// }
+
+// .card .card-text{
+//   font-family: Arial, sans-serif;
+//   color: hsl(0, 0%, 30%);
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
