@@ -4624,3 +4624,169 @@ export default Card
 //-------------------------------------------------------------------------------------------------------------
 
 
+// How to style react components with CSS
+
+// (not including external frameworks like tailwind or preprocessors such as sas)
+
+// few basic techniques
+
+// 1. external css stylesheet
+// 2. modules (dedicated css stylesheet for each component)
+// 3. inline styles
+
+
+
+// 1. external css stylesheet
+
+// advantages
+// 1. easy to use for simple projects
+// 2. it gives you flexibility with media queries and pseudo selectors
+// 3. used best to apply global styles throught the web application
+
+// disadvantages
+// 1. can lead to naming conflicts
+// 2. for large web applications you will have a lot of different buttons with different names, you will need a strong naming convention and good organization
+// 3. it might be difficult to keep track of all the different class names for large web apps
+
+
+
+// App.jsx file ------------------------------------------------
+
+import Button from './Button.jsx'
+
+
+function App() {
+
+  return(
+    <>
+    <Button></Button>
+    </>
+  )
+}
+
+export default App
+
+
+// Button.jsx file ------------------------------------------------
+
+function Button(){
+
+    return(
+        <button className="button">Click Me</button>
+    )
+}
+
+
+// index.css file ------------------------------------------------
+
+// .button{
+//   background-color: hsl(200, 100%, 50%);
+//   color: white;
+//   padding: 10px 20px;
+//   border-radius: 5px;
+//   border: none;
+//   cursor: pointer;
+// }
+
+
+// ---------------------------------------------------------------
+
+
+// 2. modules styling
+
+// with modules styling we create modules/folders for each component, and a specific css file for each jsx component
+
+// App.jsx file ----------------------------------------------------------
+
+// only this line changed for the path
+import Button from './Button/Button.jsx'
+
+// Button/Button.module.css file -----------------------------------------
+
+
+// .button{
+//   background-color: hsl(200, 100%, 50%);
+//   color: white;
+//   padding: 10px 20px;
+//   border-radius: 5px;
+//   border: none;
+//   cursor: pointer;
+// }
+
+
+// Button/Button.jsx file ------------------------------------------------
+
+
+import styles from "./Button.module.css"
+
+function Button(){
+
+    return(
+        <button className={styles.button}>Click Me</button>
+    )
+}
+
+export default Button
+
+
+// className={styles.button} is a module styling method, the {} indicate that this is a dynamic value
+// advantages of module styling
+// 1. is that it avoids naming conflicts because a unique class is going to be generated via a hashing algorithm
+// disadvantages
+// 1. that it makes global styling less convenient
+// 2. it's best used for individual components with their own unique styles
+
+// ---------------------------------------------------------------
+
+
+// 3. inline styles
+
+// inline styles creates a constant that will store the style data in the component itself
+
+
+// App.jsx file ---------------------------------------------------
+
+// only this line changed for the path
+import Button from './Button.jsx'
+
+// Button.jsx file ------------------------------------------------
+
+function Button(){
+
+    const styles = {
+        backgroundColor: "hsl(200, 100%, 50%)",
+        color: "white",
+        padding: "10px 20px",
+        borderRadius: "5px",
+        border: "none",
+        cursor: "pointer",
+    }
+    return(
+        <button style={styles}>Click Me</button>
+    )
+}
+
+export default Button
+
+
+// rules of typing inline styles inside jsx files
+// 1. replace dashes - with camelCase Naming convention
+// 2. all values should be "strings"
+// 3. replace endlines ; with commas ,
+
+// in the return statement we add an attribute called style to the element and pass a daynamic value to it using {} which will be our styles constant
+
+// advantaes of inline styling
+// convenient and easy to understand
+// it prevents global style conflicts because we're not working with classnames
+// it's great for isolated components with minimal styling
+
+// disadvantages are
+// that becomes increasngly less maintainable in large applications
+// it reduces the readability of your components esspecially if you have a lot of css properties
+// it's not great for any complex styling such as responsive css, it's better for components with mininal styling
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
