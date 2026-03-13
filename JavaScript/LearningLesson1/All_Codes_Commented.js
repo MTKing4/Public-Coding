@@ -4312,3 +4312,229 @@ function displayError(message){
 //-------------------------------------------------------------------------------------------------------------
 
 // JavaScript Course Over :)
+
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+
+
+// React Course
+
+// 1. cmd command to create a react app:
+// npm create vite@latest
+// latest means latest version
+// vite is a development server (modern replacement of create-react-app, outdated)
+
+
+// 2. command to run the React app
+// cd react-app
+// npm run dev
+
+
+// 3. node_modules folder contains external libraries and packages our app relies on
+
+// 4. public folder: contains any public assets (public fonts, images, videos)
+// they're not bundled during the final output they're typically available via a url
+
+// 4. assets folder: contains any private assets (public fonts, images, videos)
+// they're bundled during the final output
+
+// 5 src folder:
+//      main.jsx file: main file, jsx is JavaScript XML
+//      app.jsx is a component (by default is the root component)
+//      app.css for app
+//      index.css main css file for the application
+
+// 6 index.html: main entry point to our program
+
+
+// main.jsx file ------------------------------------------------
+// Unchanged
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+
+// main.jsx is the main file that runs the page
+// <App /> is the app that main.jsx file will run, it will contain the components that we want to display to the page
+// Components are the building blocks of react apps, basically peices of code combined together to make a web app/page
+
+
+// App.jsx file ------------------------------------------------
+
+
+import Header from "./Header.jsx"
+import Footer from "./Footer.jsx"
+import Food from "./Food.jsx"
+
+function App() {
+
+  return(
+    <>
+    <Header></Header>
+    <Food></Food>
+    <Footer></Footer>
+    </>
+  );
+}
+
+export default App
+
+// App is the main component here, in Header.jsx and Footer.jsx we make functions that return
+// html elements then we import them here
+// then in the App function we return them as components in this format <Header></Header>
+// you can type <Header></Header> like <Header/> for a shorthand
+// components only return one element so to add multiple elements we use JSX fragment
+// JSX fragment <> which is basically an empty tag to put all your elements in </>
+
+
+// Header.jsx file ------------------------------------------------
+
+
+function Header(){      //Header here is a component, this whole file is
+
+    return(             // a component can only return one element (but it can have children)
+        <header>
+            <h1>My website</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <hr></hr>
+        </header>
+    );
+}
+
+export default Header
+
+
+// <nav> is navbar
+// <hr> is a horizontal rule
+
+
+// Footer.jsx file ------------------------------------------------
+
+
+function Footer(){
+
+    return(
+        <footer>
+            <p>&copy; {new Date().getFullYear()} Your Website Name</p>
+        </footer>
+    );
+}
+
+export default Footer
+
+
+// &copy; prints a copywrite symbol the one with C
+// to insert javascript inside the return statement we use {} but outside of the return statement you don't need anything
+
+
+// Food.jsx file ------------------------------------------------
+
+
+function Food(){
+
+    const food1 = "Orange";
+    const food2 = "Banana";
+
+    return(
+        <ul>
+            <li>Apple</li>
+            <li>{food1}</li>
+            <li>{food2.toUpperCase()}</li>
+        </ul>
+    );
+}
+
+export default Food
+
+
+// index.css file ------------------------------------------------
+
+
+// :root {
+//   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+//   line-height: 1.5;
+//   font-weight: 400;
+
+//   color-scheme: light dark;
+//   color: rgba(255, 255, 255, 0.87);
+//   background-color: #242424;
+
+//   font-synthesis: none;
+//   text-rendering: optimizeLegibility;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+// a {
+//   font-weight: 500;
+//   color: #646cff;
+//   text-decoration: inherit;
+// }
+// a:hover {
+//   color: #535bf2;
+// }
+
+// body {
+//   margin: 0;
+//   display: flex;
+//   place-items: center;
+//   min-width: 320px;
+//   min-height: 100vh;
+// }
+
+// h1 {
+//   font-size: 3.2em;
+//   line-height: 1.1;
+// }
+
+// button {
+//   border-radius: 8px;
+//   border: 1px solid transparent;
+//   padding: 0.6em 1.2em;
+//   font-size: 1em;
+//   font-weight: 500;
+//   font-family: inherit;
+//   background-color: #1a1a1a;
+//   cursor: pointer;
+//   transition: border-color 0.25s;
+// }
+// button:hover {
+//   border-color: #646cff;
+// }
+// button:focus,
+// button:focus-visible {
+//   outline: 4px auto -webkit-focus-ring-color;
+// }
+
+// @media (prefers-color-scheme: light) {
+//   :root {
+//     color: #213547;
+//     background-color: #ffffff;
+//   }
+//   a:hover {
+//     color: #747bff;
+//   }
+//   button {
+//     background-color: #f9f9f9;
+//   }
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
