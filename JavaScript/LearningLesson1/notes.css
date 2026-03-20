@@ -665,3 +665,20 @@ button:focus-visible {
 /* ----------------------------------------------------------------------------------------------------- */
 
 
+/* Props */
+
+.student{
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  padding: 10px;
+  border: 1px solid hsla(0, 0%, 50%, 0.8);
+}
+
+.student p{     /* accessing the class student then accessing any paragraph elements within it*/
+  margin: 0;
+}
+
+
+/* ----------------------------------------------------------------------------------------------------- */
+
+

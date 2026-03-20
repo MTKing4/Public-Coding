@@ -4790,3 +4790,106 @@ export default Button
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Props
+
+// defaultProps are now deprecated in React 19+
+
+// props =  read-only properties that are shared between components.
+//          A parent component can send data to a child component.
+//          when you include a component within a parent, you can send that child component key-value pairs
+//          <Component key=value />
+
+
+// (Deprecated)
+// propTypes = a mechanism that ensures that the passed value is of the correct datatype
+//             age: PropTypes.number
+
+
+// (Deprecated)
+// defaultProps = default values for props in case they are not passed from the parent component
+//                name: "Guest"
+
+
+// App.jsx file ---------------------------------------------------
+
+import Student from './Student.jsx'
+
+function App() {
+
+  return(
+    <>
+    <Student name="Spongebob" age={30} isStudent={true}/>
+    <Student name="Patrick" age={42} isStudent={false}/>
+    <Student name="Squidward" age={50} isStudent={false}/>
+    <Student name="Sandy" age={27} isStudent={true}/>
+    <Student />
+    </>
+  )
+}
+
+export default App
+
+// age={30} we use {} to indicate it's an integer/Number without it we get an error
+// When to use {} in props
+// Use {} whenever you're passing:
+// - Numbers → {30}
+// - Booleans → {true}
+// - Variables → {age}
+// - Expressions → {10 + 20}
+// - Objects/arrays → {[1,2,3]}
+
+// props are useful when you want to show different data using the same component multiple times by passing in different data through the props
+
+
+// Student.jsx file ---------------------------------------------------
+
+import PropTypes from "prop-types"
+
+function Student(props){        // for this component to accept props, this function needs a props parameter, props is going to be a JavaScript Object
+
+    return(
+        <div className="student">
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+            <p>Student: {props.isStudent ? "Yes" : "No"}</p>
+        </div>
+    )
+}
+
+Student.propTypes ={                // defining our prop types, if a different type was passed we will get a warning, good for debugging
+    name: PropTypes.string,
+    age: PropTypes.number,
+    isStudent: PropTypes.bool,
+}
+
+Student.defaultProps = {        // deprecated not gonna work
+    name: "Guest",
+    age: 0,
+    isStudent: false,
+}
+
+export default Student
+
+
+// <p>Student: {props.isStudent}</p>
+// booleans will not display naturally, so we'll use a ternary operator
+
+
+// index.css file ---------------------------------------------------
+
+
+// .student{
+//   font-family: Arial, sans-serif;
+//   font-size: 2em;
+//   padding: 10px;
+//   border: 1px solid hsla(0, 0%, 50%, 0.8);
+// }
+
+// .student p{     /* accessing the class student then accessing any paragraph elements within it*/
+//   margin: 0;
+// }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
