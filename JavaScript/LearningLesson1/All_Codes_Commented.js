@@ -4893,3 +4893,62 @@ export default Student
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Conditional Rendering
+
+// conditional rendering = allows you to control what gets rendered in your application
+//                         based on certain conditions (show, hide, or change components)
+
+
+// App.jsx file ---------------------------------------------------
+
+
+import UserGreeting from './UserGreeting.jsx'
+
+function App() {
+
+  return(
+    <>
+        <UserGreeting isLoggedIn={true} username="Mohammad"/>
+    </>
+  )
+}
+
+export default App
+
+
+// Student.jsx file ---------------------------------------------------
+
+
+function UserGreeting(props){
+
+    if(props.isLoggedIn){       // we could also use a ternary operator
+        return <h2 className="welcome-message">Welcome {props.username}</h2>
+    }
+    else{           // you can also just return after the if without the else because the first return will exit the code
+        return <h2 className="login-prompt">Please log in to continue</h2>
+    }
+}
+
+export default UserGreeting
+
+
+// index.css file ---------------------------------------------------
+
+
+// .welcome-message{
+//   font-size: 2em;
+//   background-color: hsl(120, 100%, 42%);
+//   color: white;
+//   padding: 10px;
+//   border-radius: 5px;
+//   margin: 0;
+// }
+
+// .login-prompt{
+//   font-size: 2em;
+//   background-color: hsl(0, 100%, 42%);
+//   color: white;
+//   padding: 10px;
+//   border-radius: 5px;
+//   margin: 0;
+// }

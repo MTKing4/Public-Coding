@@ -1,10 +1,17 @@
-.student{
-  font-family: Arial, sans-serif;
+.welcome-message{
   font-size: 2em;
+  background-color: hsl(120, 100%, 42%);
+  color: white;
   padding: 10px;
-  border: 1px solid hsla(0, 0%, 50%, 0.8);
+  border-radius: 5px;
+  margin: 0;
 }
 
-.student p{     /* accessing the class student then accessing any paragraph elements within it*/
+.login-prompt{
+  font-size: 2em;
+  background-color: hsl(0, 100%, 42%);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
   margin: 0;
 }
