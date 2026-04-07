@@ -5117,7 +5117,7 @@ function App() {
 export default App
 
 
-// App.jsx file ---------------------------------------------------
+// Button.jsx file ---------------------------------------------------
 
 
 function Button(){
@@ -5130,6 +5130,143 @@ function Button(){
 } // there is also onDoubleClick
 
 export default Buttons
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
+// React Hooks and useState() Hooks
+
+// React hook = Special function that allows functional components to use React features without writing class components (React v16.8)
+//              (useState, useEffect, useContext, useReucer, useCallback, and more...)
+
+
+// useState() = A React hook that allows the creation of a stateful variable AND a setter function to update its value in the Vitrual DOM.
+//              [name, setName]
+
+
+// stateful variable = when you update this variabele, that change is reflected in the Virtual DOM, normal variables don't
+
+
+// A Virtual DOM (VDOM) = is a lightweight, in-memory JavaScript representation of the actual browser Document Object Model (DOM). 
+//                        Used by frameworks like React and Vue, it optimizes performance by calculating UI changes in memory first
+//                        then applying only the necessary, minimal updates to the real DOM, reducing expensive browser
+
+
+// App.jsx file ---------------------------------------------------
+
+
+import MyComponent from './MyComponent.jsx'
+
+function App() {
+
+  return(
+    <>
+        <MyComponent />
+    </>
+  )
+}
+
+export default App
+
+
+// MyComponent.jsx file ---------------------------------------------------
+
+
+import React, {useState} from   'react'           // using object destructuring to only import useState instead of the whole react library
+
+function MyComponent(){
+
+    const [name, setName] = useState("Guest");         // array destructuring, useState function returns an array with a stateful variable and a setter function with naming convention of setVariableName, "Guest" is an initial state
+    const [age, setAge] = useState(0);
+    const [isEmployed, setIsEmployed] = useState(false);
+
+
+    const updateName = () => {
+        setName("Spongebob");               // this will update automatically without a refresh
+    }
+
+    const updateAge = () => {
+        setAge(age + 1);
+    }
+
+    const toggleEmployeedStatus = () => {
+        setIsEmployed(!isEmployed);
+    }
+
+    return(
+            <div>
+                <p>Name: {name}</p>
+                <button onClick={updateName}>Set Name</button>
+
+                <p>Age: {age}</p>
+                <button onClick={updateAge}>Incremenet Age</button>
+
+                <p>Is Employed: {isEmployed ? "Yes" : "No"}</p>
+                <button onClick={toggleEmployeedStatus}>Toggle Employment</button>
+            </div>
+          )
+}
+
+export default MyComponent
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+// Counter Program
+
+
+// App.jsx file ---------------------------------------------------
+
+
+import Counter from './Counter.jsx'
+
+function App() {
+
+  return(
+    <>
+        <Counter />
+    </>
+  )
+}
+
+export default App
+
+
+// Counter.jsx file ---------------------------------------------------
+
+
+import React, {useState} from 'react';
+
+function Counter(){
+
+    const [count, setCount] = useState(0);
+
+    const increment = () => {
+        setCount(count + 1);
+    }
+
+    const decrement = () => {
+        setCount(count - 1);
+    }
+
+    const reset = () => {
+        setCount(0);
+
+    }
+
+    return(
+            <div className="counter-container">
+                <p className="count-display">{count}</p>
+                <button className="counter-button" onClick={decrement}>Decrement</button>
+                <button className="counter-button" onClick={reset}>reset</button>
+                <button className="counter-button" onClick={increment}>Increment</button>
+
+            </div>
+        );
+}
+
+export default Counter
 
 
 //-------------------------------------------------------------------------------------------------------------
