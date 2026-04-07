@@ -5095,3 +5095,41 @@ export default List
 //-------------------------------------------------------------------------------------------------------------
 
 
+// Click Events
+
+// click event = An interaction when a user clicks on a specific element, we can respond to clicks by passing
+//               a callback to the onClick event handler
+
+
+// App.jsx file ---------------------------------------------------
+
+import Button from './Button.jsx'
+
+function App() {
+
+  return(
+    <>
+        <Button />
+    </>
+  )
+}
+
+export default App
+
+
+// App.jsx file ---------------------------------------------------
+
+
+function Button(){
+
+    const handleClick = () => console.log("OUCH!");
+
+    const handleClick2 = (name) => console.log(`${name} stop clicking me`)
+
+    return(<button onClick={() => handleClick2('Mohammad')}>Click me 😀</button>)       // wrap in arrow function to avoid immediate execution when passing arguments
+} // there is also onDoubleClick
+
+export default Buttons
+
+
+//-------------------------------------------------------------------------------------------------------------

@@ -23,22 +23,22 @@
 
 // inline styles
 
-function Button(){
+// function Button(){
 
-    const styles = {
-        backgroundColor: "hsl(200, 100%, 50%)",
-        color: "white",
-        padding: "10px 20px",
-        borderRadius: "5px",
-        border: "none",
-        cursor: "pointer",
-    }
-    return(
-        <button style={styles}>Click Me</button>
-    )
-}
+//     const styles = {
+//         backgroundColor: "hsl(200, 100%, 50%)",
+//         color: "white",
+//         padding: "10px 20px",
+//         borderRadius: "5px",
+//         border: "none",
+//         cursor: "pointer",
+//     }
+//     return(
+//         <button style={styles}>Click Me</button>
+//     )
+// }
 
-export default Button
+// export default Button
 
 // create a constant that will store the style data
 // rules of typing inline styles inside jsx files
