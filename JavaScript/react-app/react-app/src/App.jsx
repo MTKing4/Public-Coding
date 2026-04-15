@@ -1,10 +1,10 @@
-import MyComponent2 from './MyComponent2.jsx'
+import CounterUpdFun from './CounterUpdFun.jsx'
 
 function App() {
 
   return(
     <>
-        <MyComponent2 />
+        <CounterUpdFun />
     </>
   )
 }

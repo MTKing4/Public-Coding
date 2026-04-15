@@ -5145,7 +5145,7 @@ export default Buttons
 //              [name, setName]
 
 
-// stateful variable = when you update this variabele, that change is reflected in the Virtual DOM, normal variables don't
+// stateful variable = when you update this variable, that change is reflected in the Virtual DOM, normal variables don't
 
 
 // A Virtual DOM (VDOM) = is a lightweight, in-memory JavaScript representation of the actual browser Document Object Model (DOM). 
@@ -5467,6 +5467,102 @@ export default ColorPicker
 //     border: 5px solid hsl(0, 0, 80%);
 
 // }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+// Updater Functions
+
+// updater function = A function passed as an argument to setState(), usually
+//                    ex. setYear(year + 1), a better practice would be setYear(updater function) which will be setYear(y => y + 1)
+//                    Allows for safe updates based on the previous state
+//                    Used with multiple state updates and asynchronous functions
+//                    Good practice to use updater functions
+
+
+// App.jsx file ---------------------------------------------------
+
+
+import CounterUpdFun from './CounterUpdFun.jsx'
+
+function App() {
+
+  return(
+    <>
+        <CounterUpdFun />
+    </>
+  )
+}
+
+export default App
+
+
+// CounterUpdFun.jsx file ---------------------------------------------------
+
+
+import React, { useState } from 'react';
+
+function CounterUpdFun() {
+
+    const [count, setCount] = useState(0);
+
+    function increment(){
+
+
+    // TLDR: updater functions are used when you want to call the setter function multiple times
+    //       but each time it's called the stateful variable is reset because its state didn't update
+    //       so we use an updater function (arrow function) to update the stateful variable each time we call the setter function
+
+    // example without an updater function
+    // setCount(count + 1);
+
+    // example with an updater function
+    // setCount(prevCount => prevCount + 1);       // variable name changed for naming conventions, this way you have the previous state memorized the next time the setter function is called
+
+
+    //dumb explanation by teacher below, chad explanation above
+
+    // Uses the CURRENT state to calculate the NEXT state.
+    // set functions do not trigger an update.
+    // React batches together state updates for performance reasons.
+    // NEXT state becomes the CURRENT state after an update.
+
+    // setCount(count + 1);
+    // setCount(count + 1);
+    // setCount(count + 1);            // this will update only once not 3 times because count doesn't get updated after each set so it's always 0 + 1
+
+
+    // this below now takes the PENDING state to calculate the NEXT state.
+    // React puts your updater function in a queue (waiting in line) (queue as in data struture)
+    // During the next render, it wil call them in the same order
+    // this is called multiple state updates
+    
+    setCount(prevCount => prevCount + 1);       // by convention we rename count arugment to the arrow function to something like prevCount
+    setCount(prevCount => prevCount + 1);
+    setCount(prevCount => prevCount + 1);       // this now will be applied 3 times, meaning count is getting updated each time
+
+    };
+
+    function decrement(){
+        setCount(prevCount => prevCount - 1);
+        setCount(prevCount => prevCount - 1);
+        setCount(prevCount => prevCount - 1);
+    };
+
+    function reset(){
+        setCount(0);        // updater function won't be necessary here because we don't need the previous state
+    }
+
+    return(<div className="counter-container">
+                <p className="count-display">{count}</p>
+                <button className="counter-button" onClick={decrement}>Decrement</button>
+                <button className="counter-button" onClick={reset}>reset</button>
+                <button className="counter-button" onClick={increment}>Increment</button>
+
+            </div>)
+}
+
+export default CounterUpdFun
 
 
 //-------------------------------------------------------------------------------------------------------------
