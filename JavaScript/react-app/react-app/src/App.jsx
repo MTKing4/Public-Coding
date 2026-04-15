@@ -1,10 +1,10 @@
-import CounterUpdFun from './CounterUpdFun.jsx'
+import UpdObjSt from './UpdObjSt.jsx'
 
 function App() {
 
   return(
     <>
-        <CounterUpdFun />
+        <UpdObjSt />
     </>
   )
 }
