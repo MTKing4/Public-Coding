@@ -1,10 +1,10 @@
-import UpdArrSt from './UpdArrSt.jsx'
+import UpdArrObjSt from './UpdArrObjSt.jsx'
 
 function App() {
 
   return(
     <>
-        <UpdArrSt />
+        <UpdArrObjSt />
     </>
   )
 }
