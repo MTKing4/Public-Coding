@@ -1,10 +1,10 @@
-import UpdArrObjSt from './UpdArrObjSt.jsx'
+import UseEffectHook2 from './UseEffectHook2.jsx'
 
 function App() {
 
   return(
     <>
-        <UpdArrObjSt />
+        <UseEffectHook2 />
     </>
   )
 }

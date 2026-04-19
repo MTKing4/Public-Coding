@@ -5977,3 +5977,191 @@ export default ToDoList
 //     font-size: 1.4rem;
 //     margin-left: 10px;
 // }
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+// useEffect Hook
+
+// useEffect() = React hook that tells React to do some code when :
+//               the component re-renders
+//               the compnent mounts (mounting is when a component is created and appended to the DOM)
+//               the state of a value changes
+
+// Syntax:
+// useEffect(function, [dependencies])
+
+
+// 1. useEffect(() => {})                Runs after every re-render
+// 2. useEffect(() => {}, [])            Runs only once on mount (when supplying it with an empty array)
+// 3. useEffect(() => {}, [value])       Runs on mount + when a value changes
+
+
+// Uses
+// #1 Event Listeners
+// #2 DOM Manipulation
+// #3 Subscriptions (real-time updates)
+// #4 Fetching data from an API
+// #5 Clean up when a component unmounts (unmounting is removing a component from the DOM)
+
+
+// -------------------
+// Example 1
+
+// App.jsx file ---------------------------------------------------
+
+import UseEffectHook from './UseEffectHook.jsx'
+
+function App() {
+
+  return(
+    <>
+        <UseEffectHook />
+    </>
+  )
+}
+
+export default App
+
+
+// UseEffectHook.jsx file ---------------------------------------------------
+
+
+import React, {useState, useEffect} from 'react';
+
+
+function UseEffectHook(){
+
+    const [count, setCount] = useState(0);
+    const [color, setColor] = useState("green");
+    
+
+    // this would work even without useEffect i.e. the title will update wwhen changing the title or color, but it will do so everytime which can be resource consuming
+    // the usefullness of useEffect is to organize code and free up resources
+    useEffect(() =>{
+        document.title = `Count: ${count} ${color}`;            // here color changes are not causing a re-render because it's not added to the dependencies
+
+        return () => {                          // cleanup function, when this component unmounts, removed from the DOM, or before the next re-render (if there are no dependencies)
+            // some cleanup code, say if we added an event listener when mounting, we would remove it when unmounting
+        }
+    }, [count]);                                                // the dependacy count here means it will only re-render when count changes, without a dependency, it will re-render for any other change as well, and empty dependency [] means it will only renders when you first mount (open the page) of the component and never again
+
+    function addCount(){
+        setCount(prevCount => prevCount + 1);
+    }
+    
+    function subtractCount(){
+        setCount(prevCount => prevCount - 1);
+    }
+    
+    function changeColor(){
+        setColor(prevColor => prevColor === "green" ? "red" : "green");
+    }
+
+    return(<>
+            <p style={{color: color}}>Count: {count}</p>            {/* to add a style attribute we need {{}} first curly is for js and the second one is for an object */}
+            <button onClick={addCount}>Add</button>
+            <button onClick={subtractCount}>Subtract</button><br></br>
+            <button onClick={changeColor}>Change Color</button><br></br>
+    </>)
+}
+
+export default UseEffectHook;
+
+
+// -------------------
+// Example 2
+
+
+// App.jsx file ---------------------------------------------------
+
+import UseEffectHook from './UseEffectHook.jsx'
+
+function App() {
+
+  return(
+    <>
+        <UseEffectHook />
+    </>
+  )
+}
+
+export default App
+
+
+// UseEffectHook2.jsx file ---------------------------------------------------
+
+
+// displaying window size without useEffect() using event listeners
+// this works but has a major problem, it creates a new event listener each time the a re-render happens
+
+import React, {useState, useEffect} from 'react';
+
+
+function UseEffectHook2(){
+
+    const [width, setWidth] = useState(window.innerWidth);       // innerWidth is a read-only property that returns the interior width of the window's layout viewport in pixels
+    const [height, setHeight] = useState(window.innerHeight);
+ 
+
+    window.addEventListener("resize", handleResize);
+    console.log("event listener added")
+
+    function handleResize(){
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }
+    return(<>
+        <p>Window Width {width}px</p>
+        <p>Window Height {height}px</p>
+    </>)
+}
+
+
+export default UseEffectHook2;
+
+
+// ----------------------------------------------------
+
+// with useEffect()
+
+import React, {useState, useEffect} from 'react';
+
+
+function UseEffectHook2(){
+
+    const [width, setWidth] = useState(window.innerWidth);      
+    const [height, setHeight] = useState(window.innerHeight);
+ 
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);        // if you have strict mode on in browser, the event listner will run twice, it will run a developement only setup and a cleanup cycle
+        console.log("event listener added")
+
+        return() => {               // cleanup function, do this code before the next re-render or when the component unmounts
+            window.removeEventListener("resize", handleResize);
+            console.log("event listener removed")
+        }
+    }, [])
+    
+    // can have multiple useEffect hooks in one component
+    useEffect(() => {
+        document.title = `Size: ${width} x ${height}`
+    },[width, height]);
+
+    function handleResize(){
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }
+    return(<>
+        <p>Window Width {width}px</p>
+        <p>Window Height {height}px</p>
+    </>)
+}
+
+
+export default UseEffectHook2;
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
