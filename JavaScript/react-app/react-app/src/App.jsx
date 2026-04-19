@@ -1,10 +1,10 @@
-import UseEffectHook2 from './UseEffectHook2.jsx'
+import UseContextHookA from './UseContextHookA'
 
 function App() {
 
   return(
     <>
-        <UseEffectHook2 />
+      <UseContextHookA />   
     </>
   )
 }

@@ -6165,3 +6165,215 @@ export default UseEffectHook2;
 //-------------------------------------------------------------------------------------------------------------
 
 
+// useContext() Hook
+
+// useContext() = React hook that allows you to share values between multiple levels of components
+//                without passing props through each level
+
+
+// Requirements
+
+// 1) Provider Component
+
+// 1.
+import {createContext} from 'react';
+
+// 2.
+export const MyContext = createContext();
+
+// 3.
+<MyContext.Provider value={value}>
+    <Child />
+  </MyContext.Provider>
+
+
+// 2) Consumer Components
+// 1.
+import React, { useContext } from 'react';
+import { MyContext } from './ComponentA'
+
+// 2.
+const value = useContext(MyContext);
+
+
+// App.jsx file ---------------------------------------------------
+
+import UseContextHookA from './UseContextHookA'
+
+function App() {
+
+  return(
+    <>
+      <UseContextHookA />   
+    </>
+  )
+}
+
+export default App
+
+
+// index.css file ---------------------------------------------------
+
+// .box{
+//   border: 3px solid;
+//   padding: 25px;
+// }
+
+
+// ----------------------
+
+
+// Example without useContext()
+
+
+// UseContextHookA.jsx file ---------------------------------------------------
+
+
+import React, { useState } from 'react'
+
+import UseContextHookB from './UseContextHookB'
+
+function UseContextHookA(){
+
+    const [user, setUser] = useState("Mohammad")
+
+    return(<div className='box'>
+        <h1>ComponentA</h1>
+        <h2>{`Hello ${user}`}</h2>
+        <UseContextHookB user={user}/>
+    </div>)
+}
+
+export default UseContextHookA
+
+
+// UseContextHookB.jsx file ---------------------------------------------------
+
+
+import UseContextHookC from './UseContextHookC'
+
+function UseContextHookB(props){
+
+    return(<div className='box'>
+        <h1>ComponentB</h1>
+        <UseContextHookC user={props.user}/>
+    </div>)
+}
+
+export default UseContextHookB
+
+
+// UseContextHookC.jsx file ---------------------------------------------------
+
+
+import UseContextHookD from './UseContextHookD'
+
+function UseContextHookC(props){
+
+    return(<div className='box'>
+        <h1>ComponentC</h1>
+        <UseContextHookD user={props.user}/>
+    </div>)
+}
+
+export default UseContextHookC
+
+// we passed props through 3 different components to get it to here, this is known as prop drilling
+
+
+// UseContextHookD.jsx file ---------------------------------------------------
+
+
+function UseContextHookD(props){
+
+    return(<div className='box'>
+        <h1>ComponentD</h1>
+        <h2>{`Hello ${props.user}`}</h2>
+    </div>)
+}
+
+export default UseContextHookD
+
+
+// -------------------------------
+// Example with useContext()
+
+
+// UseContextHookA.jsx file ---------------------------------------------------
+
+
+import React, { useState, createContext } from 'react'
+import UseContextHookB from './UseContextHookB.jsx'
+
+export const ComponentAContext = createContext();
+
+function UseContextHookA(){
+
+    const [user, setUser] = useState("Mohammad")
+
+    return(<div className='box'>
+        <h1>ComponentA</h1>
+        <h2>{`Hello ${user}`}</h2>
+        <ComponentAContext.Provider value={user}>
+            <UseContextHookB user={user}/>          {/* any component that's a child component of our provider component 'A' has access to this value, so in this case it's not just for component B*/}
+        </ComponentAContext.Provider>
+    </div>)
+}
+
+export default UseContextHookA
+
+
+// UseContextHookB.jsx file ---------------------------------------------------
+
+
+import UseContextHookC from './UseContextHookC.jsx'
+
+function UseContextHookB(){
+
+    return(<div className='box'>
+        <h1>ComponentB</h1>
+        <UseContextHookC/>
+    </div>)
+}
+
+export default UseContextHookB
+
+
+// UseContextHookC.jsx file ---------------------------------------------------
+
+
+import UseContextHookD from './UseContextHookD.jsx'
+
+function UseContextHookC(){
+
+    return(<div className='box'>
+        <h1>ComponentC</h1>
+        <UseContextHookD/>
+    </div>)
+}
+
+export default UseContextHookC
+
+
+// UseContextHookD.jsx file ---------------------------------------------------
+
+
+import React, { useContext } from 'react';
+import { ComponentAContext } from './UseContextHookA.jsx';
+
+function UseContextHookD(){
+
+    const user = useContext(ComponentAContext);         // value shared successfully, without prop drilling
+
+    return(<div className='box'>
+        <h1>ComponentD</h1>
+        <h2>{`Hello ${user}`}</h2>
+    </div>)
+}
+
+export default UseContextHookD
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+
