@@ -40,7 +40,7 @@ function UseEffectHook2(){
     const [height, setHeight] = useState(window.innerHeight);
  
     useEffect(() => {
-        window.addEventListener("resize", handleResize);        // if you have strict mode on in browser, the event listner will run twice, it will run a developement only setup and a cleanup cycle
+        window.addEventListener("resize", handleResize);        // if you have strict mode on in react, the event listner will run twice, it will run a developement only setup and a cleanup cycle
         console.log("event listener added")
 
         return() => {               // cleanup function, do this code before the next re-render or when the component unmounts
