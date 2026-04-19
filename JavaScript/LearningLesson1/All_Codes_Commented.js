@@ -6377,3 +6377,124 @@ export default UseContextHookD
 //-------------------------------------------------------------------------------------------------------------
 
 
+// useRef() Hook
+
+// useState() = Re-renders the component when the state value changes
+
+// useRef() = "use Reference" Does not cause re-renders when its value changes.
+//            when you want a component to "remember" some information,
+//            but you don't want that infromation to trigger new renders
+
+
+//useRef is helpful with:
+
+//            1. Accessing/Interacting with DOM elements
+//            2. Handling Focus, Animatioon, and transitions
+//            3. Managing Timers and Intervals
+
+
+// App.jsx file ---------------------------------------------------
+
+
+import UseRefHook from './UseRefHook.jsx'
+
+function App() {
+
+  return(
+    <>
+      <UseRefHook />   
+    </>
+  )
+}
+
+export default App
+
+
+// main.jsx file ---------------------------------------------------
+
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+    <App />             // removed strictMode
+)
+
+
+// useRefHook.jsx file ---------------------------------------------------
+
+
+// example with useState
+
+import React, {useState, useEffect, useRef} from 'react';
+
+function UseRefHook(){
+
+    let [number, setNumber] = useState(0);
+
+    useEffect(() => {
+        console.log("Component rendered")       // this is to test if a render is happening every time the number changes
+    })
+
+    function handleClick(){
+        setNumber(prevNumber => prevNumber + 1);
+    }
+
+    return(<button onClick={handleClick}>
+        Click Me!
+    </button>);
+}
+
+export default UseRefHook;
+
+
+// ---------------------------
+
+// example with useRef()
+
+
+import React, {useState, useEffect, useRef} from 'react';
+
+function UseRefHook(){
+
+    const ref = useRef(0);           // useRef returns a 'ref object' with a single 'current' property initially set to the 'initial value' you provided, the current property can store a value, array, object or an HTML element
+    const HTMLref = useRef(null);
+
+    useEffect(() => {
+        console.log("Component rendered")       // this is to test if a render is happening every time the numnbe changes
+    })
+
+    function handleClick(){
+        ref.current++;              //current is the value that useRef started with, 0
+        console.log(ref.current);
+        console.log(HTMLref)
+        HTMLref.current.focus();            //focus is a built-in method to focus on the object, this will cause changes to the input element to see if a re-render happens, but it doesn't because we're using useRef()
+        HTMLref.current.style.backgroundColor = "Yellow"
+    }
+
+    return(<div>
+                <button onClick={handleClick}>
+                    Click Me!
+                </button>
+                <input ref={HTMLref} />         {/* ref attribute to reference an HTML element */}
+            </div>);
+}
+
+export default UseRefHook;
+
+
+//-------------------------------------------------------------------------------------------------------------
+
+// NOTE:
+// to disable strict mode in React
+// 1. in main.jsx remove strictMode tags around the App tag
+
+{/* <StrictMode>
+<App />
+</StrictMode>, */}
+
+//-------------------------------------------------------------------------------------------------------------
+//---------------------------------------REACT COURSE OVER :))))-----------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
