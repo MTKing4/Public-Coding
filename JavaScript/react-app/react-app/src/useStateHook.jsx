@@ -1,6 +1,6 @@
 import React, {useState} from   'react'           // using object destructuring to only import useState instead of the whole react library
 
-function useStateHook(){
+function UseStateHook(){
 
     const [name, setName] = useState("Guest");         // array destructuring, useState function returns an array with a stateful variable and a setter function with naming convention of setVariableName, "Guest" is an initial state
     const [age, setAge] = useState(0);
@@ -33,4 +33,4 @@ function useStateHook(){
           )
 }
 
-export default useStateHook
+export default UseStateHook
