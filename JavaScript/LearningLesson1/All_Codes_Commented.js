@@ -5156,13 +5156,13 @@ export default Buttons
 // App.jsx file ---------------------------------------------------
 
 
-import MyComponent from './MyComponent.jsx'
+import useStateHook from './useStateHook.jsx'
 
 function App() {
 
   return(
     <>
-        <MyComponent />
+        <useStateHook />
     </>
   )
 }
@@ -5170,12 +5170,12 @@ function App() {
 export default App
 
 
-// MyComponent.jsx file ---------------------------------------------------
+// useStateHook.jsx file ---------------------------------------------------
 
 
 import React, {useState} from   'react'           // using object destructuring to only import useState instead of the whole react library
 
-function MyComponent(){
+function useStateHook(){
 
     const [name, setName] = useState("Guest");         // array destructuring, useState function returns an array with a stateful variable and a setter function with naming convention of setVariableName, "Guest" is an initial state
     const [age, setAge] = useState(0);
@@ -5208,7 +5208,7 @@ function MyComponent(){
           )
 }
 
-export default MyComponent
+export default useStateHook
 
 
 //-------------------------------------------------------------------------------------------------------------
@@ -5280,13 +5280,13 @@ export default Counter
 // App.jsx file ---------------------------------------------------
 
 
-import MyComponent2 from './MyComponent2.jsx'
+import onChangeEventHandler from './onChangeEventHandler.jsx'
 
 function App() {
 
   return(
     <>
-        <MyComponent2 />
+        <onChangeEventHandler />
     </>
   )
 }
@@ -5294,13 +5294,13 @@ function App() {
 export default App
 
 
-// MyComponent2.jsx file ---------------------------------------------------
+// onChangeEventHandler.jsx file ---------------------------------------------------
 
 
 import React, {useState} from 'react';
 
 
-function MyComponent2(){
+function onChangeEventHandler(){
 
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState();
@@ -5363,7 +5363,7 @@ function MyComponent2(){
     </div>)
 }
 
-export default MyComponent2
+export default onChangeEventHandler
 
 // onChange will update instantly to whatever we type in the textfield, function gets called each time a change happens
 //  <input type="Number" /> will give two arrows to increasae and decreas the number (super coool)

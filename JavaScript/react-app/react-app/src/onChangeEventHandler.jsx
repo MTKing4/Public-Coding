@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 
-function MyComponent2(){
+function onChangeEventHandler(){
 
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState();
@@ -64,7 +64,7 @@ function MyComponent2(){
     </div>)
 }
 
-export default MyComponent2
+export default onChangeEventHandler
 
 // onChange will update instantly to whatever we type in the textfield, function gets called each time a change happens
 //  <input type="Number" /> will give two arrows to increasae and decreas the number (super coool)
