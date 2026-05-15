@@ -10602,3 +10602,26 @@ del rectangle.height
 
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+any()
+
+# any() is a built-in Python function that checks whether at least one value in an iterable is True.
+
+# any(iterable)
+# print(any([False, False, True]))
+
+# so instead of writing:
+numbers = [1, 3, 5, 8]
+
+found = False
+for x in numbers:
+    if x % 2 == 0:
+        found = True
+        break
+print(found)
+
+# You can write:
+found = any(x % 2 == 0 for x in numbers)
+print(found)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
