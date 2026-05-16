@@ -10625,3 +10625,161 @@ found = any(x % 2 == 0 for x in numbers)
 print(found)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# streamlit
+
+# used for dashboards
+
+import urllib.parse
+from sqlalchemy import create_engine
+import pandas as pd
+import streamlit as st
+import plotly.express as px
+from datetime import datetime, timedelta
+import numpy as np
+
+
+# page setup
+st.set_page_config(layout="wide")
+
+# title
+st.title("Test Dashboard")
+
+
+# writing a table
+st.write("Here's our first attempt at using data to create a table:")
+
+# st.columns (place widgets side by side
+left_column, right_column = st.columns(2)
+
+
+# write table with a dataframe
+my_df = pd.DataFrame({
+    'first column': [1, 2, 3, 4],
+    'second column': [10, 20, 30, 40]
+})
+right_column.write(my_df)           # right_column, left column will replace st from now on to display it in a grid instead
+
+# dataframe method (allows df styles)
+dataframe = pd.DataFrame(
+    np.random.randn(5, 10),                             # creates a Pandas df with 5 rows and 10 columns with random numbers inside it
+    columns=('col %d' % i for i in range(10)))          # col %d is old-style Python string formatting. creates the column names for the DataFrame. ['col 0', 'col 1', 'col 2', ..., 'col 19']
+left_column.dataframe(dataframe.style.highlight_max(axis=0))     # axis=0 means highlight the largest number in each column
+
+# creates static table
+right_column.table(my_df)
+
+# create a chart
+chart_data = pd.DataFrame(
+     np.random.randn(20, 3),        # creates a Pandas df with 20 rows and 3 columns with random numbers inside it
+     columns=['a', 'b', 'c'])       # column names: a, b, and c
+left_column.line_chart(chart_data)
+
+# create a map
+map_data = pd.DataFrame(
+    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],      # (1000, 2) generates 1000 points each point has latitude and longitude, [37.76, -122.4] These points are clustered around: latitude  = 37.76, longitude = -122.4, / [50, 50] This scales the random values down. So instead of large random jumps, you get tiny coordinate offsets.
+    columns=['lat', 'lon'])
+right_column.map(map_data)
+
+# create a slider
+x = right_column.slider('x')                        #  this is a widget
+right_column.write(f"{x} squared is {x * x}")
+
+# accessing values (variables) by a key
+# taking input
+left_column.text_input("Your name", key="name")      # way to take input and store it in a key
+# You can access the value at any point with:
+left_column.write(st.session_state.name)           # stores the key in the session to be accessed later
+
+# Without session_state:
+#   Streamlit reruns your script every interaction
+#   Input values would reset or be hard to track
+# With session_state:
+#   The value persists across reruns
+#   You can reuse it anywhere in your app
+
+# buttons
+st.button("Reset", type="primary")
+if st.button("Say hello"):
+    st.write("Why hello there")
+else:
+    st.write("Goodbye")
+if st.button("Aloha", type="tertiary"):
+    st.write("Ciao")
+
+# selectbox
+option = st.selectbox(
+    "How would you like to be contacted?",
+    ("Email", "Home phone", "Mobile phone"),
+    index=None,
+    placeholder="Select contact method...",
+)
+st.write("You selected:", option)
+
+# selectbox with list
+st.selectbox("really?", ["no", "yes"])
+
+
+# sidebar
+add_selectbox = st.sidebar.selectbox(
+    'How would you like to be contacted?',
+    ('Email', 'Home phone', 'Mobile phone'))
+
+
+# Add a slider to the sidebar:
+add_slider = st.sidebar.slider(
+    'Select a range of values',
+    0.0, 100.0, (25.0, 75.0)
+)
+
+
+# radio buttons
+chosen = st.radio(
+        'Sorting hat',
+        ("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin"))
+st.write(f"You are in {chosen} house!")
+
+
+# Session State
+if "df" not in st.session_state:
+    st.session_state.df = pd.DataFrame(np.random.randn(20, 2), columns=["x", "y"])
+
+#header text
+st.header("Choose a datapoint color")
+
+# color picker button
+color = st.color_picker("Color", "#FF0000")
+
+# divider (line separator)
+st.divider()
+
+# scatter chart
+st.scatter_chart(st.session_state.df, x="x", y="y", color=color)
+
+
+# Pages
+# As apps grow large, it becomes useful to organize them into multiple pages. This makes the app easier to manage as a developer and easier to navigate as a user. Streamlit provides a powerful way to create multipage apps using st.Page and st.navigation. Just create your pages and connect them with navigation as follows:
+#
+# 1. Create an entry point script that defines and connects your pages
+# 2. Create separate Python files for each page's content
+# 3. Use st.Page to define your pages and st.navigation to connect them
+# Here's an example of a three-page app:
+
+# streamlit_app.py
+
+# Define the pages
+main_page = st.Page("test.py", title="Main Page", icon="🎈")
+page_2 = st.Page("dashboard.py", title="Page 2", icon="❄️")
+page_3 = st.Page("old-dashboard.py", title="Page 3", icon="🎉")
+
+# Set up navigation
+pg = st.navigation([main_page, page_2, page_3])
+
+# Run the selected page
+pg.run()
+
+# Now run streamlit run streamlit_app.py and view your shiny new multipage app!
+# The navigation menu will automatically appear, allowing users to switch between pages.
+
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
