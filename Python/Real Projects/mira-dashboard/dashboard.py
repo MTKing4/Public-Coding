@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+from datetime import datetime
 
 # =========================
 # 🔌 DB CONNECTION
@@ -32,11 +33,19 @@ st.title("📊 Sales & Distribution Dashboard")
 # =========================
 st.sidebar.header("Filters")
 
-date_from = st.sidebar.date_input("From", pd.to_datetime("2026-03-01"))
-date_to = st.sidebar.date_input("To", pd.to_datetime("2026-03-31"))
+today = datetime.now().date()
 
-date_from_str = date_from.strftime("%Y-%m-%d")
-date_to_str = date_to.strftime("%Y-%m-%d")
+# start of today
+start_of_day = datetime.combine(today, datetime.min.time())  # 00:00:00
+
+# end of today
+end_of_day = datetime.combine(today, datetime.max.time())    # 23:59:59.999999
+
+date_from = st.sidebar.date_input("From", start_of_day)
+date_to = st.sidebar.date_input("To", end_of_day)
+
+date_from_str = date_from.strftime("%Y-%m-%d %H:%M")
+date_to_str = date_to.strftime("%Y-%m-%d %H:%M")
 
 # =========================
 # 📥 LOAD FILTER DATA (Obfuscated)
@@ -44,6 +53,7 @@ date_to_str = date_to.strftime("%Y-%m-%d")
 df_customers = pd.read_sql("SELECT DISTINCT cust_id, cust_lbl FROM v_sls_ord_sts order by cust_id", engine)
 df_status = pd.read_sql("SELECT DISTINCT ord_sts_id, sts_lbl FROM v_sls_ord_sts order by ord_sts_id", engine)
 df_class = pd.read_sql("SELECT DISTINCT cat_id, cat_lbl FROM v_sls_ord_sts order by cat_id", engine)
+df_owner = pd.read_sql("SELECT DISTINCT ownr_id, ownr_lbl FROM t_sys_owner order by ownr_id", engine)
 
 df_branch = pd.read_sql("""
 SELECT DISTINCT o.brnch_id, b.brnch_lbl 
@@ -64,37 +74,78 @@ order by whse_id
 # =========================
 def make_filter(df, id_col, name_col, label):
     df["label"] = df[id_col].astype(str) + " | " + df[name_col]
-    selected = st.sidebar.selectbox(label, ["All"] + df["label"].tolist())
-    return int(selected.split(" | ")[0]) if selected != "All" else None
 
-customer_id = make_filter(df_customers, "cust_id", "cust_lbl", "Customer")
+    selected = st.sidebar.multiselect(
+        label,
+        options=df["label"].tolist()
+    )
 
-class_id = make_filter(df_class, "cat_id", "cat_lbl", "Class")
+    if not selected:
+        return None
+
+    # Extracted values cleanly map to strings/ints without breaking mixed keys
+    selected_ids = [x.split(" | ")[0] for x in selected]
+    try:
+        return [int(x) for x in selected_ids]
+    except ValueError:
+        return selected_ids
+
 branch_id = make_filter(df_branch, "brnch_id", "brnch_lbl", "Branch")
+owner_id = make_filter(df_owner, "ownr_id", "ownr_lbl", "Salesmen")
+customer_id = make_filter(df_customers, "cust_id", "cust_lbl", "Customer")
+class_id = make_filter(df_class, "cat_id", "cat_lbl", "Class")
 store_id = make_filter(df_store, "whse_id", "whse_lbl", "Store")
 status_id = make_filter(df_status, "ord_sts_id", "sts_lbl", "Order Status")
 
 # =========================
 # 🧱 WHERE CLAUSE (Obfuscated)
 # =========================
+
+def add_condition(column, value):
+    if value is None:
+        return None
+
+    # list → IN (...)
+    if isinstance(value, list):
+        if len(value) == 0:
+            return None
+        formatted_items = [f"'{x}'" if isinstance(x, str) else str(x) for x in value]
+        return f"{column} IN ({','.join(formatted_items)})"
+
+    # single value → =
+    if isinstance(value, str):
+        return f"{column} = '{value}'"
+
+    return f"{column} = {value}"
+
+
 conditions = [
-    f"CAST(dlvry_dt AS DATE) BETWEEN '{date_from_str}' AND '{date_to_str}'"
+    f"dlvry_dt >= '{date_from_str}' AND dlvry_dt < '{date_to_str}'"
 ]
 
-if customer_id:
-    conditions.append(f"cust_id = {customer_id}")
+cond = add_condition("cust_id", customer_id)
+if cond:
+    conditions.append(cond)
 
-if status_id:
-    conditions.append(f"ord_sts_id = '{status_id}'")
+cond = add_condition("ord_sts_id", status_id)
+if cond:
+    conditions.append(cond)
 
-if class_id:
-    conditions.append(f"cat_id = {class_id}")
+cond = add_condition("cat_id", class_id)
+if cond:
+    conditions.append(cond)
 
-if branch_id:
-    conditions.append(f"brnch_id = {branch_id}")
+cond = add_condition("brnch_id", branch_id)
+if cond:
+    conditions.append(cond)
 
-if store_id:
-    conditions.append(f"whse_id = {store_id}")
+cond = add_condition("whse_id", store_id)
+if cond:
+    conditions.append(cond)
+
+cond = add_condition("ownr_id", owner_id)
+if cond:
+    conditions.append(cond)
 
 where_clause = " AND ".join(conditions)
 
@@ -108,7 +159,7 @@ SELECT
     COUNT(DISTINCT ord_id) AS total_orders,
     COUNT(DISTINCT CASE WHEN ord_sts_id = 'v' THEN ord_id END) AS invoiced_orders,
     (COUNT(DISTINCT CASE WHEN ord_sts_id = 'v' THEN ord_id END) * 1.0 
-     / COUNT(DISTINCT ord_id)) * 100 AS conversion_rate
+     / NULLIF(COUNT(DISTINCT ord_id), 0)) * 100 AS conversion_rate
 FROM v_sls_ord_sts
 WHERE {where_clause}
 """, engine)
@@ -157,7 +208,13 @@ col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Total Orders", int(df_conv["total_orders"][0]))
 col2.metric("Invoiced Orders", int(df_conv["invoiced_orders"][0]))
-col3.metric("Conversion %", round(df_conv["conversion_rate"][0], 2))
+
+value = df_conv["conversion_rate"][0]
+
+if value is None or pd.isna(value):
+    value = 0
+
+col3.metric("Conversion %", round(value, 2))
 
 col5, col6 = st.columns(2)
 
@@ -177,10 +234,18 @@ st.plotly_chart(fig_sales, use_container_width=True)
 # =========================
 # 📊 SALES BY SALESMAN
 # =========================
-st.subheader("👨‍💼 Sales by Salesman")
+st.subheader("👨‍💼 Top 10 Sales by Salesman")
 
-df_grouped = df_salesman.groupby("Salesman").sum(numeric_only=True).reset_index()
-df_top = df_grouped.sort_values("total_sales", ascending=False).head(10)
+try:
+    df_grouped = df_salesman.groupby("Salesman").sum(numeric_only=True).reset_index()
+    df_top = df_grouped.sort_values("total_sales", ascending=False).head(10)
+except KeyError:
+    empty_data = {
+        "Salesman": [0],
+        "total_sales": [0],
+        "invoice_count": [0],
+    }
+    df_top = pd.DataFrame(empty_data)
 
 view_option = st.selectbox("View Type", ["Bar", "Pie"])
 
@@ -190,6 +255,22 @@ else:
     fig = px.bar(df_top, x="total_sales", y="Salesman", orientation="h")
 
 st.plotly_chart(fig, use_container_width=True)
+
+# =========================
+# 📋 RAW DATA
+# =========================
+
+st.subheader("👥 All Salesman")
+
+try:
+    st.dataframe(df_grouped.sort_values(by="total_sales", ascending=False))
+except KeyError:
+    empty_data = {
+        "Salesman": [0],
+        "total_sales": [0],
+        "invoice_count": [0],
+    }
+    df_top = pd.DataFrame(empty_data)
 
 # =========================
 # 🥧 DELIVERY PIE
@@ -215,9 +296,3 @@ df_daily = df_salesman.groupby("Date")["total_sales"].sum().reset_index()
 
 fig_timeline = px.line(df_daily, x="Date", y="total_sales", markers=True)
 st.plotly_chart(fig_timeline, use_container_width=True)
-
-# =========================
-# 📋 RAW DATA
-# =========================
-with st.expander("Show Raw Data"):
-    st.dataframe(df_salesman)
