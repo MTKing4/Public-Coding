@@ -3,14 +3,16 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Selenium](https://img.shields.io/badge/-Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
 
-Welcome to my personal code vault. This repository serves as a central hub for my development journey, ranging from **enterprise-level automation scripts**, **GUI software**, and **data analysis tools** to **full-stack web applications** and **modern frontend frameworks**.
+Welcome to my personal code vault. This repository serves as a central hub for my development journey, ranging from **enterprise-level automation scripts**, **GUI software**, and **data analysis tools** to **full-stack web applications**, **modern frontend frameworks** and **mobile apps**.
 
-It documents my progression through Python, C++, JavaScript, and SQL, demonstrating my ability to solve complex real-world problems.
+It documents my progression through Python, C++, JavaScript, Dart, and SQL, demonstrating my ability to solve complex real-world problems.
 
 ## 🚀 Key Highlights & "Real World" Projects
 
@@ -23,6 +25,8 @@ This section contains production-ready scripts used for business automation, rep
 | **Admin Panel Translation Automator** | Automates the bulk update of application translations on a web admin interface. Reads translation data from an **Excel** file and uses **Selenium** to navigate complex UI elements (accordions), injecting text directly via JavaScript event dispatching (`input`/`change` events) for speed and reliability. | `Python`, `Selenium`, `Pandas`, `JavaScript Injection` |
 | **Cancellation Report Query** | Automates the generation of cancelled orders reports. Queries a DB, processes data with Pandas to calculate timestamps and cancellation reasons, cross-references it with a PBX system logs (call center data) to determine the duration the operator took to make the necessary call, and exports results to Excel. | `SQL`, `Pandas`, `Excel Automation` |
 | **Cancelled Orders Ratio Email Alert** | A monitoring tool that calculates the ratio of cancelled orders per city. If the ratio exceeds a specific threshold (e.g., 5%), it automatically constructs an HTML email report and sends it to the operations team via SMTP. | `Python`, `SMTP (Email)`, `HTML/CSS`, `SQL` |
+| **MiRA Sales & Distribution Dashboard** | An interactive web application that connects to an SQL Server database to visualize sales and distribution metrics. Features dynamic filtering (by date, customer, status, branch), KPI cards for conversion/delivery rates, and interactive Plotly charts for sales trends and salesman performance. | `Python`, `Streamlit`, `SQLAlchemy`, `Pandas`, `Plotly` |
+| **Telegram Job Scanner Bot** | An automated asynchronous script utilizing the Telethon library to monitor multiple Telegram channels for tech and IT job postings. Filters messages based on a comprehensive keyword list, logs the jobs, and instantly forwards relevant opportunities to designated chats via the Telegram Bot API. | `Python`, `Telethon`, `Telegram API`, `AsyncIO` |
 
 
 ## ⚛️ Frontend & Web Development
@@ -42,6 +46,9 @@ This section contains production-ready scripts used for business automation, rep
 ## 🐍 Python Development
 
 My most extensive work is in Python, covering Data Science, Web Scraping, GUI Apps, and Web Development.
+
+### 📊 Data Visualization & Dashboards (Streamlit)
+* **Streamlit Web Apps:** Built interactive, data-driven web applications (like the MiRA Dashboard), utilizing Streamlit's rapid UI components alongside `pandas` for data manipulation, `sqlalchemy` for secure database connections, and `plotly` for dynamic, responsive charting.
 
 ### 🌐 Web Development (Django & Flask)
 * **PyShop (Django):** A fully functional e-commerce backend structure featuring custom models for `Products` and `Offers`, migrations, and a customized Admin Panel.
@@ -74,6 +81,17 @@ My most extensive work is in Python, covering Data Science, Web Scraping, GUI Ap
 
 ---
 
+## 📱 Dart & Mobile App Development
+
+Laying the structural and logical groundwork for mobile app development using the Flutter framework by mastering the Dart programming language. 
+
+* **Core Language Mechanics:** Implementation of JIT/AOT compilation concepts, sound null safety, and advanced control flow (including pattern matching and arrow switches).
+* **Object-Oriented Architecture:** Deep dive into OOP principles utilizing Classes, named constructors, getters/setters, multilevel inheritance, mixins, and strict class modifiers (`sealed`, `final`, `base`, `interface`).
+* **Asynchronous Programming:** Handling delayed operations and APIs using `Future`, `async/await`, and building continuous data pipelines with `Streams` and `StreamControllers`.
+* **Data Structures:** Advanced manipulation of Lists, Maps, Records (destructuring and multiple returns), and utilizing Generics for highly reusable, type-safe collections.
+
+---
+
 ## 🐘 PHP Development: Server-Side Logic
 *Showcasing my experience with web-based back-end architecture.*
 
@@ -90,10 +108,10 @@ My most extensive work is in Python, covering Data Science, Web Scraping, GUI Ap
 
 ## 🛠️ Tech Stack Summary
 
-* **Languages:** `Python`, `JavaScript` (ES6+), `SQL`, `PHP`, `C++`, `HTML5`, `CSS3`
-* **Frameworks/Libs:** `React`, `Django`, `Flask`, `Bootstrap 5`, `Pygame`, `Tkinter`, `OpenPyXL`
-* **Data/ML:** `Pandas`, `Scikit-learn`, `NumPy`, `Selenium`, `BeautifulSoup`, `Joblib`
-* **Infrastructure:** `PostgreSQL`, `SQLite`, `SMTP`, `REST APIs` (Slack, Pixela, OpenWeather)
+* **Languages:** `Python`, `JavaScript` (ES6+), `Dart`, `SQL`, `PHP`, `C++`, `HTML5`, `CSS3`
+* **Frameworks/Libs:** `React`, `Django`, `Flask`, `Streamlit`, `Bootstrap 5`, `Plotly`, `Telethon`, `Pygame`, `Tkinter`, `OpenPyXL`
+* **Data/ML:** `Pandas`, `Scikit-learn`, `NumPy`, `SQLAlchemy`, `Selenium`, `BeautifulSoup`, `Joblib`
+* **Infrastructure:** `PostgreSQL`, `SQL Server`, `SQLite`, `SMTP`, `REST APIs` (Slack, Pixela, Telegram, OpenWeather)
 * **GUI:** `Tkinter`, `Pygame`, `Turtle`
 
 
