@@ -83,8 +83,13 @@ My most extensive work is in Python, covering Data Science, Web Scraping, GUI Ap
 
 ## 📱 Dart & Mobile App Development
 
-Laying the structural and logical groundwork for mobile app development using the Flutter framework by mastering the Dart programming language. 
+Laying the structural and logical groundwork for mobile app development using the Flutter framework by mastering the Dart programming language.
 
+### 📱 Flutter Applications
+* **Currency Converter:** A cross-platform mobile application featuring distinct UI implementations for both Material Design and Apple's Cupertino design system. It utilizes stateful widgets and text editing controllers to calculate and update currency exchange rates in real-time.
+* **E-commerce Shop App:** A multi-screen shopping application that includes a dynamic product catalog, detailed product views, and a dedicated cart page. It leverages the Provider package for robust state management to handle shopping cart interactions across the application.
+
+### 🎯 Core Language Mechanics
 * **Core Language Mechanics:** Implementation of JIT/AOT compilation concepts, sound null safety, and advanced control flow (including pattern matching and arrow switches).
 * **Object-Oriented Architecture:** Deep dive into OOP principles utilizing Classes, named constructors, getters/setters, multilevel inheritance, mixins, and strict class modifiers (`sealed`, `final`, `base`, `interface`).
 * **Asynchronous Programming:** Handling delayed operations and APIs using `Future`, `async/await`, and building continuous data pipelines with `Streams` and `StreamControllers`.
@@ -109,7 +114,7 @@ Laying the structural and logical groundwork for mobile app development using th
 ## 🛠️ Tech Stack Summary
 
 * **Languages:** `Python`, `JavaScript` (ES6+), `Dart`, `SQL`, `PHP`, `C++`, `HTML5`, `CSS3`
-* **Frameworks/Libs:** `React`, `Django`, `Flask`, `Streamlit`, `Bootstrap 5`, `Plotly`, `Telethon`, `Pygame`, `Tkinter`, `OpenPyXL`
+* **Frameworks/Libs:** `React`, `Django`, `Flask`, `Streamlit`, `Bootstrap 5`, `Plotly`, `Telethon`, `Pygame`, `Tkinter`, `OpenPyXL`, `Flutter`
 * **Data/ML:** `Pandas`, `Scikit-learn`, `NumPy`, `SQLAlchemy`, `Selenium`, `BeautifulSoup`, `Joblib`
 * **Infrastructure:** `PostgreSQL`, `SQL Server`, `SQLite`, `SMTP`, `REST APIs` (Slack, Pixela, Telegram, OpenWeather)
 * **GUI:** `Tkinter`, `Pygame`, `Turtle`
